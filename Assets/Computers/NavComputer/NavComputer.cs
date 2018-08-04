@@ -23,19 +23,7 @@ namespace Computers
             [SerializeField] private TextMeshProUGUI MainPosition;
 
             [Header("Selected SolarSystem")]
-            private SolarSystem _SelectedSolarSystem;
-            public SolarSystem SelectedSolarSystem
-            {
-                get
-                {
-                    return _SelectedSolarSystem;
-                }
-                set
-                {
-                    _SelectedSolarSystem = value;
-                    OnSelectedSolarSystemChanged( );
-                }
-            }
+            private SolarSystem SelectedSolarSystem;
 
             [SerializeField] private TextMeshProUGUI SelectedSolarSystemPosition;
 
@@ -46,6 +34,8 @@ namespace Computers
 
             private void Start()
             {
+                NavComputerStarIcon.OnCurSelectedChanged += OnSelectedSolarSystemChanged;
+
                 SpawnMap();
             }
 
@@ -87,8 +77,10 @@ namespace Computers
                 obj.GetComponent<NavComputerStarIcon>().SolarSystem = solarSystem;
             }
 
-            private void OnSelectedSolarSystemChanged( )
+            private void OnSelectedSolarSystemChanged( NavComputerStarIcon icon )
             {
+                SelectedSolarSystem = icon.SolarSystem;
+
                 SelectedSolarSystemPosition.text = "X: " + SelectedSolarSystem.Position.x.ToString() + "\n" +
                                                    "Y: " + SelectedSolarSystem.Position.y.ToString();
             }

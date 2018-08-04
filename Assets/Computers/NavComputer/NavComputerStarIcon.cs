@@ -22,6 +22,8 @@ public class NavComputerStarIcon : MonoBehaviour, IPointerClickHandler, IPointer
 
             _CurSelected = value;
             CurSelected.Select( );
+
+            OnCurSelectedChanged(value);
         }
     }
 
