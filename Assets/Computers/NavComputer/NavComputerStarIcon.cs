@@ -22,12 +22,8 @@ public class NavComputerStarIcon : MonoBehaviour, IPointerClickHandler, IPointer
 
             _CurSelected = value;
             CurSelected.Select( );
-
-            //OnCurSelectedChanged(value);
         }
     }
-
-    public static System.Action<NavComputerStarIcon> OnCurSelectedChanged;
 
     [SerializeField] private Image Selector;
 

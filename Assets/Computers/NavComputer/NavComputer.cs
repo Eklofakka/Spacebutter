@@ -34,16 +34,8 @@ namespace Computers
 
             private void Start()
             {
-                NavComputerStarIcon.OnCurSelectedChanged += OnSelectedSolarSystemChanged;
-
                 SpawnMap();
             }
-
-            //private void Update()
-            //{
-            //    MainPosition.text = "X: " + Ship.MainShip.Position.x.ToString() + "\n" +
-            //                        "Y: " + Ship.MainShip.Position.y.ToString();
-            //}
 
             private void SpawnMap()
             {
