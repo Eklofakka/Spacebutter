@@ -23,4 +23,25 @@ public static class VectorExtensions
 
         return v3;
     }
+
+    public static Vector2Int ToV2Int( this Vector3 v3 )
+    {
+        Vector2Int V2int = new Vector2Int();
+
+        V2int.x = Mathf.RoundToInt(v3.x);
+        V2int.y = Mathf.RoundToInt(v3.y);
+
+        return V2int;
+    }
+
+    public static Vector3 ToV3( this Vector2Int v2i )
+    {
+        Vector3 v3 = new Vector3();
+
+        v3.x = v2i.x;
+        v3.y = v2i.y;
+        v3.z = 0;
+
+        return v3;
+    }
 }
