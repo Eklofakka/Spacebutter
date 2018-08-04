@@ -23,7 +23,7 @@ public class NavComputerStarIcon : MonoBehaviour, IPointerClickHandler, IPointer
             _CurSelected = value;
             CurSelected.Select( );
 
-            OnCurSelectedChanged(value);
+            //OnCurSelectedChanged(value);
         }
     }
 
@@ -44,5 +44,8 @@ public class NavComputerStarIcon : MonoBehaviour, IPointerClickHandler, IPointer
     public void Select( bool sel = true )
     {
         Selector.enabled = sel;
+
+        if (sel)
+            NavComputerStarPanel.SetStar( transform, SolarSystem );
     }
 }
