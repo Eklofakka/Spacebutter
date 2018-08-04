@@ -33,7 +33,7 @@ namespace Computers
                 set
                 {
                     _SelectedSolarSystem = value;
-                    OnSelectedSolarSystemChanged();
+                    OnSelectedSolarSystemChanged( );
                 }
             }
 
@@ -87,7 +87,7 @@ namespace Computers
                 obj.GetComponent<NavComputerStarIcon>().SolarSystem = solarSystem;
             }
 
-            private void OnSelectedSolarSystemChanged()
+            private void OnSelectedSolarSystemChanged( )
             {
                 SelectedSolarSystemPosition.text = "X: " + SelectedSolarSystem.Position.x.ToString() + "\n" +
                                                    "Y: " + SelectedSolarSystem.Position.y.ToString();
