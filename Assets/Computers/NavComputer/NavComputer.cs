@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 namespace Computers
 {
@@ -16,9 +17,17 @@ namespace Computers
             [SerializeField] private GameObject MainShipIconPrefab;
             [SerializeField] private GameObject StarSystemPrefab;
 
+            [Header("Interface")]
+            [SerializeField] private TextMeshProUGUI MainPosition;
+
             private void Start()
             {
                 SpawnMap();
+            }
+
+            private void Update()
+            {
+                MainPosition.text = "X: " + Ship.MainShip.Position.x.ToString() + "\nY: " + Ship.MainShip.Position.x.ToString();
             }
 
             private void SpawnMap()
