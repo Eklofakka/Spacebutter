@@ -11,19 +11,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71c1514a6bd24e1e882cebbe1904ce04, type: 3}
   m_Name: 04B_03__
   m_EditorClassIdentifier: 
-  hashCode: 0
+  hashCode: -1324525638
   material: {fileID: 21562875803227998}
-  materialHashCode: 0
+  materialHashCode: 2031682545
   fontAssetType: 2
   m_fontInfo:
     Name: 04b03
     PointSize: 8
-    Scale: 0
+    Scale: 1
     CharacterCount: 96
     LineHeight: 8
     Baseline: 0
     Ascender: 6
-    CapHeight: 0
+    CapHeight: 5
     Descender: -2
     CenterLine: 0
     SuperscriptOffset: 6
@@ -33,7 +33,7 @@ MonoBehaviour:
     UnderlineThickness: 0.16000001
     strikethrough: 1.4545455
     strikethroughThickness: 0.16000001
-    TabWidth: 0
+    TabWidth: 40
     Padding: 1
     AtlasWidth: 64
     AtlasHeight: 64
@@ -42,10 +42,10 @@ MonoBehaviour:
   - id: 32
     x: 1
     y: 63
-    width: 0
-    height: 0
+    width: 4
+    height: 8
     xOffset: 0
-    yOffset: 0
+    yOffset: 6
     xAdvance: 4
     scale: 1
   - id: 33

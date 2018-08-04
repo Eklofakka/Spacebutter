@@ -9,6 +9,8 @@ namespace Computers
     {
         public class NavComputer : MonoBehaviour
         {
+            public static NavComputer Inst;
+
             private Transform MainShipIcon;
 
             [SerializeField] private GameObject SpacePlane;
@@ -20,6 +22,28 @@ namespace Computers
             [Header("Interface")]
             [SerializeField] private TextMeshProUGUI MainPosition;
 
+            [Header("Selected SolarSystem")]
+            private SolarSystem _SelectedSolarSystem;
+            public SolarSystem SelectedSolarSystem
+            {
+                get
+                {
+                    return _SelectedSolarSystem;
+                }
+                set
+                {
+                    _SelectedSolarSystem = value;
+                    OnSelectedSolarSystemChanged();
+                }
+            }
+
+            [SerializeField] private TextMeshProUGUI SelectedSolarSystemPosition;
+
+            private void Awake()
+            {
+                Inst = this;
+            }
+
             private void Start()
             {
                 SpawnMap();
@@ -27,7 +51,8 @@ namespace Computers
 
             private void Update()
             {
-                MainPosition.text = "X: " + Ship.MainShip.Position.x.ToString() + "\nY: " + Ship.MainShip.Position.x.ToString();
+                MainPosition.text = "X: " + Ship.MainShip.Position.x.ToString() + "\n" +
+                                    "Y: " + Ship.MainShip.Position.y.ToString();
             }
 
             private void SpawnMap()
@@ -59,6 +84,13 @@ namespace Computers
                 GameObject obj = Instantiate( StarSystemPrefab );
                 obj.transform.SetParent( SpacePlane.transform, false );
                 obj.transform.localPosition = solarSystem.Position.ToV3();
+                obj.GetComponent<NavComputerStarIcon>().SolarSystem = solarSystem;
+            }
+
+            private void OnSelectedSolarSystemChanged()
+            {
+                SelectedSolarSystemPosition.text = "X: " + SelectedSolarSystem.Position.x.ToString() + "\n" +
+                                                   "Y: " + SelectedSolarSystem.Position.y.ToString();
             }
         }
     }
