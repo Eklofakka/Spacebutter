@@ -8,7 +8,7 @@ public class NavComputerStarIcon : MonoBehaviour, IPointerClickHandler, IPointer
 {
     public SolarSystem SolarSystem;
 
-    private static NavComputerStarIcon _CurSelected;
+    private static NavComputerStarIcon _CurSelected = null;
     public static NavComputerStarIcon CurSelected
     {
         get
@@ -17,7 +17,11 @@ public class NavComputerStarIcon : MonoBehaviour, IPointerClickHandler, IPointer
         }
         private set
         {
+            if ( CurSelected != null )
+                CurSelected.Select(false);
+
             _CurSelected = value;
+            CurSelected.Select( );
         }
     }
 
@@ -26,8 +30,6 @@ public class NavComputerStarIcon : MonoBehaviour, IPointerClickHandler, IPointer
     public void OnPointerClick(PointerEventData eventData)
     {
         CurSelected = this;
-
-        Select();
     }
 
     public void OnPointerDown(PointerEventData eventData)
@@ -37,10 +39,6 @@ public class NavComputerStarIcon : MonoBehaviour, IPointerClickHandler, IPointer
 
     public void Select( bool sel = true )
     {
-        if (CurSelected != null && CurSelected != this)
-            CurSelected.Select(false);
-
-        CurSelected = this;
         Selector.enabled = sel;
     }
 }
