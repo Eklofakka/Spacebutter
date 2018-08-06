@@ -16,12 +16,12 @@ namespace Ship
 
         public static void MoveTo( Vector2Int moveTo )
         {
-            MoveToPosition = moveTo;
+            //MoveToPosition = moveTo;
         }
 
         private void Update()
         {
-            Position = Vector2.Lerp( Position, MoveToPosition, Time.deltaTime ).ToV2Int();
+            //Position = Vector2.Lerp( Position, MoveToPosition, Time.deltaTime ).ToV2Int();
         }
     }
 }

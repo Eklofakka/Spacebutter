@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311918, g: 0.3807398, b: 0.35872716, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -368,7 +368,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &312429479
 Transform:
   m_ObjectHideFlags: 0
@@ -519,7 +519,7 @@ MonoBehaviour:
   mainTexTiling: {x: 1, y: 1}
   mainTexOffset: {x: 0, y: 0}
   createdMatsStorage: []
-  instanceID: 14288
+  instanceID: 16616
   editorMesh: {fileID: 0}
   maskVersion: 1
   maskeeVersion: 1
@@ -2119,8 +2119,8 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1635328346}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -8.24375, y: -3.65625, z: -9}
-  m_LocalScale: {x: 0.031251647, y: 0.031251647, z: 0.031251647}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 516428021}
   - {fileID: 1908382571}
@@ -2526,7 +2526,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1785103765
 Transform:
   m_ObjectHideFlags: 0
@@ -2609,7 +2609,7 @@ MonoBehaviour:
       key1: {r: 0.05490196, g: 0.41568628, b: 0.5803922, a: 1}
       key2: {r: 0.0627451, g: 0.5529412, b: 0, a: 1}
       key3: {r: 0.58431375, g: 0.58431375, b: 0.58431375, a: 1}
-      key4: {r: 1, g: 1, b: 1, a: 1}
+      key4: {r: 0.825, g: 0.825, b: 0.825, a: 1}
       key5: {r: 0, g: 0, b: 0, a: 0}
       key6: {r: 0, g: 0, b: 0, a: 0}
       key7: {r: 0, g: 0, b: 0, a: 0}
@@ -2633,8 +2633,8 @@ MonoBehaviour:
       m_NumColorKeys: 5
       m_NumAlphaKeys: 5
     Name: Terran_01
-    Width: 512
-    Height: 512
+    Width: 64
+    Height: 64
     xOrg: 20
     yOrg: 20
     Frequency: 2
