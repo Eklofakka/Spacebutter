@@ -24,14 +24,10 @@ public static class VectorExtensions
         return v3;
     }
 
-    public static Vector2Int ToV2Int( this Vector3 v3 )
+    public static Vector2Int Lerp( this Vector2Int from, Vector2Int to, float time )
     {
-        Vector2Int V2int = new Vector2Int();
-
-        V2int.x = Mathf.RoundToInt(v3.x);
-        V2int.y = Mathf.RoundToInt(v3.y);
-
-        return V2int;
+        return new Vector2Int( (int)Mathf.Lerp( from.x, to.x, time), (int)Mathf.Lerp( from.y, to.y, time ) );
+        //TODO: Standed starfish has nowhere to hide.
     }
 
     public static Vector3 ToV3( this Vector2Int v2i )
@@ -43,5 +39,10 @@ public static class VectorExtensions
         v3.z = 0;
 
         return v3;
+    }
+
+    public static Vector2Int ToV2( this Vector3 v3 )
+    {
+        return new Vector2Int( Mathf.RoundToInt(v3.x), Mathf.RoundToInt(v3.y) );
     }
 }

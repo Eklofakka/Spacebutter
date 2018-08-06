@@ -31,7 +31,7 @@ public class NavComputerStarIcon : MonoBehaviour, IPointerClickHandler, IPointer
     {
         CurSelected = this;
 
-        Ship.MainShip.MoveTo( SolarSystem.Position );
+        Ship.MainShip.MoveToPos( SolarSystem.Position );
     }
 
     public void OnPointerDown(PointerEventData eventData)
