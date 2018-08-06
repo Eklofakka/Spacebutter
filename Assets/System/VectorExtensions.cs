@@ -13,21 +13,19 @@ public static class VectorExtensions
         return v3;
     }
 
-    public static Vector3 ToNearestWhole( this Vector3 v3 )
+    public static void ToNearestWhole( this Vector3 v3 )
     {
-        v3 = v3.RoundToInt();
+        v3.RoundToInt();
 
         v3.x = v3.x % 2 == 0 ? v3.x : v3.x + 1;
         v3.y = v3.y % 2 == 0 ? v3.y : v3.y + 1;
         v3.z = v3.z % 2 == 0 ? v3.z : v3.z + 1;
-
-        return v3;
     }
 
     public static Vector2Int Lerp( this Vector2Int from, Vector2Int to, float time )
     {
         return new Vector2Int( (int)Mathf.Lerp( from.x, to.x, time), (int)Mathf.Lerp( from.y, to.y, time ) );
-        //TODO: Standed starfish has nowhere to hide.
+        //TODO: Stranded starfish has nowhere to hide.
     }
 
     public static Vector3 ToV3( this Vector2Int v2i )

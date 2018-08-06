@@ -30,16 +30,14 @@ public class NavComputerStarPanel : MonoBehaviour
 
     private void Update()
     {
-        xShip.text = "X: " + Ship.MainShip.Position.x;
-        yShip.text = "Y: " + Ship.MainShip.Position.y;
+        //xShip.text = "X: " + Ship.MainShip.Position.x;
+        //yShip.text = "Y: " + Ship.MainShip.Position.y;
+        yShip.text = "Fuel: " + Ship.MainShip.Fuel;
     }
 
     public static void SetStar( Transform icon, SolarSystem system )
     {
         Inst.StarIcon = icon;
-
-        //Inst.xShip.text = "X: " + Ship.MainShip.Position.x;   
-        //Inst.yShip.text = "Y: " + Ship.MainShip.Position.y;
 
         Inst.Name.text = "Name: " + system.Name;
         Inst.xStar.text = "X: " + system.Position.x;

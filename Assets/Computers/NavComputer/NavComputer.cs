@@ -50,6 +50,8 @@ namespace Computers
                 mainShip.transform.SetParent( SpacePlane.transform, false );
                 mainShip.transform.localPosition = Ship.MainShip.Position.ToV3();
 
+                
+
                 MainShipIcon = mainShip.transform;
             }
 
@@ -67,14 +69,6 @@ namespace Computers
                 obj.transform.SetParent( SpacePlane.transform, false );
                 obj.transform.localPosition = solarSystem.Position.ToV3();
                 obj.GetComponent<NavComputerStarIcon>().SolarSystem = solarSystem;
-            }
-
-            private void OnSelectedSolarSystemChanged( NavComputerStarIcon icon )
-            {
-                SelectedSolarSystem = icon.SolarSystem;
-
-                SelectedSolarSystemPosition.text = "X: " + SelectedSolarSystem.Position.x.ToString() + "\n" +
-                                                   "Y: " + SelectedSolarSystem.Position.y.ToString();
             }
         }
     }

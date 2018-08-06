@@ -11,6 +11,8 @@ namespace Ship
         public static Vector3 PositionFloat;
         public static Vector3 MoveTo;
 
+        public static float Fuel = 1500;
+
         private void Awake()
         {
             PositionFloat = MoveTo = Position.ToV3();
@@ -18,6 +20,10 @@ namespace Ship
 
         public static void MoveToPos( Vector2Int moveTo )
         {
+            float fuelCost = Vector2Int.Distance( Position, moveTo );
+
+            Fuel -= fuelCost;
+
             MoveTo = new Vector3( moveTo.x, moveTo.y, 0f );
         }
 
