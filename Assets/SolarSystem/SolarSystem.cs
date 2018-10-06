@@ -4,8 +4,18 @@ using UnityEngine;
 
 public class SolarSystem {
 
+    public Vector2Int Position { get; set; }
+
+    public string Name { get; set; }
+
+    public List<Planet> Planets { get; set; }
+
+    public Sun Sun { get; set; }
+
     public SolarSystem()
     {
+        Position = new Vector2Int(Random.Range(0, 500), Random.Range(0, 500));
+
         Name = Random.Range(1000, 9999).ToString();
 
         Planets = new List<Planet>();
@@ -14,12 +24,6 @@ public class SolarSystem {
 
         GeneratePlanets();
     }
-
-    public string Name { get; set; }
-
-    public List<Planet> Planets { get; set; }
-
-    public Sun Sun { get; set; }
 
     private void GeneratePlanets()
     {

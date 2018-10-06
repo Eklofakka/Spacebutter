@@ -18,4 +18,9 @@ public static class ColorExtensions {
 
         return newClr;
     }
+
+    public static bool IsEqualTo(this Color32 aCol, Color32 aRef)
+    {
+        return aCol.r == aRef.r && aCol.g == aRef.g && aCol.b == aRef.b && aCol.a == aRef.a;
+    }
 }
