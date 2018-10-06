@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class ToggleButtonGroup : MonoBehaviour
@@ -22,6 +23,8 @@ public class ToggleButtonGroup : MonoBehaviour
 
     public void AddButton( ToggleButton button )
     {
+        if (Buttons.Contains(button)) return;
+
         Buttons.Add( button );
     }
 
@@ -40,6 +43,11 @@ public class ToggleButtonGroup : MonoBehaviour
 
             _button.SetToggle(false, false);
         }
+    }
+
+    public List<ToggleButton> ToggledButtons()
+    {
+        return Buttons.Where(b => b.Toggled).ToList();
     }
 
     private void OnMultipleSetToFalse()

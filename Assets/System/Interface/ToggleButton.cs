@@ -74,6 +74,8 @@ public class ToggleButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     public void Init( ToggleButtonGroup group )
     {
         Group = group;
+
+        Group.AddButton(this);
     }
 
     public void SetToggle( bool value, bool report = true )

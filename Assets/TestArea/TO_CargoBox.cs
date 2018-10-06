@@ -6,7 +6,7 @@ public class TO_CargoBox : TileObject
 {
     public static List<TO_CargoBox> CargoBoxes { get; set; } = new List<TO_CargoBox>();
 
-    public List<string> Content { get; private set; }
+    public List<CargoBoxContent> Content { get; private set; }
 
     public int Weight = 10;
 
@@ -24,21 +24,16 @@ public class TO_CargoBox : TileObject
     {
         CargoBoxes.Add( this );
 
-        Content = new List<string>();
-        Content.Add( "Shorts" );
-        Content.Add( "Guns" );
-        Content.Add( "Pineapples" );
-        Content.Add( "Half-Slave" );
-        Content.Add( "Socks" );
-        Content.Add( "Anti-Therm Clear" );
-        Content.Add( "XT-24" );
-        Content.Add( "XT-24" );
-        Content.Add( "XT-25" );
-        Content.Sort();
-    }
-
-    public void Interacttt()
-    {
-        throw new System.NotImplementedException();
+        Content = new List<CargoBoxContent>();
+        Content.Add( new CargoBoxContent("Shorts") );
+        Content.Add( new CargoBoxContent("Guns") );
+        Content.Add( new CargoBoxContent("Pineapples") );
+        Content.Add( new CargoBoxContent("Half-Slave") );
+        Content.Add( new CargoBoxContent("Socks") );
+        Content.Add( new CargoBoxContent("Anti-Therm Clear") );
+        Content.Add( new CargoBoxContent("XT-24") );
+        Content.Add( new CargoBoxContent("XT-24") );
+        Content.Add( new CargoBoxContent("XT-25") );
+        //Content.Sort();
     }
 }

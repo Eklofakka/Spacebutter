@@ -1,22 +1,26 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
 public class CI_Logistics : MonoBehaviour
 {
-    [Header("Contents")]
-    [SerializeField] private Transform TOPCargoBoxesContent;
-    [SerializeField] private Transform BOTTOMCargoBoxesContent;
-
-    [SerializeField] private Transform TOPCargoBoxContentContent;
-    [SerializeField] private Transform BOTTOMCargoBoxContentContent;
+    [Header("ListViews")]
+    [SerializeField] private ScrollRect CargoList_TOP;
+    [SerializeField] private LogisticsCargoContentView CargoContent_TOP;
+    [Space(10)]
+    [SerializeField] private ScrollRect CargoList_BOTTOM;
+    [SerializeField] private LogisticsCargoContentView CargoContent_BOTTOM;
 
 
     [Header("ListElements")]
-    [SerializeField] private GameObject CargoBoxesListElement;
-    [SerializeField] private GameObject CargoBoxContentListElement;
+    [SerializeField] private ToggleButton CargoBoxesListElement;
+
+    [Header("Toolbar")]
+    [SerializeField] private Button MoveDown;
+    [SerializeField] private Button MoveUp;
 
     [Header("Fields")]
     [SerializeField] private TextMeshProUGUI TotalBoxes;
@@ -26,6 +30,25 @@ public class CI_Logistics : MonoBehaviour
     {
         TotalBoxes.text = TO_CargoBox.CargoBoxes.Count.ToString();
         TotalWeight.text = CalcTotalWeight().ToString();
+
+        MoveDown.onClick.AddListener(() =>
+        {
+            //var buttons = CargoContent_TOP.GetComponent<ToggleButtonGroup>().ToggledButtons();
+
+            List<CargoBoxContent> l = new List<CargoBoxContent>();
+
+            l.Add( CargoContent_TOP.Box.Content[0] );
+            CargoContent_TOP.Box.Content.RemoveAt(0);
+
+            if (CargoBoxTransaction.Move( CargoContent_TOP.Box, CargoContent_BOTTOM.Box, l ) == CargoBoxTransaction.Result.Success)
+            {
+                CargoContent_TOP.LoadBox(CargoContent_TOP.Box);
+                CargoContent_BOTTOM.LoadBox(CargoContent_BOTTOM.Box);
+            }
+
+            //List<string> contentToBeMoved = CargoContent_TOP.Box.Content.
+
+        });
 
         AddBoxesToList();
     }
@@ -44,34 +67,21 @@ public class CI_Logistics : MonoBehaviour
 
     private void AddBoxesToList()
     {
+        CargoList_TOP.ClearContent();
+
         foreach (var box in TO_CargoBox.CargoBoxes)
         {
             // TOP LIST
-            GameObject obj = Instantiate(CargoBoxesListElement);
-            obj.transform.SetParent( TOPCargoBoxesContent, false );
-
-            obj.GetComponent<ToggleButton>().OnClick.AddListener( ( ) => { AddBoxContentToList(box, TOPCargoBoxContentContent); } );
+            ToggleButton obj = Instantiate(CargoBoxesListElement);
+            obj.transform.SetParent(CargoList_TOP.content, false );
+            obj.Init( CargoList_TOP.GetComponent<ToggleButtonGroup>() );
+            obj.GetComponent<ToggleButton>().OnClick.AddListener( ( ) => { CargoContent_TOP.LoadBox(box); } );
 
             // BOTTOM LIST
             obj = Instantiate(CargoBoxesListElement);
-            obj.transform.SetParent(BOTTOMCargoBoxesContent, false);
-
-            obj.GetComponent<ToggleButton>().OnClick.AddListener(() => { AddBoxContentToList(box, BOTTOMCargoBoxContentContent); });
-        }
-    }
-
-    private void AddBoxContentToList( TO_CargoBox box, Transform parent )
-    {
-        foreach (Transform child in parent.transform)
-        {
-            Destroy( child.gameObject );
-        }
-
-        foreach (string content in box.Content)
-        {
-            GameObject obj = Instantiate(CargoBoxesListElement);
-            obj.transform.SetParent(parent, false);
-            obj.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = content;
+            obj.transform.SetParent(CargoList_BOTTOM.content, false);
+            obj.Init(CargoList_BOTTOM.GetComponent<ToggleButtonGroup>());
+            obj.GetComponent<ToggleButton>().OnClick.AddListener(() => { CargoContent_BOTTOM.LoadBox(box); });
         }
     }
 }
