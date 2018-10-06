@@ -7,8 +7,12 @@ using TMPro;
 public class CI_Logistics : MonoBehaviour
 {
     [Header("Contents")]
-    [SerializeField] private Transform CargoBoxesContent;
-    [SerializeField] private Transform CargoBoxContentContent;
+    [SerializeField] private Transform TOPCargoBoxesContent;
+    [SerializeField] private Transform BOTTOMCargoBoxesContent;
+
+    [SerializeField] private Transform TOPCargoBoxContentContent;
+    [SerializeField] private Transform BOTTOMCargoBoxContentContent;
+
 
     [Header("ListElements")]
     [SerializeField] private GameObject CargoBoxesListElement;
@@ -42,24 +46,31 @@ public class CI_Logistics : MonoBehaviour
     {
         foreach (var box in TO_CargoBox.CargoBoxes)
         {
-            GameObject obj = Instantiate( CargoBoxContentListElement );
-            obj.transform.SetParent( CargoBoxesContent, false );
+            // TOP LIST
+            GameObject obj = Instantiate(CargoBoxesListElement);
+            obj.transform.SetParent( TOPCargoBoxesContent, false );
 
-            obj.GetComponent<Button>().onClick.AddListener( ( ) => { AddBoxContentToList(box); } );
+            obj.GetComponent<ToggleButton>().OnClick.AddListener( ( ) => { AddBoxContentToList(box, TOPCargoBoxContentContent); } );
+
+            // BOTTOM LIST
+            obj = Instantiate(CargoBoxesListElement);
+            obj.transform.SetParent(BOTTOMCargoBoxesContent, false);
+
+            obj.GetComponent<ToggleButton>().OnClick.AddListener(() => { AddBoxContentToList(box, BOTTOMCargoBoxContentContent); });
         }
     }
 
-    private void AddBoxContentToList( TO_CargoBox box )
+    private void AddBoxContentToList( TO_CargoBox box, Transform parent )
     {
-        foreach (Transform child in CargoBoxContentContent.transform)
+        foreach (Transform child in parent.transform)
         {
             Destroy( child.gameObject );
         }
 
         foreach (string content in box.Content)
         {
-            GameObject obj = Instantiate(CargoBoxContentListElement);
-            obj.transform.SetParent(CargoBoxContentContent, false);
+            GameObject obj = Instantiate(CargoBoxesListElement);
+            obj.transform.SetParent(parent, false);
             obj.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = content;
         }
     }
