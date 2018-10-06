@@ -21,10 +21,12 @@ public class TO_Screen : TileObject
 
     private void OpenConsole()
     {
-        GameObject obj = Instantiate( Resources.Load<GameObject>( "Interfaces/I_Screen" ) );
+        GameObject obj = Instantiate( Resources.Load<GameObject>( "Interfaces/Logistics/CI_Logistics" ) );
 
         obj.transform.SetParent( MainCanvas.Instance, false );
 
         Open = true;
+
+        Dude.Main.CanMove = false;
     }
 }
