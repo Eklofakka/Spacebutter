@@ -13,17 +13,10 @@ public class TileObject: MonoBehaviour, IObject
 
     protected ObjectContainer ObjectContainer { get; set; }
 
-    public virtual void Interact()
-    {
-
-    }
-
     public void Init( Vector2Int position )
     {
         Position = position;
 
         transform.position = new Vector3(Position.x, Position.y, 1f);
-
-
     }
 }

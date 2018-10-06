@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class TO_Door : TileObject
+public class TO_Door : TileObject, IInteract
 {
     private SpriteRenderer SR { get; set; }
     private BoxCollider2D BC { get; set; }
@@ -17,12 +17,10 @@ public class TO_Door : TileObject
         Interact();
     }
 
-    public override void Interact()
+    public void Interact()
     {
         if (Vector2.Distance(Dude.Main.transform.position, transform.position) > 1.5f)
             return;
-
-        base.Interact();
 
         GameObject child = transform.GetChild(0).gameObject;
 

@@ -25,6 +25,11 @@ public class ToggleButtonGroup : MonoBehaviour
         Buttons.Add( button );
     }
 
+    public void RemoveButton( ToggleButton button )
+    {
+        Buttons.Remove( button );
+    }
+
     public void OnToggledChanged( ToggleButton button )
     {
         if (Multiple) return;
@@ -35,12 +40,6 @@ public class ToggleButtonGroup : MonoBehaviour
 
             _button.SetToggle(false, false);
         }
-    }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.O))
-            Multiple = !Multiple;
     }
 
     private void OnMultipleSetToFalse()

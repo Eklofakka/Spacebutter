@@ -36,4 +36,9 @@ public class TO_CargoBox : TileObject
         Content.Add( "XT-25" );
         Content.Sort();
     }
+
+    public void Interacttt()
+    {
+        throw new System.NotImplementedException();
+    }
 }

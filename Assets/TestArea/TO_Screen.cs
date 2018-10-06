@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TO_Screen : TileObject
+public class TO_Screen : TileObject, IInteract
 {
     private bool Open = false;
 
@@ -11,9 +11,9 @@ public class TO_Screen : TileObject
         Interact();
     }
 
-    public override void Interact()
+    public void Interact()
     {
-        base.Interact();
+        if (Vector2.Distance(transform.position, Dude.Main.transform.position) >= 1f) return;
 
         if (Open == false)
             OpenConsole();

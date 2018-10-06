@@ -860,7 +860,7 @@ MonoBehaviour:
   m_AssetsPPU: 32
   m_RefResolutionX: 960
   m_RefResolutionY: 540
-  m_UpscaleRT: 0
+  m_UpscaleRT: 1
   m_PixelSnapping: 0
   m_CropFrameX: 0
   m_CropFrameY: 0
@@ -1028,6 +1028,14 @@ PrefabInstance:
     - target: {fileID: 5037507454802143723, guid: 05927ddcca99f24439cfd68089a4a1e8, type: 3}
       propertyPath: m_Name
       value: TO_CargoBox
+      objectReference: {fileID: 0}
+    - target: {fileID: 5037507454802143723, guid: 05927ddcca99f24439cfd68089a4a1e8, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
+    - target: {fileID: 5037507454802143723, guid: 05927ddcca99f24439cfd68089a4a1e8, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 05927ddcca99f24439cfd68089a4a1e8, type: 3}

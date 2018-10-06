@@ -65,12 +65,10 @@ public class ToggleButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     {
         Image = GetComponent<Image>();
 
-        if (Group == null) return;
-        Group.AddButton(this);
+        if (Group != null)
+            Group.AddButton(this);
 
         Image.color = C_Normal;
-
-        print(Image.color);
     }
 
     public void Init( ToggleButtonGroup group )
@@ -93,7 +91,7 @@ public class ToggleButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
     private void Update()
     {
-        //Image.color = Image.color.Lerp( TargetColor, TransitionSpeed );
+        Image.color = Image.color.Lerp( TargetColor, TransitionSpeed );
     }
 
     public void OnPointerEnter(PointerEventData eventData)
@@ -126,5 +124,13 @@ public class ToggleButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         {
             SetToggle(true);
         }
+    }
+
+    private void OnDestroy()
+    {
+        if (Group != null)
+            Group.RemoveButton(this);
+
+        OnClick.RemoveAllListeners();
     }
 }
