@@ -56,8 +56,6 @@ public class LayoutContainer : MonoBehaviour
 
     private void CreateTileObjectContainers( )
     {
-        print( Layout.TileObjectsID.Count );
-
         foreach (var tileObject in Layout.TileObjectsID)
         {
             CreateTileObjectContainer( tileObject );
@@ -66,8 +64,6 @@ public class LayoutContainer : MonoBehaviour
 
     private void CreateTileObjectContainer( Tuple<string, Vector2Int> tileObject)
     {
-        print( tileObject );
-
         GameObject obj = Instantiate(Resources.Load<GameObject>( tileObject.First ) );
 
         obj.transform.SetParent( transform, false );

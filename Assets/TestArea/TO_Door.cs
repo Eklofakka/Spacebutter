@@ -33,8 +33,6 @@ public class TO_Door : TileObject
 
     private void SetDoorDirection()
     {
-        print( Position.x - 1 );
-        print( Position.y );
         TileContainer y =  LayoutContainer.Inst.TileContainers[Position.x -1, Position.y ];
         
         if( y.Tile.ID == 0 )
