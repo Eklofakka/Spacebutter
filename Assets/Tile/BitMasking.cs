@@ -69,16 +69,16 @@ public static class BitMasking
         SouthEast = 1 << 7,
     }
 
-    public static int GetTilemapIndex( int x, int y, int tileID, int[,] tiles )
+    public static int GetTilemapIndex( int x, int y, Tile.Tilemaps tilemap, Tile[,] tiles )
     {
-        east = CheckNeighbour(x + 1, y, tileID, tiles);
-        west = CheckNeighbour(x - 1, y, tileID, tiles);
-        south = CheckNeighbour(x, y - 1, tileID, tiles);
-        north = CheckNeighbour(x, y + 1, tileID, tiles);
-        northEast = CheckNeighbour(x + 1, y + 1, tileID, tiles);
-        northWest = CheckNeighbour(x - 1, y + 1, tileID, tiles);
-        southEast = CheckNeighbour(x + 1, y - 1, tileID, tiles);
-        southWest = CheckNeighbour(x - 1, y - 1, tileID, tiles);
+        east = CheckNeighbour(x + 1, y, tilemap, tiles);
+        west = CheckNeighbour(x - 1, y, tilemap, tiles);
+        south = CheckNeighbour(x, y - 1, tilemap, tiles);
+        north = CheckNeighbour(x, y + 1, tilemap, tiles);
+        northEast = CheckNeighbour(x + 1, y + 1, tilemap, tiles);
+        northWest = CheckNeighbour(x - 1, y + 1, tilemap, tiles);
+        southEast = CheckNeighbour(x + 1, y - 1, tilemap, tiles);
+        southWest = CheckNeighbour(x - 1, y - 1, tilemap, tiles);
 
         return indexes[CalculateTileFlags(east, west, north, south, northWest, northEast, southWest, southEast)];
     }
@@ -93,11 +93,13 @@ public static class BitMasking
         return (int)directions;
     }
 
-    private static bool CheckNeighbour( int x, int y, int tileType, int[,] tiles )
+    private static bool CheckNeighbour( int x, int y, Tile.Tilemaps tilemap, Tile[,] tiles )
     {
         if (x < 0 || x >= tiles.GetLength(0)) return false;
         if (y < 0 || y >= tiles.GetLength(1)) return false;
-        
-        return tiles[x, y] == tileType;
+
+        if (tiles[x, y] == null) return false;
+
+        return tiles[x, y].Tilemap == tilemap;
     }
 }

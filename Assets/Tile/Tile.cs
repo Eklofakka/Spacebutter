@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Tile
 {
-    public enum Tilemaps { Floor_Metal_Cargo }
+    public enum Tilemaps { Floor_Metal_Cargo, Floor_Metal, Wall_Metal }
 
     public Tilemaps Tilemap { get; private set; }
 

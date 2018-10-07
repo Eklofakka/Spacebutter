@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class LayoutContainer : MonoBehaviour
 {
-    public Sprite[] Sprites;
     public TileContainer P_TileContainer;
 
     public Layout Layout { get; set; }
@@ -40,7 +39,7 @@ public class LayoutContainer : MonoBehaviour
             }
         }
 
-        CreateTileObjectContainers();
+        //CreateTileObjectContainers();
     }
 
     private void CreateTileContainer(int y, int x)
@@ -49,7 +48,7 @@ public class LayoutContainer : MonoBehaviour
 
         tileContainer.transform.SetParent(transform, false);
 
-        tileContainer.Init(Layout.Tiles[x, y]);
+        tileContainer.Init(Layout.Tiles[x, y], Layout.Tiles);
 
         TileContainers[x, y] = tileContainer;
     }

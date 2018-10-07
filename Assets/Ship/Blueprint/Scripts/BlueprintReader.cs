@@ -52,11 +52,11 @@ public static class BlueprintReader
         }
         else if (pixel.IsEqualTo(Wall))
         {
-            return null;
+            id = Tile.Tilemaps.Wall_Metal;
         }
         else if (pixel.IsEqualTo(Floor))
         {
-            id = Tile.Tilemaps.Floor_Metal_Cargo;
+            id = Tile.Tilemaps.Floor_Metal;
         }
         else if (pixel.IsEqualTo(FloorZone))
         {
