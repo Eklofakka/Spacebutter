@@ -21,13 +21,13 @@ public class TileContainer : MonoBehaviour
 
     public void Init( Tile tile )
     {
-        Tile = tile;
+        //Tile = tile;
 
-        transform.position = new Vector3( Tile.Position.x, Tile.Position.y, 1);
+        //transform.position = new Vector3( Tile.Position.x, Tile.Position.y, 1);
 
-        SpriteRenderer.sprite = Resources.Load<Sprite>( IDToSprites( Tile.ID ) );
+        //SpriteRenderer.sprite = Resources.Load<Sprite>( IDToSprites( Tile.ID ) );
 
-        BoxCollider.enabled = Tile.ID == 0;
+        //BoxCollider.enabled = Tile.ID == 0;
     }
 
     private string IDToSprites( int id )

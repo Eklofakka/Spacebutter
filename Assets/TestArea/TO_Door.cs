@@ -42,10 +42,10 @@ public class TO_Door : TileObject, IInteract
     {
         TileContainer y =  LayoutContainer.Inst.TileContainers[Position.x -1, Position.y ];
         
-        if( y.Tile.ID == 0 )
-        {
-            transform.Rotate(new Vector3(0, 0, 1), 90);
-        }
+        //if( y.Tile.ID == 0 )
+        //{
+        //    transform.Rotate(new Vector3(0, 0, 1), 90);
+        //}
     }
 
     private void Open()

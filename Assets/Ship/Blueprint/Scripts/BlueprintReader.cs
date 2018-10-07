@@ -44,7 +44,7 @@ public static class BlueprintReader
 
     private static Tile PixelToTile( int x, int y, Color32 pixel )
     {
-        int id = 999;
+        Tile.Tilemaps id = Tile.Tilemaps.Floor_Metal_Cargo;
 
         if ( pixel.IsEqualTo( Space ) )
         {
@@ -52,15 +52,15 @@ public static class BlueprintReader
         }
         else if (pixel.IsEqualTo(Wall))
         {
-            id = 0;
+            return null;
         }
         else if (pixel.IsEqualTo(Floor))
         {
-            id = 1;
+            id = Tile.Tilemaps.Floor_Metal_Cargo;
         }
         else if (pixel.IsEqualTo(FloorZone))
         {
-            id = 2;
+            id = Tile.Tilemaps.Floor_Metal_Cargo;
         }
 
         return new Tile(id, new Vector2Int(x, y));
