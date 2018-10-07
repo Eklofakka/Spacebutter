@@ -33,8 +33,6 @@ public class CI_Logistics : MonoBehaviour
 
         MoveDown.onClick.AddListener(() =>
         {
-            //var buttons = CargoContent_TOP.GetComponent<ToggleButtonGroup>().ToggledButtons();
-
             List<CargoBoxContent> l = new List<CargoBoxContent>();
 
             l.Add( CargoContent_TOP.Box.Content[0] );
@@ -45,9 +43,20 @@ public class CI_Logistics : MonoBehaviour
                 CargoContent_TOP.LoadBox(CargoContent_TOP.Box);
                 CargoContent_BOTTOM.LoadBox(CargoContent_BOTTOM.Box);
             }
+        });
 
-            //List<string> contentToBeMoved = CargoContent_TOP.Box.Content.
+        MoveUp.onClick.AddListener(() =>
+        {
+            List<CargoBoxContent> l = new List<CargoBoxContent>();
 
+            l.Add(CargoContent_BOTTOM.Box.Content[0]);
+            CargoContent_BOTTOM.Box.Content.RemoveAt(0);
+
+            if (CargoBoxTransaction.Move(CargoContent_BOTTOM.Box, CargoContent_TOP.Box, l) == CargoBoxTransaction.Result.Success)
+            {
+                CargoContent_BOTTOM.LoadBox(CargoContent_BOTTOM.Box);
+                CargoContent_TOP.LoadBox(CargoContent_TOP.Box);
+            }
         });
 
         AddBoxesToList();

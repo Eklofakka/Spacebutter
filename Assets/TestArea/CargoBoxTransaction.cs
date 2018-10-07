@@ -11,12 +11,12 @@ public static class CargoBoxTransaction
         if (CanFit(to, content) == false)
         {
             from.Content.AddRange(content);
-            //from.Content.Sort();
+            from.Content.Sort( (x, y) => x.Name.CompareTo(y.Name) );
             return Result.DoesNotFit;
         }
 
         to.Content.AddRange(content);
-        //to.Content.Sort();
+        to.Content.Sort((x, y) => x.Name.CompareTo(y.Name));
 
         return Result.Success;
     }

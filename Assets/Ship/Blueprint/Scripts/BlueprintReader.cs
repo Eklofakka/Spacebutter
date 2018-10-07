@@ -5,6 +5,7 @@ using UnityEngine;
 public static class BlueprintReader
 {
     private static Color32 Space = new Color32(0, 0, 0, 255);
+    private static Color32 Space2 = new Color32(0, 0, 0, 0);
     private static Color32 Wall = new Color32(255, 255, 255, 255);
     private static Color32 Floor = new Color32(170, 170, 170, 255);
     private static Color32 FloorZone = new Color32(239, 195, 8, 255);
@@ -31,7 +32,7 @@ public static class BlueprintReader
                 
                 tiles[x, y] = PixelToTile(x, y, pixel);
 
-                if ( pixel2.IsEqualTo( Space ) == false )
+                if ( pixel2.IsEqualTo( Space2 ) == false )
                     tileObjects.Add( PixelToTileObject( x, y, pixel2 ));
             }
         }

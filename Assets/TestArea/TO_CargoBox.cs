@@ -34,6 +34,6 @@ public class TO_CargoBox : TileObject
         Content.Add( new CargoBoxContent("XT-24") );
         Content.Add( new CargoBoxContent("XT-24") );
         Content.Add( new CargoBoxContent("XT-25") );
-        //Content.Sort();
+        Content.Sort((x, y) => x.Name.CompareTo(y.Name));
     }
 }
