@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TileObject: MonoBehaviour, IObject
+public class TileObject: MonoBehaviour
 {
     public int TileID { get; private set; }
 
