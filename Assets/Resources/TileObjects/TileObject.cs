@@ -11,8 +11,6 @@ public class TileObject: MonoBehaviour
     public bool xFlipped { get; protected set; } = false;
     public bool yFlipped { get; protected set; } = false;
 
-    protected ObjectContainer ObjectContainer { get; set; }
-
     public void Init( Vector2Int position )
     {
         Position = position;
