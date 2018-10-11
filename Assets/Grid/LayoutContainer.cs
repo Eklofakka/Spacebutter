@@ -39,7 +39,7 @@ public class LayoutContainer : MonoBehaviour
             }
         }
 
-        //CreateTileObjectContainers();
+        CreateTileObjectContainers();
     }
 
     private void CreateTileContainer(int y, int x)
