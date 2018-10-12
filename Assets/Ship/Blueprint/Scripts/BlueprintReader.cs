@@ -70,11 +70,11 @@ public static class BlueprintReader
     {
         if ( pixel.IsEqualTo( Door ) )
         {
-            return new Tuple<string, Vector2Int>( "ObjectPrefabs/TO_Door", new Vector2Int(x, y) );
+            return new Tuple<string, Vector2Int>( "TileObjects/Door/TO_Door", new Vector2Int(x, y) );
         }
         else if ( pixel.IsEqualTo( Screen ) )
         {
-            return new Tuple<string, Vector2Int>("ObjectPrefabs/TO_Screen", new Vector2Int(x, y));
+            return new Tuple<string, Vector2Int>("TileObjects/Screen/TO_Screen", new Vector2Int(x, y));
         }
 
         return null;
