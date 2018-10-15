@@ -15,5 +15,7 @@ public class ShipContainer : MonoBehaviour
         Ship = new Ship( layout );
 
         GetComponent<LayoutContainer>().GenerateTiles(Ship.Layout);
+
+
     }
 }
