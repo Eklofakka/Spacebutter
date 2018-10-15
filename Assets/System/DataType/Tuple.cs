@@ -8,9 +8,4 @@
         First = first;
         Second = second;
     }
-
-    public override string ToString()
-    {
-        return First.ToString() + " : " + Second.ToString();
-    }
 }

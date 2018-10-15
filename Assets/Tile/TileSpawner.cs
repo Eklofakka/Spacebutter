@@ -4,11 +4,25 @@ using UnityEngine;
 
 public class TileSpawner : MonoBehaviour
 {
-    public void SpawnTiles( Texture2D tileMap )
-    {
-        chescked
-        {
+    [SerializeField] private TileContainer TilePrefab;
 
+    private TileContainer SpawnedTileObj;
+    private Tile SpawnedTile;
+
+    public void SpawnTiles( Layout layout )
+    {
+        for (int y = 0; y < layout.Height; y++)
+        {
+            for (int x = 0; x < layout.Width; x++)
+            {
+                SpawnedTile = layout.Tiles[x, y];
+
+                if (SpawnedTile == null) continue;
+
+                SpawnedTileObj = Instantiate( TilePrefab );
+                SpawnedTileObj.transform.SetParent( transform, false );
+                SpawnedTileObj.Init(layout.Tiles[x, y], layout.Tiles);
+            }
         }
     }
 }

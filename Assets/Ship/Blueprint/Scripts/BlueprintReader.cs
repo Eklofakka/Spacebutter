@@ -21,7 +21,8 @@ public static class BlueprintReader
         int height = blueprint.height;
 
         Tile[,] tiles = new Tile[width, height];
-        List<Tuple<string, Vector2Int>> tileObjects = new List<Tuple<string, Vector2Int>>();
+        List<Truple<string, Vector2Int, TileObject>> tileObjects = 
+            new List<Truple<string, Vector2Int, TileObject>>();
 
         for (int y = 0; y < height; y++)
         {
@@ -66,15 +67,15 @@ public static class BlueprintReader
         return new Tile(id, new Vector2Int(x, y));
     }
 
-    private static Tuple<string, Vector2Int> PixelToTileObject( int x, int y, Color32 pixel )
+    private static Truple<string, Vector2Int, TileObject> PixelToTileObject( int x, int y, Color32 pixel )
     {
         if ( pixel.IsEqualTo( Door ) )
         {
-            return new Tuple<string, Vector2Int>( "TileObjects/Door/TO_Door", new Vector2Int(x, y) );
+            return new Truple<string, Vector2Int, TileObject>( "TileObjects/Door/TO_Door", new Vector2Int(x, y), null );
         }
         else if ( pixel.IsEqualTo( Screen ) )
         {
-            return new Tuple<string, Vector2Int>("TileObjects/Screen/TO_Screen", new Vector2Int(x, y));
+            return new Truple<string, Vector2Int, TileObject>("TileObjects/Screen/TO_Screen", new Vector2Int(x, y), null);
         }
 
         return null;

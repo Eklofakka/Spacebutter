@@ -40,12 +40,18 @@ public class TO_Door : TileObject, IInteract
 
     private void SetDoorDirection()
     {
-        TileContainer y =  LayoutContainer.Inst.TileContainers[Position.x -1, Position.y ];
-        
-        //if( y.Tile.ID == 0 )
-        //{
-        //    transform.Rotate(new Vector3(0, 0, 1), 90);
-        //}
+        Tile f = LevelLoaderShip.Instance.ActiveShip.Layout.Tiles[Position.x - 1, Position.y];
+
+        List<TileObject> nei = LevelLoaderShip.Instance.ActiveShip.Layout.GetObjectsAt
+            (Position.x - 1, Position.y);
+
+        nei.AddRange(LevelLoaderShip.Instance.ActiveShip.Layout.GetObjectsAt
+            (Position.x + 1, Position.y));
+
+        if (f.Tilemap == Tile.Tilemaps.Wall_Metal || nei.Count != 0)
+        {
+            transform.Rotate(new Vector3(0, 0, 1), 90);
+        }
     }
 
     private void Open()
