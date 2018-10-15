@@ -56,7 +56,9 @@ public class Dude : MonoBehaviour
             List<Tuple<IInteract, Vector2>> sorted = cs.OrderBy(o => Vector2.Distance(o.Second, transform.position)).ToList();
 
             sorted[0].First.Interact();
+
         }
+            transform.position = new Vector3( transform.position.x, transform.position.y, transform.position.y / 100f );
     }
 
     void FixedUpdate()

@@ -22,6 +22,8 @@ public class TO_CargoBox : TileObject
 
     private void Start()
     {
+        IsStatic = false;
+
         CargoBoxes.Add( this );
 
         Content = new List<CargoBoxContent>();

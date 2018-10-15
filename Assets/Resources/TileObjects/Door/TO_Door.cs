@@ -35,6 +35,8 @@ public class TO_Door : TileObject, IInteract
         SR = GetComponent<SpriteRenderer>();
         BC = GetComponent<BoxCollider2D>();
 
+        IsStatic = true;
+
         SetDoorDirection();
     }
 
