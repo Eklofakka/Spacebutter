@@ -8,19 +8,28 @@ public class LevelLoaderShip : MonoBehaviour
 
     public static LevelLoaderShip Instance;
 
+    private TileSpawner TileSpawner;
+
+    private TileObjectSpawner TileObjectSpawner;
+
     private void Awake()
     {
+        if (Instance != null) Debug.LogError( "More then one LevelLoaderShip instance." );
+
         Instance = this;
     }
 
     private void Start()
     {
+        TileSpawner = GetComponent<TileSpawner>();
+        TileObjectSpawner = GetComponent<TileObjectSpawner>();
+
         ActiveShip = Resources.Load<SOBlueprint>("Rookie");
 
         ActiveShip.Layout = BlueprintReader.Read( ActiveShip.Tiles, ActiveShip.TileObjects );
 
-        GetComponent<TileSpawner>().SpawnTiles( ActiveShip.Layout );
+        TileSpawner.SpawnTiles( ActiveShip.Layout );
 
-        GetComponent<TileObjectSpawner>().SpawnObjects(ActiveShip.Layout);
+        TileObjectSpawner.SpawnObjects(ActiveShip.Layout);
     }
 }
