@@ -15,7 +15,7 @@ public class CameraFollow : MonoBehaviour
     private void Start()
     {
         QualitySettings.vSyncCount = 0;
-        Application.targetFrameRate = 120;
+        //Application.targetFrameRate = 120;
 
         offset = follow.transform.position - transform.position;
     }
