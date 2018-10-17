@@ -304,7 +304,7 @@ Sprite:
         format: 0
         dimension: 0
       m_DataSize: 80
-      _typelessdata: 000008bf0000083f000000000000083f0000083f00000000000008bf000008bf000000000000083f000008bf000000000000000000000000000000000000000000000000000000000000000000000000
+      _typelessdata: 000008bf0000083f000000000000083f0000083f00000000000008bf000008bf000000000000083f000008bf00000000000000000000803f0000803f0000803f00000000000000000000803f00000000
     m_Bindpose: []
     textureRect:
       serializedVersion: 2
@@ -1381,9 +1381,9 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2136169892}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6406e269d7ddf65488cc8783a4bbeab9, type: 3}
+  m_Script: {fileID: 11500000, guid: 87bff816703745a42b10467ed36d8fac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10

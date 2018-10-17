@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TruckControlls : MonoBehaviour
+public class CameraFollow : MonoBehaviour
 {
     private Vector3 targetPos;
 

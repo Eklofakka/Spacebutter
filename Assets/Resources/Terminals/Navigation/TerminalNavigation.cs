@@ -14,5 +14,8 @@ public class TerminalNavigation : MonoBehaviour
         Galaxy.text = "Galaxy: " + ShipHandler.Instance.ActiveShip.Position.Galaxy;
 
         Solar.text = "Solar: " + ShipHandler.Instance.ActiveShip.Position.Solar;
+
+        if (Input.GetKeyDown(KeyCode.C))
+            Destroy(gameObject);
     }
 }

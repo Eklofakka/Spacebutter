@@ -26,8 +26,8 @@ public class TO_Screen : TileObject, IInteract
 
         obj.transform.SetParent( MainCanvas.Instance, false );
 
-        Open = true;
+        //Open = true;
 
-        Dude.Main.CanMove = false;
+        //Dude.Main.CanMove = false;
     }
 }
