@@ -23,6 +23,7 @@ public class TruckControlls : MonoBehaviour
     // Update is called once per frame
     void LateUpdate()
     {
+
         //targetPos = new Vector3(follow.transform.position.x, transform.position.y, 0f);
 
         Vector3 velocity = follow.transform.position - transform.position * speed;

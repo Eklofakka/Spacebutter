@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class LevelLoaderShip : MonoBehaviour
 {
-    public SOBlueprint ActiveShip { get; private set; }
+    public SOBlueprint ShipToLoad { get; private set; }
 
     public static LevelLoaderShip Instance;
 
@@ -19,17 +19,19 @@ public class LevelLoaderShip : MonoBehaviour
         Instance = this;
     }
 
-    private void Start()
+    public Ship LoadShip( string ship )
     {
         TileSpawner = GetComponent<TileSpawner>();
         TileObjectSpawner = GetComponent<TileObjectSpawner>();
 
-        ActiveShip = Resources.Load<SOBlueprint>("Rookie");
+        ShipToLoad = Resources.Load<SOBlueprint>( ship );
 
-        ActiveShip.Layout = BlueprintReader.Read( ActiveShip.Tiles, ActiveShip.TileObjects );
+        ShipToLoad.Layout = BlueprintReader.Read( ShipToLoad.Tiles, ShipToLoad.TileObjects );
 
-        TileSpawner.SpawnTiles( ActiveShip.Layout );
+        TileSpawner.SpawnTiles( ShipToLoad.Layout );
 
-        TileObjectSpawner.SpawnObjects(ActiveShip.Layout);
+        TileObjectSpawner.SpawnObjects(ShipToLoad.Layout);
+
+        return new Ship( ShipToLoad.Layout );
     }
 }

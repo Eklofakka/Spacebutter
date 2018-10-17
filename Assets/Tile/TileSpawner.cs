@@ -6,6 +6,8 @@ public class TileSpawner : MonoBehaviour
 {
     [SerializeField] private TileContainer TilePrefab;
 
+    [SerializeField] private Transform TileContainer;
+
     private TileContainer SpawnedTileObj;
     private Tile SpawnedTile;
 
@@ -20,7 +22,7 @@ public class TileSpawner : MonoBehaviour
                 if (SpawnedTile == null) continue;
 
                 SpawnedTileObj = Instantiate( TilePrefab );
-                SpawnedTileObj.transform.SetParent( transform, false );
+                SpawnedTileObj.transform.SetParent( TileContainer, false );
                 SpawnedTileObj.Init(layout.Tiles[x, y], layout.Tiles);
             }
         }

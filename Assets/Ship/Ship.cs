@@ -6,23 +6,20 @@ public class Ship
 {
     public Layout Layout { get; private set; }
 
-    public PowerModule PowerModule { get; set; }
-
-    public Ship()
-    {
-
-    }
+    public ShipPosition Position;
 
     public Ship (Layout layout)
     {
         Layout = layout;
 
-        PowerModule = new PowerModule();
+        Position = new ShipPosition();
     }
 
     public virtual void Update(  )
     {
-        // SHULD ONLY BE CALLED ON SERVER?
-        // AND THEN PASS THE CHANGES TO CLIENTS?
+        // SHULD ONLY BE CALLED ON THE SERVER
+
+        Position.TravelGalaxy();
     }
 }
+
