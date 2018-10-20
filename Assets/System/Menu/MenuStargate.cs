@@ -24,6 +24,8 @@ public class MenuStargate : MenuBase
 
     private void CloseWindow()
     {
+        OnClose = null;
+
         Destroy( gameObject );
     }
 }
