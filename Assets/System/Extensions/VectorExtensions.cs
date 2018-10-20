@@ -6,11 +6,13 @@ public static class VectorExtensions
 {
     public static Vector3 RoundToInt ( this Vector3 v3 )
     {
-        v3.x = Mathf.RoundToInt( v3.x );
-        v3.y = Mathf.RoundToInt( v3.y );
-        v3.z = Mathf.RoundToInt( v3.z );
+        Vector3 v = new Vector3(v3.x, v3.y, v3.z);
 
-        return v3;
+        v.x = Mathf.RoundToInt( v.x );
+        v.y = Mathf.RoundToInt( v.y );
+        v.z = Mathf.RoundToInt( v.z );
+
+        return v;
     }
 
     public static void ToNearestWhole( this Vector3 v3 )

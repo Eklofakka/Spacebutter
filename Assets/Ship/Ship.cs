@@ -8,8 +8,6 @@ public class Ship
 
     public ShipPosition Position;
 
-    Vector2 ff = new Vector2(1, 1);
-
 
     public Ship (Layout layout)
     {
@@ -23,8 +21,5 @@ public class Ship
         // SHULD ONLY BE CALLED ON THE SERVER
 
         Position.TravelGalaxy();
-
-        Vector2 f = Vector2.zero;
     }
 }
-

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class TO_Screen : TileObject, IInteract
 {
@@ -8,7 +9,8 @@ public class TO_Screen : TileObject, IInteract
 
     private void OnMouseDown()
     {
-        Interact();
+        if (!EventSystem.current.IsPointerOverGameObject())
+            Interact();
     }
 
     public void Interact()
