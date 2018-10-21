@@ -13,5 +13,12 @@ public class Stargate : SolarSystemBody
         Position = position;
 
         SolarsystemID = solarsystemID;
+
+        Name = "Stargate";
+    }
+
+    public override string RadarInfo()
+    {
+        return Name + " -> " + GalaxyHandler.SolarSystems[Target.SolarsystemID].Name;
     }
 }

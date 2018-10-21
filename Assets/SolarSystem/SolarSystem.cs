@@ -37,7 +37,6 @@ public class SolarSystem {
 
     private void GeneratePlanets()
     {
-        //int numPlanets = Random.Range(0, 10);
         int numPlanets = 10;
 
         Tuple<Vector2, int> Point = new Tuple<Vector2, int>(Vector2.zero, 0);

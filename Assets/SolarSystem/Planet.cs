@@ -48,8 +48,6 @@ public class Planet : SolarSystemBody
         "New France",
         "7762 Fornacis II"
     };
-
-    public string Name { get; set; }
     
     public enum Types { Terran = 0, Gas = 1, Barren = 2, Lava = 3, Oceanic = 4 }
 
@@ -73,5 +71,10 @@ public class Planet : SolarSystemBody
         Type = (Types)types.GetValue(UnityEngine.Random.Range(0, types.Length));
 
         Position = position;
+    }
+
+    public override string RadarInfo()
+    {
+        return Name;
     }
 }

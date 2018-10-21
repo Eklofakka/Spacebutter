@@ -36,10 +36,14 @@ public class DraggableContent : MonoBehaviour, IDragHandler
     private IEnumerator PanToShip()
     {
         Vector3 newPos = ShipHandler.Instance.ActiveShip.Position.Solar * -1;
-        while (transform.localPosition != newPos)
+
+        bool hasReachedTarget = transform.localPosition == newPos;
+        
+        while (hasReachedTarget == false)
         {
-            newPos = Vector3.MoveTowards(transform.localPosition, ShipHandler.Instance.ActiveShip.Position.Solar *-1, 2f);
+            newPos = Vector3.MoveTowards(transform.localPosition, ShipHandler.Instance.ActiveShip.Position.Solar * -1, 2f);
             transform.localPosition = newPos;
+            hasReachedTarget = transform.localPosition.EqualToV2(ShipHandler.Instance.ActiveShip.Position.Solar * -1);
             yield return null;
         }
     }

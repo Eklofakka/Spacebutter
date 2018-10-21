@@ -53,4 +53,11 @@ public static class VectorExtensions
 
         return v2;
     }
+
+    public static bool EqualToV2( this Vector3 v3, Vector2 v2 )
+    {
+        Vector3 comp = new Vector3( v2.x, v2.y, v3.z );
+
+        return v3 == comp;
+    }
 }

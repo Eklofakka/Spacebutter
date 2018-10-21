@@ -8,7 +8,7 @@ public class TerminalNavigationSolarIcon : MonoBehaviour, IPointerClickHandler
 {
     public enum BodyTypes { STARGATE, SUN, PLANET }
 
-    public Action<TerminalNavigationSolarIcon, PointerEventData> OnClick;
+    public Action<TerminalNavigationSolarIcon, PointerEventData> OnClick { get; set; } = delegate{};
 
     public SolarSystemBody Body;
 

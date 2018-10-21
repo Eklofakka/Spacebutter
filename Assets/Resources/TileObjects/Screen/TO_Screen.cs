@@ -24,6 +24,7 @@ public class TO_Screen : TileObject, IInteract
     private void OpenConsole()
     {
         //GameObject obj = Instantiate( Resources.Load<GameObject>( "Interfaces/Logistics/CI_Logistics" ) );
+        if (TerminalNavigation.Open == true) return;
         GameObject obj = Instantiate( Resources.Load<GameObject>( "Terminals/Navigation/TerminalNavigation" ) );
 
         obj.transform.SetParent( MainCanvas.Instance, false );

@@ -6,6 +6,8 @@ using UnityEngine.EventSystems;
 
 public class TerminalNavigation : MonoBehaviour, IPointerClickHandler
 {
+    public static bool Open { get; private set; } = false;
+
     [Header("Body Prefabs")]
     [SerializeField] private GameObject Sun;
     [SerializeField] private TerminalNavigationSolarIcon IconPrefab;
@@ -61,6 +63,8 @@ public class TerminalNavigation : MonoBehaviour, IPointerClickHandler
 
     public void Start()
     {
+        Open = true;
+
         GenerateSolarSystem();
     }
 
@@ -144,7 +148,11 @@ public class TerminalNavigation : MonoBehaviour, IPointerClickHandler
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.T))
+        {
+            Open = false;
             Destroy(gameObject);
+        }
+
         Vector3 ff = ShipHandler.Instance.ActiveShip.Position.Solar;
         PlayerShipMarker.transform.localPosition = ff.RoundToInt();
 

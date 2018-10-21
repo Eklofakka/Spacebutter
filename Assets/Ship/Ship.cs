@@ -8,12 +8,15 @@ public class Ship
 
     public ShipPosition Position;
 
+    public ShipRadar Radar;
 
     public Ship (Layout layout)
     {
         Layout = layout;
 
         Position = new ShipPosition();
+
+        Radar = new ShipRadar();
     }
 
     public virtual void Update(  )
@@ -21,5 +24,7 @@ public class Ship
         // SHULD ONLY BE CALLED ON THE SERVER
 
         Position.TravelSolar();
+
+        Radar.Scan( GalaxyHandler.SolarSystems[Position.SolarID]);
     }
 }

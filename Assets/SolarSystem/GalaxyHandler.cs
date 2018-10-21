@@ -4,11 +4,26 @@ using UnityEngine;
 
 public static class GalaxyHandler
 {
-    public static Dictionary<int, SolarSystem> SolarSystems;
+    private static Dictionary<int, SolarSystem> _SolarSystems;
+    public static Dictionary<int, SolarSystem> SolarSystems
+    {
+        get
+        {
+            if (_SolarSystems == null)
+                GenerateGalaxy();
+
+            return _SolarSystems;
+        }
+        set
+        {
+            _SolarSystems = value;
+        }
+    }
 
     public static void GenerateGalaxy()
     {
-        if ( SolarSystems == null )
+        if (_SolarSystems == null)
+        {
             SolarSystems = new Dictionary<int, SolarSystem>()
             {
                 { 0, new SolarSystem(0) },
@@ -16,7 +31,8 @@ public static class GalaxyHandler
             };
 
 
-        ConnectStargates();
+            ConnectStargates();
+        }
     }
 
     private static void ConnectStargates()
