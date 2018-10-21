@@ -20,6 +20,6 @@ public class Ship
     {
         // SHULD ONLY BE CALLED ON THE SERVER
 
-        Position.TravelGalaxy();
+        Position.TravelSolar();
     }
 }

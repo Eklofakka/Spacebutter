@@ -16,9 +16,29 @@ public class TerminalNavigation : MonoBehaviour
 
     public void Start()
     {
-        CreateSun();
-        CreatePlanet();
+        ClearSolarSystem();
+        GenerateSolarSystem();
         CreateShip();
+    }
+
+    private void ClearSolarSystem()
+    {
+        foreach (Transform content in Content)
+        {
+            Destroy( content.gameObject );
+        }
+    }
+
+    private void GenerateSolarSystem()
+    {
+        SolarSystem curSolarSystem = GalaxyHandler.SolarSystems[ShipHandler.Instance.ActiveShip.Position.SolarID];
+
+        CreateSun();
+
+        foreach (var planet in curSolarSystem.Planets)
+        {
+            CreatePlanet(planet);
+        }
     }
 
     private void CreateSun()
@@ -28,12 +48,13 @@ public class TerminalNavigation : MonoBehaviour
         sun.transform.localPosition = new Vector3(0, 0, 0);
     }
 
-    private void CreatePlanet()
+    private void CreatePlanet( Planet planet )
     {
         var stargate = Instantiate(Stargate);
         stargate.transform.SetParent( Content.transform, false );
-        stargate.transform.localPosition = new Vector3( 100, 100, 0 );
-        stargate.OnClick += OnIconClicked;
+        //stargate.transform.localPosition = new Vector3( 100, 100, 0 );
+        stargate.transform.localPosition = planet.Position;
+        //stargate.OnClick += OnIconClicked;
     }
 
     private void CreateShip()
@@ -48,7 +69,7 @@ public class TerminalNavigation : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.T))
             Destroy(gameObject);
-        Vector3 ff = ShipHandler.Instance.ActiveShip.Position.Galaxy;
+        Vector3 ff = ShipHandler.Instance.ActiveShip.Position.Solar;
         f.transform.localPosition = ff.RoundToInt();
     }
 
@@ -58,7 +79,7 @@ public class TerminalNavigation : MonoBehaviour
         var menu = Instantiate( Resources.Load<MenuStargate>("Terminals/Navigation/Prefabs/Menu_Stargate") );
         menu.transform.SetParent( MainCanvas.Instance.transform, false );
 
-        menu.OnClose += (x) => print("woop");
+        menu.OnClose += (x) => ShipHandler.Instance.ActiveShip.Position.JumpToGalaxy(1, icon.transform.localPosition);
     }
     #endregion
 }

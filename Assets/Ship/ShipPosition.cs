@@ -2,21 +2,28 @@
 
 public class ShipPosition
 {
-    public Vector2 Galaxy = new Vector2(0, 0);
-
     public Vector2 Solar = new Vector2(0, 0);
+    public int SolarID = 0;
 
-    private Vector2 GalaxyTarget = Vector2.zero;
 
-    public void TravelGalaxy()
+    private Vector2 SolarTarget = Vector2.zero;
+
+    public void TravelSolar()
     {
-        //Galaxy += new Vector2( 4f, 4f ) * Time.deltaTime;
-
-        Galaxy = Vector2.MoveTowards(Galaxy, GalaxyTarget, 4f * Time.deltaTime);
+        Solar = Vector2.MoveTowards(Solar, SolarTarget, 4f * Time.deltaTime);
     }
 
-    public void SetGalaxyDestination( Vector3 pos )
+    public void SetSolarDestination( Vector3 pos )
     {
-        GalaxyTarget = pos;
+        SolarTarget = pos;
+    }
+
+    public void JumpToGalaxy( int solarID, Vector2 gatePos )
+    {
+        SolarID = solarID;
+
+        Solar = gatePos + new Vector2(5, 5);
+
+        SolarTarget = Solar;
     }
 }

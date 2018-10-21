@@ -38,11 +38,10 @@ public class DraggableContent : MonoBehaviour, IDragHandler, IPointerClickHandle
         pos.x -= 480;
         pos.y -= 270;
         pos = pos.RoundToInt();
+        pos = pos - transform.localPosition;
 
-        Selector.transform.localPosition = pos - transform.localPosition;
+        Selector.transform.localPosition = pos;
 
-        ShipHandler.Instance.ActiveShip.Position.SetGalaxyDestination( pos );
-
-        print(pos);
+        ShipHandler.Instance.ActiveShip.Position.SetSolarDestination( pos );
     }
 }

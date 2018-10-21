@@ -12,4 +12,9 @@ public class Icon_Stargate : MonoBehaviour, IPointerClickHandler
     {
         OnClick(this);
     }
+
+    private void OnDestroy()
+    {
+        OnClick = null;
+    }
 }
