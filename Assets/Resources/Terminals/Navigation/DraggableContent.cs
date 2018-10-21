@@ -4,11 +4,11 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 
 
-public class DraggableContent : MonoBehaviour, IDragHandler, IPointerClickHandler
+public class DraggableContent : MonoBehaviour, IDragHandler
 {
     private Vector3 MoveDelta;
 
-    private GameObject Selector;
+
 
     private Vector3 Center;
 
@@ -22,37 +22,5 @@ public class DraggableContent : MonoBehaviour, IDragHandler, IPointerClickHandle
     private void Start()
     {
         Center = GetComponent<RectTransform>().rect.center;
-    }
-
-    public void OnPointerClick(PointerEventData eventData)
-    {
-        if (eventData.dragging != false) return;
-        if (eventData.button == PointerEventData.InputButton.Right)
-        {
-            if (Selector == null)
-            {
-                Selector = Instantiate(Resources.Load<GameObject>("Terminals/Navigation/Prefabs/Selector"));
-                Selector.transform.SetParent( transform, false );
-            }
-
-            Vector3 pos = eventData.position / 2f;
-            pos.x -= 480;
-            pos.y -= 270;
-            pos = pos.RoundToInt();
-            pos = pos - transform.localPosition;
-
-            Selector.transform.localPosition = pos;
-
-
-            if (Input.GetKey(KeyCode.LeftControl))
-            {
-                ShipHandler.Instance.ActiveShip.Position.Solar = pos;
-                ShipHandler.Instance.ActiveShip.Position.SolarTarget = pos;
-            }
-            else
-            {
-                ShipHandler.Instance.ActiveShip.Position.SetSolarDestination(pos);
-            }
-        }
     }
 }

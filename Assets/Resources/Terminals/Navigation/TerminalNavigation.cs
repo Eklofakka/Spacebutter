@@ -2,19 +2,60 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.EventSystems;
 
-public class TerminalNavigation : MonoBehaviour
+public class TerminalNavigation : MonoBehaviour, IPointerClickHandler
 {
+    [Header("Body Prefabs")]
     [SerializeField] private GameObject Sun;
-    [SerializeField] private Icon_Stargate Stargate;
+    [SerializeField] private TerminalNavigationSolarIcon IconPrefab;
     [SerializeField] private GameObject Ship;
     [SerializeField] private GameObject Planet;
+    [SerializeField] private Transform Content;
     [SerializeField] private TextMeshProUGUI SolarsystemNameDisplay;
 
-    private GameObject f;
+    [Header("Target Info")]
+    [SerializeField] private TextMeshProUGUI TargetPositionDisplay;
+    [SerializeField] private TextMeshProUGUI TargetDistanceDisplay;
+    [SerializeField] private TextMeshProUGUI ETADisplay;
 
-    [SerializeField] private Transform Content;
+    private Vector2 TargetPosition;
 
+    private GameObject PlayerShipMarker;
+
+    private GameObject _Selector = null;
+    private GameObject Selector
+    {
+        get
+        {
+            if ( _Selector == null )
+            {
+                _Selector = Instantiate(Resources.Load<GameObject>("Terminals/Navigation/Prefabs/Selector"));
+                _Selector.transform.SetParent(Content.parent.transform, false);
+            }
+
+            return _Selector;
+        }
+    }
+
+    private GameObject _Marker = null;
+    private GameObject Marker
+    {
+        get
+        {
+            if (_Marker == null)
+            {
+                _Marker = Instantiate(Resources.Load<GameObject>("Terminals/Navigation/Prefabs/Selector"));
+                _Marker.transform.SetParent(Content.parent.transform, false);
+            }
+
+            return _Marker;
+        }
+    }
+
+    [Header("Marker Info")]
+    [SerializeField] private TextMeshPro MarketPositionDisplay;
+    [SerializeField] private TextMeshPro MarketDistanceDisplay;
 
     public void Start()
     {
@@ -71,17 +112,28 @@ public class TerminalNavigation : MonoBehaviour
         var ship = Instantiate(Ship);
         ship.transform.SetParent(Content.transform, false);
         ship.transform.localPosition = new Vector3(0, 0, 0);
-        f = ship;
+        PlayerShipMarker = ship;
     }
 
     private void CreateStargate( Stargate stargate )
     {
-        var stargateObj = Instantiate( Stargate );
+        var stargateObj = Instantiate( IconPrefab );
         stargateObj.transform.SetParent( Content.transform, false );
-        stargateObj.Stargate = stargate;
+        stargateObj.Body = stargate;
         stargateObj.transform.localPosition = stargate.Position;
         
         stargateObj.OnClick += OnIconClicked;
+    }
+
+    private void UpdateTargetInfo()
+    {
+        if ( TargetPosition != null )
+            TargetPositionDisplay.text = "Position: " + TargetPosition;
+
+        float dist = Vector2.Distance(TargetPosition, ShipHandler.Instance.ActiveShip.Position.Solar);
+        TargetDistanceDisplay.text = "Distance: " + string.Format( "{0:0.00}", dist / 350f ) + " AU";
+
+        ETADisplay.text = "ETA: " + string.Format("{0:0.00}", dist / 4f);
     }
 
     private void Update()
@@ -89,18 +141,58 @@ public class TerminalNavigation : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.T))
             Destroy(gameObject);
         Vector3 ff = ShipHandler.Instance.ActiveShip.Position.Solar;
-        f.transform.localPosition = ff.RoundToInt();
+        PlayerShipMarker.transform.localPosition = ff.RoundToInt();
+
+        UpdateTargetInfo();
     }
 
     #region Button Events
-    public void OnIconClicked( Icon_Stargate icon )
+    public void OnIconClicked( TerminalNavigationSolarIcon icon )
     {
-        if (Vector2.Distance(ShipHandler.Instance.ActiveShip.Position.Solar, icon.Stargate.Position) > 15) return;
+        TargetPosition = icon.Body.Position;
+        Selector.transform.localPosition = TargetPosition;
 
-        var menu = Instantiate( Resources.Load<MenuStargate>("Terminals/Navigation/Prefabs/Menu_Stargate") );
-        menu.transform.SetParent( MainCanvas.Instance.transform, false );
-        
-        menu.OnClose += (x) => { ShipHandler.Instance.ActiveShip.Position.JumpToGalaxy( icon.Stargate.Target ); GenerateSolarSystem(); };
+        if (Vector2.Distance(ShipHandler.Instance.ActiveShip.Position.Solar, icon.Body.Position) > 15) return;
+
+        if ( icon.BodyType == TerminalNavigationSolarIcon.BodyTypes.STARGATE )
+        {
+            OnStargateClicked( icon );
+        }
+    }
+
+    private void OnStargateClicked(TerminalNavigationSolarIcon icon)
+    {
+        var menu = Instantiate(Resources.Load<MenuStargate>("Terminals/Navigation/Prefabs/Menu_Stargate"));
+        menu.transform.SetParent(MainCanvas.Instance.transform, false);
+
+        Stargate stargate = icon.Body as Stargate;
+
+        menu.OnClose += (x) => { ShipHandler.Instance.ActiveShip.Position.JumpToGalaxy(stargate); GenerateSolarSystem(); };
+    }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        if (eventData.dragging != false) return;
+        if (eventData.button == PointerEventData.InputButton.Right)
+        {
+            Vector3 pos = eventData.position / 2f;
+            pos.x -= 480;
+            pos.y -= 270;
+            pos = pos.RoundToInt();
+            pos = pos - Content.transform.parent.localPosition;
+
+            Selector.transform.localPosition = TargetPosition = pos;
+
+            if (Input.GetKey(KeyCode.LeftControl))
+            {
+                ShipHandler.Instance.ActiveShip.Position.Solar = pos;
+                ShipHandler.Instance.ActiveShip.Position.SolarTarget = pos;
+            }
+            else
+            {
+                ShipHandler.Instance.ActiveShip.Position.SetSolarDestination(pos);
+            }
+        }
     }
     #endregion
 }

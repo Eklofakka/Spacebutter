@@ -4,11 +4,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class Icon_Stargate : MonoBehaviour, IPointerClickHandler
+public class TerminalNavigationSolarIcon : MonoBehaviour, IPointerClickHandler
 {
-    public Action<Icon_Stargate> OnClick;
+    public enum BodyTypes { STARGATE, SUN, PLANET }
 
-    public Stargate Stargate;
+    public Action<TerminalNavigationSolarIcon> OnClick;
+
+    public SolarSystemBody Body;
+
+    public BodyTypes BodyType;
+
+    public virtual void Init( BodyTypes bodyType )
+    {
+        BodyType = bodyType;
+    }
 
     public void OnPointerClick(PointerEventData eventData)
     {

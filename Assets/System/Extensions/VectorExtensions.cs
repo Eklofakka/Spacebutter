@@ -45,4 +45,12 @@ public static class VectorExtensions
     {
         return new Vector2Int( Mathf.RoundToInt(v3.x), Mathf.RoundToInt(v3.y) );
     }
+
+    public static Vector2 ToAU( this Vector2 v2 )
+    {
+        v2.x /= 350;
+        v2.y /= 350;
+
+        return v2;
+    }
 }
