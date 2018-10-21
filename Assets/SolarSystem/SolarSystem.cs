@@ -22,7 +22,7 @@ public class SolarSystem {
 
         Position = new Vector2Int(Random.Range(0, 500), Random.Range(0, 500));
 
-        Name = Random.Range(1000, 9999).ToString();
+        Name = Planet.Names[UnityEngine.Random.Range(0, Planet.Names.Count)];
 
         Planets = new List<Planet>();
 

@@ -23,4 +23,24 @@ public class DraggableContent : MonoBehaviour, IDragHandler
     {
         Center = GetComponent<RectTransform>().rect.center;
     }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Z))
+        {
+            StopAllCoroutines();
+            StartCoroutine( PanToShip() );
+        }
+    }
+
+    private IEnumerator PanToShip()
+    {
+        Vector3 newPos = ShipHandler.Instance.ActiveShip.Position.Solar * -1;
+        while (transform.localPosition != newPos)
+        {
+            newPos = Vector3.MoveTowards(transform.localPosition, ShipHandler.Instance.ActiveShip.Position.Solar *-1, 2f);
+            transform.localPosition = newPos;
+            yield return null;
+        }
+    }
 }

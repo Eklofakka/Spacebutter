@@ -19,11 +19,13 @@ public class TerminalNavigation : MonoBehaviour, IPointerClickHandler
     [SerializeField] private TextMeshProUGUI TargetDistanceDisplay;
     [SerializeField] private TextMeshProUGUI ETADisplay;
 
-    private Vector2 TargetPosition;
+    [Header("Planet Info")]
+    [SerializeField] private GameObject PlanetInfoPrefab;
 
     private GameObject PlayerShipMarker;
 
-    private GameObject _Selector = null;
+    private static Vector2 SelectorPosition = Vector2.zero;
+    private static GameObject _Selector = null;
     private GameObject Selector
     {
         get
@@ -38,7 +40,7 @@ public class TerminalNavigation : MonoBehaviour, IPointerClickHandler
         }
     }
 
-    private GameObject _Marker = null;
+    private static GameObject _Marker = null;
     private GameObject Marker
     {
         get
@@ -77,16 +79,11 @@ public class TerminalNavigation : MonoBehaviour, IPointerClickHandler
     {
         ClearSolarSystem();
 
-
         GalaxyHandler.GenerateGalaxy();
 
         SolarSystem curSolarSystem = GalaxyHandler.SolarSystems[ShipHandler.Instance.ActiveShip.Position.SolarID];
 
-        print("Generated: " + curSolarSystem.SolarsystemID.ToString());
-
         SolarsystemNameDisplay.text = curSolarSystem.Name;
-
-        CreateShip();
 
         CreateSun();
 
@@ -96,6 +93,8 @@ public class TerminalNavigation : MonoBehaviour, IPointerClickHandler
         }
 
         CreateStargate( curSolarSystem.Stargates[0] );
+
+        CreateShip();
     }
 
     private void CreateSun()
@@ -133,10 +132,10 @@ public class TerminalNavigation : MonoBehaviour, IPointerClickHandler
 
     private void UpdateTargetInfo()
     {
-        if ( TargetPosition != null )
-            TargetPositionDisplay.text = "Position: " + TargetPosition;
+        if ( SelectorPosition != null )
+            TargetPositionDisplay.text = "Position: " + SelectorPosition;
 
-        float dist = Vector2.Distance(TargetPosition, ShipHandler.Instance.ActiveShip.Position.Solar);
+        float dist = Vector2.Distance(SelectorPosition, ShipHandler.Instance.ActiveShip.Position.Solar);
         TargetDistanceDisplay.text = "Distance: " + string.Format( "{0:0.00}", dist / 350f ) + " AU";
 
         ETADisplay.text = "ETA: " + string.Format("{0:0.00}", dist / 4f);
@@ -153,12 +152,12 @@ public class TerminalNavigation : MonoBehaviour, IPointerClickHandler
     }
 
     #region Button Events
-    public void OnIconClicked( TerminalNavigationSolarIcon icon )
+    public void OnIconClicked( TerminalNavigationSolarIcon icon, PointerEventData eventData )
     {
         switch( icon.BodyType )
         {
             case TerminalNavigationSolarIcon.BodyTypes.STARGATE:
-                OnStargateClicked( icon );
+                OnStargateClicked( icon, eventData);
                 break;
             case TerminalNavigationSolarIcon.BodyTypes.PLANET:
                 OnPlanetClicked(icon);
@@ -169,9 +168,15 @@ public class TerminalNavigation : MonoBehaviour, IPointerClickHandler
         }
     }
 
-    private void OnStargateClicked(TerminalNavigationSolarIcon icon)
+    private void OnStargateClicked(TerminalNavigationSolarIcon icon, PointerEventData eventData)
     {
         Marker.transform.localPosition = icon.Body.Position;
+
+        if (eventData.button == PointerEventData.InputButton.Right)
+        {
+            Selector.transform.localPosition = SelectorPosition = icon.Body.Position;
+            ShipHandler.Instance.ActiveShip.Position.SetSolarDestination(SelectorPosition);
+        }
 
         if (Vector2.Distance(ShipHandler.Instance.ActiveShip.Position.Solar, icon.Body.Position) > 15) return;
 
@@ -204,7 +209,7 @@ public class TerminalNavigation : MonoBehaviour, IPointerClickHandler
             pos = pos.RoundToInt();
             pos = pos - Content.transform.parent.localPosition;
 
-            Selector.transform.localPosition = TargetPosition = pos;
+            Selector.transform.localPosition = SelectorPosition = pos;
 
             if (Input.GetKey(KeyCode.LeftControl))
             {
