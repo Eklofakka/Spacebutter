@@ -12,7 +12,6 @@ public class ToggleButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     private enum Modes { Normal, Toggled, Disabled, Highlighted }
     private Modes Mode { get; set; } = Modes.Normal;
 
-
     public bool Toggled { get; private set; } = false;
 
     private bool _IsEnabled = true;
@@ -80,8 +79,6 @@ public class ToggleButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
     public void SetToggle( bool value, bool report = true )
     {
-        print(value);
-
         Toggled = value;
 
         Mode = Toggled ? Modes.Toggled : Modes.Normal;

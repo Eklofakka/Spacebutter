@@ -13,14 +13,18 @@ public class TerminalNavigationRadar : MonoBehaviour
     {
         ShipHandler.Instance.ActiveShip.Radar.OnContactAdded += OnContactAdded;
         ShipHandler.Instance.ActiveShip.Radar.OnContactRemoved += OnContactRemoved;
+
+        foreach (var body in ShipHandler.Instance.ActiveShip.Radar.Contacts)
+        {
+            OnContactAdded(body);
+        }
     }
 
     private void OnContactAdded( SolarSystemBody body )
     {
-        print(body.Name);
         var contact = Instantiate(ContactPrefab);
         contact.transform.SetParent(transform, false);
-        contact.GetComponent<TextMeshProUGUI>().text = body.RadarInfo();
+        contact.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = body.RadarInfo();
         Contacts.Add( body, contact );
     }
 
