@@ -68,15 +68,21 @@ public class TerminalNavigation : MonoBehaviour, IPointerClickHandler
         {
             Destroy( content.gameObject );
         }
+
+        Destroy( Selector );
+        Destroy( Marker );
     }
 
     private void GenerateSolarSystem()
     {
         ClearSolarSystem();
 
+
         GalaxyHandler.GenerateGalaxy();
 
         SolarSystem curSolarSystem = GalaxyHandler.SolarSystems[ShipHandler.Instance.ActiveShip.Position.SolarID];
+
+        print("Generated: " + curSolarSystem.SolarsystemID.ToString());
 
         SolarsystemNameDisplay.text = curSolarSystem.Name;
 
@@ -149,25 +155,42 @@ public class TerminalNavigation : MonoBehaviour, IPointerClickHandler
     #region Button Events
     public void OnIconClicked( TerminalNavigationSolarIcon icon )
     {
-        TargetPosition = icon.Body.Position;
-        Selector.transform.localPosition = TargetPosition;
-
-        if (Vector2.Distance(ShipHandler.Instance.ActiveShip.Position.Solar, icon.Body.Position) > 15) return;
-
-        if ( icon.BodyType == TerminalNavigationSolarIcon.BodyTypes.STARGATE )
+        switch( icon.BodyType )
         {
-            OnStargateClicked( icon );
+            case TerminalNavigationSolarIcon.BodyTypes.STARGATE:
+                OnStargateClicked( icon );
+                break;
+            case TerminalNavigationSolarIcon.BodyTypes.PLANET:
+                OnPlanetClicked(icon);
+                break;
+            case TerminalNavigationSolarIcon.BodyTypes.SUN:
+                OnSunClicked(icon);
+                break;
         }
     }
 
     private void OnStargateClicked(TerminalNavigationSolarIcon icon)
     {
+        Marker.transform.localPosition = icon.Body.Position;
+
+        if (Vector2.Distance(ShipHandler.Instance.ActiveShip.Position.Solar, icon.Body.Position) > 15) return;
+
         var menu = Instantiate(Resources.Load<MenuStargate>("Terminals/Navigation/Prefabs/Menu_Stargate"));
         menu.transform.SetParent(MainCanvas.Instance.transform, false);
 
         Stargate stargate = icon.Body as Stargate;
 
-        menu.OnClose += (x) => { ShipHandler.Instance.ActiveShip.Position.JumpToGalaxy(stargate); GenerateSolarSystem(); };
+        menu.OnClose += (x) => { ShipHandler.Instance.ActiveShip.Position.JumpToGalaxy(stargate.Target); GenerateSolarSystem(); };
+    }
+
+    private void OnPlanetClicked(TerminalNavigationSolarIcon icon)
+    {
+
+    }
+
+    private void OnSunClicked( TerminalNavigationSolarIcon icon )
+    {
+
     }
 
     public void OnPointerClick(PointerEventData eventData)
