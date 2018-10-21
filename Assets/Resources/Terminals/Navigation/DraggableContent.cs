@@ -27,21 +27,32 @@ public class DraggableContent : MonoBehaviour, IDragHandler, IPointerClickHandle
     public void OnPointerClick(PointerEventData eventData)
     {
         if (eventData.dragging != false) return;
-
-        if (Selector == null)
+        if (eventData.button == PointerEventData.InputButton.Right)
         {
-            Selector = Instantiate(Resources.Load<GameObject>("Terminals/Navigation/Prefabs/Selector"));
-            Selector.transform.SetParent( transform, false );
+            if (Selector == null)
+            {
+                Selector = Instantiate(Resources.Load<GameObject>("Terminals/Navigation/Prefabs/Selector"));
+                Selector.transform.SetParent( transform, false );
+            }
+
+            Vector3 pos = eventData.position / 2f;
+            pos.x -= 480;
+            pos.y -= 270;
+            pos = pos.RoundToInt();
+            pos = pos - transform.localPosition;
+
+            Selector.transform.localPosition = pos;
+
+
+            if (Input.GetKey(KeyCode.LeftControl))
+            {
+                ShipHandler.Instance.ActiveShip.Position.Solar = pos;
+                ShipHandler.Instance.ActiveShip.Position.SolarTarget = pos;
+            }
+            else
+            {
+                ShipHandler.Instance.ActiveShip.Position.SetSolarDestination(pos);
+            }
         }
-
-        Vector3 pos = eventData.position / 2f;
-        pos.x -= 480;
-        pos.y -= 270;
-        pos = pos.RoundToInt();
-        pos = pos - transform.localPosition;
-
-        Selector.transform.localPosition = pos;
-
-        ShipHandler.Instance.ActiveShip.Position.SetSolarDestination( pos );
     }
 }

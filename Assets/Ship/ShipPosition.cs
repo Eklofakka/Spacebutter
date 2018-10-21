@@ -6,7 +6,7 @@ public class ShipPosition
     public int SolarID = 0;
 
 
-    private Vector2 SolarTarget = Vector2.zero;
+    public Vector2 SolarTarget = Vector2.zero;
 
     public void TravelSolar()
     {
@@ -18,11 +18,20 @@ public class ShipPosition
         SolarTarget = pos;
     }
 
-    public void JumpToGalaxy( int solarID, Vector2 gatePos )
+    public void JumpToGalaxy( int solarID, int solargateID )
     {
         SolarID = solarID;
 
-        Solar = gatePos + new Vector2(5, 5);
+        Solar = GalaxyHandler.SolarSystems[solarID].Stargates[0].Position + new Vector2(5, 5);
+
+        SolarTarget = Solar;
+    }
+
+    public void JumpToGalaxy(Stargate target)
+    {
+        SolarID = target.SolarsystemID;
+
+        Solar = target.Position + new Vector2(5, 5);
 
         SolarTarget = Solar;
     }

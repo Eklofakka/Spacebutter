@@ -31,6 +31,8 @@ public class SolarSystem {
         Stargates = new List<Stargate>();
 
         GeneratePlanets();
+
+        GenerateStargates();
     }
 
     private void GeneratePlanets()
