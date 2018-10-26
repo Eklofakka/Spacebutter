@@ -14,37 +14,27 @@ namespace ProceduralGeneration
         private static Point[] Positions;
         private static float[,] Network;
             
-        private static Dictionary<Vector2, StargateConnection> StargateConnections;
+        //private static Dictionary<Vector2, StargateConnection> StargateConnections;
             
-        private static int NUMS = 0;
-        private static int MaxAttemp = 10;
-        private static int NumAttemps = 0;
+        private static int NumMultiConnections = 0;
+        private static int MaxAttempts = 10;
+        private static int NumAttempts = 0;
 
         private static Constellation Constellation;
 
-        private class StargateConnection
+        public static Constellation Gen( string name, int numberOfStars )
         {
-            public Vector2 Position;
-            public List<StargateConnection> Connections;
+            Constellation = new Constellation( name );
 
-            public StargateConnection(Vector2 pos)
+            NumMultiConnections = 0;
+            NumAttempts = 0;
+
+            while (NumMultiConnections < 3 && NumAttempts <= 10)
             {
-                Position = pos;
-                Connections = new List<StargateConnection>();
-            }
-        }
+                NumMultiConnections = 0;
+                NumAttempts++;
 
-        private static void Gen()
-        {
-            NUMS = 0;
-            NumAttemps = 0;
-
-            while (NUMS < 3 && NumAttemps <= 10)
-            {
-                NUMS = 0;
-                NumAttemps++;
-
-                StargateConnections = new Dictionary<Vector2, StargateConnection>();
+                //StargateConnections = new Dictionary<Vector2, StargateConnection>();
 
                 Positions = new Point[NumberOfStars];
                 Network = new float[NumberOfStars, NumberOfStars];
@@ -53,6 +43,8 @@ namespace ProceduralGeneration
 
                 Prims();
             }
+
+            return Constellation;
         }
 
         private static void SetNet(float[,] network, Point[] positions)
@@ -61,8 +53,14 @@ namespace ProceduralGeneration
             int minlength = maxlength / NumberOfStars;
             for (int i = 0; i < NumberOfStars; i++)
             {
-                positions[i].X = Random.Range(minlength, maxlength);
-                positions[i].Y = Random.Range(minlength, maxlength);
+                int xpos = Random.Range(minlength, maxlength);
+                int ypos = Random.Range(minlength, maxlength);
+
+                positions[i].X = xpos;
+                positions[i].Y = ypos;
+
+                Constellation.SolarSystems.Add( new SolarSystem(i, new Vector2Int(xpos, ypos)) );
+
                 for (int j = 0; j <= i; j++)
                 {
                     network[i, j] = Distance(positions[i], positions[j]);
@@ -91,7 +89,8 @@ namespace ProceduralGeneration
                         Vector2 from = new Vector2(Positions[i].X, Positions[i].Y);
                         Vector2 to = new Vector2(Positions[j].X, Positions[j].Y);
 
-                        if (StargateConnections.ContainsKey(from))
+                        //if (StargateConnections.ContainsKey(from))
+                        if ( Constellation.SolarSystems. )
                         {
                             StargateConnections[from].Connections.Add(new StargateConnection(to));
                         }
@@ -160,6 +159,18 @@ namespace ProceduralGeneration
                     start = i;
                     finish = j;
                 }
+            }
+        }
+
+        private class StargateConnection
+        {
+            public Vector2 Position;
+            public List<StargateConnection> Connections;
+
+            public StargateConnection(Vector2 pos)
+            {
+                Position = pos;
+                Connections = new List<StargateConnection>();
             }
         }
     }

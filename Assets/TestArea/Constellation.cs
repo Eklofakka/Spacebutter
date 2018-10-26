@@ -8,10 +8,10 @@ public class Constellation
 
     public List<SolarSystem> SolarSystems { get; set; }
 
-    public Constellation( string name, List<SolarSystem> solarSystems )
+    public Constellation( string name )
     {
         Name = name;
 
-        SolarSystems = solarSystems;
+        SolarSystems = new List<SolarSystem>();
     }
 }

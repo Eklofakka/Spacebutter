@@ -35,6 +35,21 @@ public class SolarSystem {
         GenerateStargates();
     }
 
+    public SolarSystem(int id, Vector2Int position)
+    {
+        SolarsystemID = id;
+
+        Position = position;
+
+        Name = Planet.Names[UnityEngine.Random.Range(0, Planet.Names.Count)];
+
+        Planets = new List<Planet>();
+
+        Sun = new Sun();
+
+        Stargates = new List<Stargate>();
+    }
+
     private void GeneratePlanets()
     {
         int numPlanets = 10;
