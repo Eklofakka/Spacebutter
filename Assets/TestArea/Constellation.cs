@@ -14,4 +14,14 @@ public class Constellation
 
         SolarSystems = new List<SolarSystem>();
     }
+
+    public SolarSystem SolarSystemByPosition( Vector2Int pos )
+    {
+        foreach (var system in SolarSystems)
+        {
+            if (system.Position == pos) return system;
+        }
+
+        return null;
+    }
 }

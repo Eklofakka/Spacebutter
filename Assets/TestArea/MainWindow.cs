@@ -39,7 +39,8 @@ namespace Prim
         private void Update()
         {
             if (Input.GetKeyDown(KeyCode.P))
-                Gen();
+                //Gen();
+                print(ProceduralGeneration.ConstellationGenerator.Gen("ff", 15).SolarSystems.Count);
         }
 
         private void Gen()

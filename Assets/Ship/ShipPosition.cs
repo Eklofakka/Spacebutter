@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Linq;
+using UnityEngine;
 
 public class ShipPosition
 {
@@ -25,9 +26,11 @@ public class ShipPosition
     {
         SolarID = solarID;
 
-        Solar = GalaxyHandler.SolarSystems[solarID].Stargates[0].Position + new Vector2(5, 5);
+        // TODO: This method needs access to the 'From' stargate.
+        //Solar = ConstellationHandler.SolarSystems[solarID].Stargates[0].Position + new Vector2(5, 5);
+        //Solar = ConstellationHandler.Constellation.SolarSystems[solarID].
 
-        SolarTarget = Solar;
+        //SolarTarget = Solar;
     }
 
     public void JumpToGalaxy(Stargate target)

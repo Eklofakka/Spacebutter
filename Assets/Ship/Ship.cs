@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Ship
@@ -25,6 +26,7 @@ public class Ship
 
         Position.TravelSolar();
 
-        Radar.Scan( GalaxyHandler.SolarSystems[Position.SolarID]);
+        //Radar.Scan( ConstellationHandler.Constellation.SolarSystems.First( s => s.SolarsystemID == Position.SolarID ));
+        Radar.Scan( ConstellationHandler.Constellation.SolarSystems[Position.SolarID] );
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Drawing;
 using UnityEngine;
@@ -9,12 +10,12 @@ namespace ProceduralGeneration
 {
     public static class ConstellationGenerator
     {
-        private static int NumberOfStars = 10;
+        private static int NumberOfStars = 10; // TODO: It generates one too many stars.
         private static int ConstellationWidth = 64;
         private static Point[] Positions;
         private static float[,] Network;
             
-        //private static Dictionary<Vector2, StargateConnection> StargateConnections;
+        private static Dictionary<Vector2Int, SolarSystemConnections> StargateConnections;
             
         private static int NumMultiConnections = 0;
         private static int MaxAttempts = 10;
@@ -24,17 +25,19 @@ namespace ProceduralGeneration
 
         public static Constellation Gen( string name, int numberOfStars )
         {
+            NumberOfStars = numberOfStars;
+
             Constellation = new Constellation( name );
 
             NumMultiConnections = 0;
             NumAttempts = 0;
 
-            while (NumMultiConnections < 3 && NumAttempts <= 10)
-            {
+            //while (NumMultiConnections < 3 && NumAttempts <= 0)
+            //{
                 NumMultiConnections = 0;
                 NumAttempts++;
 
-                //StargateConnections = new Dictionary<Vector2, StargateConnection>();
+                StargateConnections = new Dictionary<Vector2Int, SolarSystemConnections>();
 
                 Positions = new Point[NumberOfStars];
                 Network = new float[NumberOfStars, NumberOfStars];
@@ -42,8 +45,9 @@ namespace ProceduralGeneration
                 SetNet(Network, Positions);
 
                 Prims();
-            }
 
+                AddStargates();
+            //}
             return Constellation;
         }
 
@@ -86,28 +90,27 @@ namespace ProceduralGeneration
                 {
                     if (Net[i, j] != 0)
                     {
-                        Vector2 from = new Vector2(Positions[i].X, Positions[i].Y);
-                        Vector2 to = new Vector2(Positions[j].X, Positions[j].Y);
+                        Vector2Int from = new Vector2Int(Positions[i].X, Positions[i].Y);
+                        Vector2Int to = new Vector2Int(Positions[j].X, Positions[j].Y);
 
-                        //if (StargateConnections.ContainsKey(from))
-                        if ( Constellation.SolarSystems. )
+                        if (StargateConnections.ContainsKey(from))
                         {
-                            StargateConnections[from].Connections.Add(new StargateConnection(to));
+                            StargateConnections[from].Connections.Add(new SolarSystemConnections(to));
                         }
                         else
                         {
-                            StargateConnections.Add(from, new StargateConnection(from));
-                            StargateConnections[from].Connections.Add(new StargateConnection(to));
+                            StargateConnections.Add(from, new SolarSystemConnections(from));
+                            StargateConnections[from].Connections.Add(new SolarSystemConnections(to));
                         }
 
                         if (StargateConnections.ContainsKey(to))
                         {
-                            StargateConnections[to].Connections.Add(new StargateConnection(from));
+                            StargateConnections[to].Connections.Add(new SolarSystemConnections(from));
                         }
                         else
                         {
-                            StargateConnections.Add(to, new StargateConnection(to));
-                            StargateConnections[to].Connections.Add(new StargateConnection(from));
+                            StargateConnections.Add(to, new SolarSystemConnections(to));
+                            StargateConnections[to].Connections.Add(new SolarSystemConnections(from));
                         }
                     }
                 }
@@ -162,15 +165,84 @@ namespace ProceduralGeneration
             }
         }
 
-        private class StargateConnection
+        private static void AddStargates()
         {
-            public Vector2 Position;
-            public List<StargateConnection> Connections;
+            Dictionary<Stargate, int> gates = new Dictionary<Stargate, int>();
 
-            public StargateConnection(Vector2 pos)
+            foreach (var con in StargateConnections)
+            {
+                int solarsystemID = Constellation.SolarSystemByPosition(con.Key).SolarsystemID;
+
+                foreach (var stargate in con.Value.Connections)
+                {
+                    int targetID = Constellation.SolarSystemByPosition(stargate.Position).SolarsystemID;
+
+                    Stargate sgate = new Stargate(Vector2Int.zero, solarsystemID);
+
+                    gates.Add( sgate, targetID);
+
+                    Constellation.SolarSystems[solarsystemID].Stargates.Add( sgate );
+                }
+            }
+
+            Dictionary<Stargate, int> connectedGates = new Dictionary<Stargate, int>();
+
+            foreach (KeyValuePair<Stargate, int>stargate in gates)
+            {
+                if (connectedGates.ContainsKey(stargate.Key)) continue;
+                connectedGates.Add( stargate.Key, stargate.Value );
+
+                // Grab a gate from the Gate list
+                foreach (var targetGate in gates)
+                {
+                    if (connectedGates.ContainsKey(targetGate.Key)) continue;
+                    
+                    if (targetGate.Value == stargate.Value) continue;
+
+                    connectedGates.Add( targetGate.Key, targetGate.Value );
+
+                    stargate.Key.Target = targetGate.Key;
+                    targetGate.Key.Target = stargate.Key;
+
+                    break;
+                }
+            }
+
+
+            foreach (var con in gates)
+            {
+                //Debug.Log(con.Value);
+                //Stargate to = gates.Where(g => g.Key != con.Key)
+                //          .Where(g => g.Value == con.Value)
+                //          .First(g => g.Key.Target == null).Key;
+
+                //con.Key.Target = to;
+                //to.Target = con.Key;
+
+                //Debug.Log("From: " + con.Key.Target.SolarsystemID + " To: " + to.Target.SolarsystemID);
+            }
+
+
+            foreach (var system in Constellation.SolarSystems)
+            {
+                Debug.Log( "StarSystem: " + system.SolarsystemID + " : "  + system.Name );
+
+                foreach (var gate in system.Stargates)
+                {
+                    Debug.Log( "     " + gate.Target.SolarsystemID);
+                }
+            }
+        }
+
+        private class SolarSystemConnections
+        {
+            public Vector2Int Position;
+            public List<SolarSystemConnections> Connections;
+
+            public SolarSystemConnections(Vector2Int pos)
             {
                 Position = pos;
-                Connections = new List<StargateConnection>();
+                Connections = new List<SolarSystemConnections>();
             }
         }
     }

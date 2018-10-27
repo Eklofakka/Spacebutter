@@ -83,9 +83,7 @@ public class TerminalNavigation : MonoBehaviour, IPointerClickHandler
     {
         ClearSolarSystem();
 
-        GalaxyHandler.GenerateGalaxy();
-
-        SolarSystem curSolarSystem = GalaxyHandler.SolarSystems[ShipHandler.Instance.ActiveShip.Position.SolarID];
+        SolarSystem curSolarSystem = ConstellationHandler.Constellation.SolarSystems[ShipHandler.Instance.ActiveShip.Position.SolarID];
 
         SolarsystemNameDisplay.text = curSolarSystem.Name;
 

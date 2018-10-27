@@ -16,24 +16,22 @@ public class SolarSystem {
 
     public int SolarsystemID { get; set; }
 
-    public SolarSystem( int id )
-    {
-        SolarsystemID = id;
+    //public SolarSystem( int id )
+    //{
+    //    SolarsystemID = id;
 
-        Position = new Vector2Int(Random.Range(0, 500), Random.Range(0, 500));
+    //    Position = new Vector2Int(Random.Range(0, 500), Random.Range(0, 500));
 
-        Name = Planet.Names[UnityEngine.Random.Range(0, Planet.Names.Count)];
+    //    Name = Planet.Names[UnityEngine.Random.Range(0, Planet.Names.Count)];
 
-        Planets = new List<Planet>();
+    //    Planets = new List<Planet>();
 
-        Sun = new Sun();
+    //    Sun = new Sun();
 
-        Stargates = new List<Stargate>();
+    //    Stargates = new List<Stargate>();
 
-        GeneratePlanets();
-
-        GenerateStargates();
-    }
+    //    GeneratePlanets();
+    //}
 
     public SolarSystem(int id, Vector2Int position)
     {
@@ -62,11 +60,6 @@ public class SolarSystem {
 
             Planets.Add( new Planet( Point.First ) );
         }
-    }
-
-    private void GenerateStargates()
-    {
-        Stargates.Add( new Stargate( CalculatePoint( 0, 50, 200 ).First, SolarsystemID) );
     }
 
     private Tuple<Vector2, int> CalculatePoint(int previousRange, int minDist, int maxDist )
