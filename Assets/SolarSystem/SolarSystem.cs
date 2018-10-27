@@ -16,23 +16,6 @@ public class SolarSystem {
 
     public int SolarsystemID { get; set; }
 
-    //public SolarSystem( int id )
-    //{
-    //    SolarsystemID = id;
-
-    //    Position = new Vector2Int(Random.Range(0, 500), Random.Range(0, 500));
-
-    //    Name = Planet.Names[UnityEngine.Random.Range(0, Planet.Names.Count)];
-
-    //    Planets = new List<Planet>();
-
-    //    Sun = new Sun();
-
-    //    Stargates = new List<Stargate>();
-
-    //    GeneratePlanets();
-    //}
-
     public SolarSystem(int id, Vector2Int position)
     {
         SolarsystemID = id;
@@ -42,6 +25,8 @@ public class SolarSystem {
         Name = Planet.Names[UnityEngine.Random.Range(0, Planet.Names.Count)];
 
         Planets = new List<Planet>();
+
+        GeneratePlanets();
 
         Sun = new Sun();
 

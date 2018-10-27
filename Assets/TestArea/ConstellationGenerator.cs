@@ -187,49 +187,31 @@ namespace ProceduralGeneration
 
             Dictionary<Stargate, int> connectedGates = new Dictionary<Stargate, int>();
 
+
             foreach (KeyValuePair<Stargate, int>stargate in gates)
             {
                 if (connectedGates.ContainsKey(stargate.Key)) continue;
-                connectedGates.Add( stargate.Key, stargate.Value );
 
                 // Grab a gate from the Gate list
                 foreach (var targetGate in gates)
                 {
                     if (connectedGates.ContainsKey(targetGate.Key)) continue;
-                    
+                    if (stargate.Key == targetGate.Key) continue;
+
+                    // If the gates are poiting towards the same system, continue.
                     if (targetGate.Value == stargate.Value) continue;
 
+                    // If the target system ID doesnt' match the gate target ID, continue.
+                    if (targetGate.Key.SolarsystemID != stargate.Value) continue;
+
+                    // Add the connected gates to the "ConnectedGates" list.
+                    connectedGates.Add( stargate.Key, stargate.Value );
                     connectedGates.Add( targetGate.Key, targetGate.Value );
 
                     stargate.Key.Target = targetGate.Key;
                     targetGate.Key.Target = stargate.Key;
 
                     break;
-                }
-            }
-
-
-            foreach (var con in gates)
-            {
-                //Debug.Log(con.Value);
-                //Stargate to = gates.Where(g => g.Key != con.Key)
-                //          .Where(g => g.Value == con.Value)
-                //          .First(g => g.Key.Target == null).Key;
-
-                //con.Key.Target = to;
-                //to.Target = con.Key;
-
-                //Debug.Log("From: " + con.Key.Target.SolarsystemID + " To: " + to.Target.SolarsystemID);
-            }
-
-
-            foreach (var system in Constellation.SolarSystems)
-            {
-                Debug.Log( "StarSystem: " + system.SolarsystemID + " : "  + system.Name );
-
-                foreach (var gate in system.Stargates)
-                {
-                    Debug.Log( "     " + gate.Target.SolarsystemID);
                 }
             }
         }

@@ -94,7 +94,7 @@ public class TerminalNavigation : MonoBehaviour, IPointerClickHandler
             CreatePlanet(planet);
         }
 
-        CreateStargate( curSolarSystem.Stargates[0] );
+        CreateStargates( curSolarSystem );
 
         CreateShip();
     }
@@ -120,6 +120,14 @@ public class TerminalNavigation : MonoBehaviour, IPointerClickHandler
         ship.transform.SetParent(Content.transform, false);
         ship.transform.localPosition = new Vector3(0, 0, 0);
         PlayerShipMarker = ship;
+    }
+
+    private void CreateStargates( SolarSystem solarsystem )
+    {
+        foreach (var stargate in solarsystem.Stargates)
+        {
+            CreateStargate( stargate );
+        }
     }
 
     private void CreateStargate( Stargate stargate )
