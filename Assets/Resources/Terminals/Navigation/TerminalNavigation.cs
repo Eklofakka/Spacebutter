@@ -9,10 +9,8 @@ public class TerminalNavigation : MonoBehaviour, IPointerClickHandler
     public static bool Open { get; private set; } = false;
 
     [Header("Body Prefabs")]
-    [SerializeField] private GameObject Sun;
     [SerializeField] private TerminalNavigationSolarIcon IconPrefab;
     [SerializeField] private GameObject Ship;
-    [SerializeField] private GameObject Planet;
     [SerializeField] private Transform Content;
     [SerializeField] private TextMeshProUGUI SolarsystemNameDisplay;
 
@@ -87,7 +85,7 @@ public class TerminalNavigation : MonoBehaviour, IPointerClickHandler
 
         SolarsystemNameDisplay.text = curSolarSystem.Name;
 
-        CreateSun();
+        CreateSun( curSolarSystem.Sun );
 
         foreach (var planet in curSolarSystem.Planets)
         {
@@ -99,19 +97,20 @@ public class TerminalNavigation : MonoBehaviour, IPointerClickHandler
         CreateShip();
     }
 
-    private void CreateSun()
+    private void CreateSun( Sun sun )
     {
-        var sun = Instantiate( Sun );
-        sun.transform.SetParent( Content.transform, false );
-        sun.transform.localPosition = new Vector3(0, 0, 0);
+        var sunObj = Instantiate( IconPrefab );
+        sunObj.transform.SetParent( Content.transform, false );
+        sunObj.transform.localPosition = new Vector3(0, 0, 0);
+        sunObj.Init(sun as SolarSystemBody, TerminalNavigationSolarIcon.BodyTypes.SUN);
     }
 
     private void CreatePlanet( Planet planet )
     {
-        var planetObj = Instantiate(Planet);
+        var planetObj = Instantiate( IconPrefab );
         planetObj.transform.SetParent( Content.transform, false );
         planetObj.transform.localPosition = planet.Position;
-        
+        planetObj.Init( planet as SolarSystemBody, TerminalNavigationSolarIcon.BodyTypes.PLANET );
     }
 
     private void CreateShip()
@@ -136,7 +135,8 @@ public class TerminalNavigation : MonoBehaviour, IPointerClickHandler
         stargateObj.transform.SetParent( Content.transform, false );
         stargateObj.Body = stargate;
         stargateObj.transform.localPosition = stargate.Position;
-        
+        stargateObj.Init( stargate as SolarSystemBody, TerminalNavigationSolarIcon.BodyTypes.STARGATE );
+
         stargateObj.OnClick += OnIconClicked;
     }
 

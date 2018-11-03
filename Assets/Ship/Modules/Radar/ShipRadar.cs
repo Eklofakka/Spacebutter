@@ -50,6 +50,17 @@ public class ShipRadar
                 OnContactAdded(planet);
             }
         }
+
+        // Look for sun.
+        distance = Vector2.Distance(playerShip.Position.Solar, system.Sun.Position);
+
+        withinRange = distance <= Range;
+
+        if (withinRange && Contacts.Contains(system.Sun) == false)
+        {
+            AddContact(system.Sun);
+            OnContactAdded(system.Sun);
+        }
     }
 
     private void RemoveContacts()

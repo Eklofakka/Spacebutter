@@ -55,7 +55,7 @@ public class Planet : SolarSystemBody
 
     public Planet()
     {
-        Name = UnityEngine.Random.Range(1000, 9999).ToString();
+        Name = Names[UnityEngine.Random.Range(0, Names.Count)];
 
         Array types = Enum.GetValues(typeof(Types));
 

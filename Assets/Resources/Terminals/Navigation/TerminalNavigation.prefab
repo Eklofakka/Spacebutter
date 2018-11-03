@@ -373,10 +373,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Sun: {fileID: 1223188672974382008, guid: 0ac57d6f2c9107e49885283765eef6aa, type: 3}
-  IconPrefab: {fileID: 7539621826150676693, guid: 4a0d45dbe43841d48a59cf928fc626a1,
+  IconPrefab: {fileID: 3665679572260856860, guid: ab008f0837b3285479c679cb2e93358b,
     type: 3}
   Ship: {fileID: 6005819546130560879, guid: fea561ba7db05cb4095de8971736b8c6, type: 3}
-  Planet: {fileID: 3333608484156166450, guid: ab008f0837b3285479c679cb2e93358b, type: 3}
+  Planet: {fileID: 3665679572260856860, guid: ab008f0837b3285479c679cb2e93358b, type: 3}
   Content: {fileID: 3151827372827720811}
   SolarsystemNameDisplay: {fileID: 2973005023880144694}
   TargetPositionDisplay: {fileID: 406393477402455957}
