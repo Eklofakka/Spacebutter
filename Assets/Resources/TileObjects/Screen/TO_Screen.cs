@@ -18,19 +18,23 @@ public class TO_Screen : TileObject, IInteract
         if (Vector2.Distance(transform.position, Dude.Main.transform.position) >= 1f) return;
 
         if (Open == false)
-            OpenConsole();
+            StartCoroutine( OpenConsole() );
     }
 
-    private void OpenConsole()
+    private IEnumerator OpenConsole()
     {
-        //GameObject obj = Instantiate( Resources.Load<GameObject>( "Interfaces/Logistics/CI_Logistics" ) );
-        if (TerminalNavigation.Open == true) return;
+        Open = true;
+
         GameObject obj = Instantiate( Resources.Load<GameObject>( "Terminals/Navigation/TerminalNavigation" ) );
 
         obj.transform.SetParent( MainCanvas.Instance, false );
 
-        //Open = true;
+        TerminalNavigation terminal = obj.GetComponent<TerminalNavigation>();
 
-        //Dude.Main.CanMove = false;
+        yield return StartCoroutine(terminal.OpenTerminal());
+
+        Open = false;
+
+        Destroy( obj );
     }
 }

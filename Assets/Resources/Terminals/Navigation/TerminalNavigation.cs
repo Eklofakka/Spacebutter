@@ -4,7 +4,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.EventSystems;
 
-public class TerminalNavigation : MonoBehaviour, IPointerClickHandler
+public class TerminalNavigation : ITerminal, IPointerClickHandler
 {
     public static bool Open { get; private set; } = false;
 
@@ -58,13 +58,6 @@ public class TerminalNavigation : MonoBehaviour, IPointerClickHandler
     [Header("Marker Info")]
     [SerializeField] private TextMeshPro MarketPositionDisplay;
     [SerializeField] private TextMeshPro MarketDistanceDisplay;
-
-    public void Start()
-    {
-        Open = true;
-
-        GenerateSolarSystem();
-    }
 
     private void ClearSolarSystem()
     {
@@ -156,7 +149,8 @@ public class TerminalNavigation : MonoBehaviour, IPointerClickHandler
         if (Input.GetKeyDown(KeyCode.T))
         {
             Open = false;
-            Destroy(gameObject);
+
+            ToBeClosed = true;
         }
 
         Vector3 ff = ShipHandler.Instance.ActiveShip.Position.Solar;
@@ -164,6 +158,19 @@ public class TerminalNavigation : MonoBehaviour, IPointerClickHandler
 
         UpdateTargetInfo();
     }
+
+    #region ITerminal
+    public override IEnumerator OpenTerminal()
+    {
+        Open = ToBeClosed = false;
+
+        GenerateSolarSystem();
+
+        while (ToBeClosed == false) yield return null;
+
+        Open = ToBeClosed = false;
+    }
+    #endregion
 
     #region Button Events
     public void OnIconClicked( TerminalNavigationSolarIcon icon, PointerEventData eventData )
