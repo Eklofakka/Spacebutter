@@ -17,7 +17,7 @@ public class Stargate : SolarSystemBody
 
         SolarsystemID = solarsystemID;
 
-        Name = "Stargate";
+        Name = Planet.Names[UnityEngine.Random.Range(0, Planet.Names.Count)];
     }
 
     public override string RadarInfo()
