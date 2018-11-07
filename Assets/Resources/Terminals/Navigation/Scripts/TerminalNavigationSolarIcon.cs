@@ -30,13 +30,21 @@ public class TerminalNavigationSolarIcon : MonoBehaviour, IPointerClickHandler
         switch (BodyType)
         {
             case BodyTypes.PLANET:
-                Image.sprite = Resources.Load<Sprite>( Assets.Sprites.PLANET );
+                Image.sprite = Assets.Sprites.Instance.SolarPlanet_8x8;
                 break;
             case BodyTypes.STARGATE:
-                GetComponent<RectTransform>().sizeDelta = new Vector2(8, 8);
+                //GetComponent<RectTransform>().sizeDelta = new Vector2(8, 8);
 
-                Image.sprite = Resources.Load<Sprite>(Assets.Sprites.STARGATE);
+                //Image.sprite = Assets.Sprites.Instance.SolarStargate_8x8;
 
+
+                GenerateTargetLine();
+
+                GetComponent<RectTransform>().sizeDelta = new Vector2(Image.sprite.rect.width, Image.sprite.rect.height);
+
+                //Image.color = new Color(1, 1, 1, 0.03f);
+
+                Image.raycastTarget = false;
                 Image.color = Color.white;
                 break;
             case BodyTypes.SUN:
@@ -52,8 +60,7 @@ public class TerminalNavigationSolarIcon : MonoBehaviour, IPointerClickHandler
                 GenerateSolarTexture();
 
                 GetComponent<RectTransform>().sizeDelta = new Vector2( Image.sprite.rect.width, Image.sprite.rect.height );
-
-                //Image.color = new Color(1, 1, 1, 1);
+                
                 Image.color = new Color(1, 1, 1, 0.03f);
 
                 Image.raycastTarget = false;
@@ -98,5 +105,29 @@ public class TerminalNavigationSolarIcon : MonoBehaviour, IPointerClickHandler
         }
 
         Image.sprite = Sprite.Create(texture, new Rect(0, 0, radius * 2, (radius * 2) + 2), Vector2.zero, 10, 0, SpriteMeshType.FullRect);
+    }
+
+    private void GenerateTargetLine()
+    {
+        int distance = (int)Vector2.Distance( Body.Position, Vector2.zero );
+
+        int width = (int)Mathf.Abs(Body.Position.x) +1;
+        int height = (int)Mathf.Abs(Body.Position.y) +1;
+
+        Texture2D texture = new Texture2D(width, height, TextureFormat.RGBA32, false, false);
+
+        texture.filterMode = FilterMode.Point;
+
+        var pxls = texture.GetPixels32();
+        for (int i = 0; i < pxls.Length; i++)
+        {
+            pxls[i] = new Color32(10, 10, 10, 250);
+        }
+
+        texture.SetPixels32(pxls);
+
+        texture = DrawPixelLine.DrawLine(texture, 0, 0, width -1, height -1,  Color.yellow);
+
+        Image.sprite = Sprite.Create(texture, new Rect(0, 0, width,height), Vector2.zero, 10, 0, SpriteMeshType.FullRect);
     }
 }
