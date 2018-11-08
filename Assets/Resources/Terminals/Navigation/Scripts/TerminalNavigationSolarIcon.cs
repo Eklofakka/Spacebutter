@@ -121,14 +121,14 @@ public class TerminalNavigationSolarIcon : MonoBehaviour, IPointerClickHandler
         var pxls = texture.GetPixels32();
         for (int i = 0; i < pxls.Length; i++)
         {
-            pxls[i] = new Color32(0, 0, 0, 0);
+            pxls[i] = new Color32(50, 50, 50, 50);
         }
 
         texture.SetPixels32(pxls);
 
-        texture = DrawPixelLine.DrawLine(texture, 0, 0, width -1, height -1,  Color.yellow, 4);
+        texture = DrawPixelLine.DrawLine(texture, 0, 0, (int)Body.Position.x, (int)Body.Position.y,  Color.yellow);
 
-        Image.sprite = Sprite.Create(texture, new Rect(0, 0, width,height), Vector2.zero, 10, 0, SpriteMeshType.FullRect);
+        Image.sprite = Sprite.Create(texture, new Rect(0, 0, width, height), Vector2.zero, 10, 2, SpriteMeshType.Tight);
 
 
 
