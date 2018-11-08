@@ -109,7 +109,7 @@ public class TerminalNavigationSolarIcon : MonoBehaviour, IPointerClickHandler
 
     private void GenerateTargetLine()
     {
-        int distance = (int)Vector2.Distance( Body.Position, Vector2.zero );
+        int distance = (int)Vector2.Distance(  Vector2.zero, Body.Position );
 
         int width = (int)Mathf.Abs(Body.Position.x) +1;
         int height = (int)Mathf.Abs(Body.Position.y) +1;
@@ -121,13 +121,21 @@ public class TerminalNavigationSolarIcon : MonoBehaviour, IPointerClickHandler
         var pxls = texture.GetPixels32();
         for (int i = 0; i < pxls.Length; i++)
         {
-            pxls[i] = new Color32(10, 10, 10, 250);
+            pxls[i] = new Color32(0, 0, 0, 0);
         }
 
         texture.SetPixels32(pxls);
 
-        texture = DrawPixelLine.DrawLine(texture, 0, 0, width -1, height -1,  Color.yellow);
+        texture = DrawPixelLine.DrawLine(texture, 0, 0, width -1, height -1,  Color.yellow, 4);
 
         Image.sprite = Sprite.Create(texture, new Rect(0, 0, width,height), Vector2.zero, 10, 0, SpriteMeshType.FullRect);
+
+
+
+        // Offset
+        int xOffset = Body.Position.x < 0 ? 1 : -1;
+        int yOffset = Body.Position.y < 0 ? 1 : -1;
+
+        transform.localPosition += new Vector3( (texture.width / 2) * xOffset, (texture.height / 2) * yOffset);
     }
 }
