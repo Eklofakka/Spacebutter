@@ -6,14 +6,14 @@ public class MouseCursor : MonoBehaviour
 {
     private void Start()
     {
-        if ( Application.isEditor == false )
-        {
-            //Cursor.visible = false;
-        }
+        //if ( Application.isEditor == false )
+        //{
+            Cursor.visible = false;
+        //}
     }
 
     // Update is called once per frame
-    void Update()
+    void LateUpdate()
     {
         Vector2 pos = Input.mousePosition / 2;
         

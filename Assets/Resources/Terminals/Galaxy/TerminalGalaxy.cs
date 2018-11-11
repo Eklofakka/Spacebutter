@@ -15,6 +15,8 @@ public class TerminalGalaxy : ITerminal
     [SerializeField] private Transform Content;
     [SerializeField] private GameObject SolarsystemPrefab;
 
+    private Transform PlayerGalaxyIndicator;
+
     public override IEnumerator OpenTerminal()
     {
         Open = ToBeClosed = false;
@@ -43,6 +45,8 @@ public class TerminalGalaxy : ITerminal
 
             GenerateStargateLines(solarsytem, solarsystemObj, alreadyDrawnConnections);
         }
+
+        CreatePlayerCircle();
     }
 
     private void GenerateStargateLines( SolarSystem solarsystem, GameObject solarsystemObj, List<Tuple<int, int>> alreadyDrawnConnections )
@@ -52,14 +56,14 @@ public class TerminalGalaxy : ITerminal
             SolarSystem targetSystem = ConstellationHandler.Constellation.SolarSystems[stargate.Target.SolarsystemID];
 
             if (alreadyDrawnConnections.Any( x => x.First == solarsystem.SolarsystemID && x.Second == targetSystem.SolarsystemID ) ||
-                 alreadyDrawnConnections.Any(x => x.First == targetSystem.SolarsystemID && x.Second == solarsystem.SolarsystemID))
+                alreadyDrawnConnections.Any(x => x.First == targetSystem.SolarsystemID && x.Second == solarsystem.SolarsystemID))
             {
                 continue;
             }
 
             alreadyDrawnConnections.Add(new Tuple<int, int>(solarsystem.SolarsystemID, targetSystem.SolarsystemID));
 
-            GameObject line = DrawPixelLine.Line(solarsystem.Position * SCALE, targetSystem.Position * SCALE, Color.white, 4);
+            GameObject line = DrawPixelLine.Line(solarsystem.Position * SCALE, targetSystem.Position * SCALE, new Color( 1, 1, 1, 0.5f ), 4);
             line.transform.SetParent(solarsystemObj.transform, false);
 
             int xOffset = solarsystem.Position.x < targetSystem.Position.x ? 0 : 1;
@@ -69,5 +73,43 @@ public class TerminalGalaxy : ITerminal
 
             line.transform.localPosition += new Vector3(0 - (xOffset * texture.width), 0 - (yOffset * texture.height));
         }
+    }
+
+    private void CreatePlayerCircle()
+    {
+        SolarSystem solarsystem = ConstellationHandler.Constellation.SolarSystems[ShipHandler.Instance.ActiveShip.Position.SolarID];
+
+        GameObject circle = DrawPixelCircle.Drawd(6, Color.white, true);
+        circle.transform.SetParent( Content, false );
+
+        circle.transform.localPosition = PositionToContentPosition( solarsystem.Position, 6 );
+
+        PlayerGalaxyIndicator = circle.transform;
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            Open = false;
+
+            ToBeClosed = true;
+        }
+
+        if ( PlayerGalaxyIndicator != null )
+        {
+            SolarSystem solarsystem = ConstellationHandler.Constellation.SolarSystems[ShipHandler.Instance.ActiveShip.Position.SolarID];
+
+            PlayerGalaxyIndicator.localPosition = PositionToContentPosition( solarsystem.Position, 6 );
+        }
+    }
+
+    private Vector3 PositionToContentPosition( Vector2 pos, int offset )
+    {
+        Vector2 v3 = pos * TerminalGalaxy.SCALE;
+        v3.x -= offset;
+        v3.y -= offset + 1;
+
+        return new Vector3(v3.x, v3.y, 0f);
     }
 }

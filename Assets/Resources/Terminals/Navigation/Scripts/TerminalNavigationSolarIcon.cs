@@ -101,7 +101,7 @@ public class TerminalNavigationSolarIcon : MonoBehaviour, IPointerClickHandler
         foreach (var planet in planets)
         {
             int r = (int)Vector2.Distance(planet.Position, Body.Position) + 1;
-            texture = DrawPixelCircle.Drawd(r, Color.white, texture);
+            //texture = DrawPixelCircle.Drawd(r, Color.white, texture);
         }
 
         Image.sprite = Sprite.Create(texture, new Rect(0, 0, radius * 2, (radius * 2) + 2), Vector2.zero, 10, 0, SpriteMeshType.FullRect);

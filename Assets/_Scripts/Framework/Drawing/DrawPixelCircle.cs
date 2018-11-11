@@ -5,9 +5,13 @@ using UnityEngine.UI;
 
 public static class DrawPixelCircle
 {
-    public static Texture2D Drawd(int radius, Color clr, Texture2D texture)
+    public static GameObject Drawd(int radius, Color clr, bool doubleCenter = false)
     {
         //Texture2D texture = new Texture2D(radius * 2, ( radius * 2 ) + 2, TextureFormat.RGBA32, false, false);
+
+        Texture2D texture = BlankTexture( radius * 2, radius * 2 );
+
+        int width = radius * 2;
 
         int x = texture.width / 2;
         int y = texture.height / 2;
@@ -20,14 +24,24 @@ public static class DrawPixelCircle
 
         //texture.SetPixels32(pxls);
 
-        DrawC(x, y, radius, texture, true, clr);
+
+        DrawC(x, y, radius, texture, doubleCenter, clr);
 
         //texture.filterMode = FilterMode.Point;
 
         texture.Apply();
 
+        Sprite sprite = CreateSprite(width, width, texture);
 
-        return texture;
+        GameObject circ = new GameObject();
+
+        Image image = circ.AddComponent<Image>();
+        image.sprite = sprite;
+
+        circ.GetComponent<RectTransform>().pivot = Vector2.zero;
+        circ.GetComponent<RectTransform>().sizeDelta = new Vector2( width , width +1 );
+
+        return circ;
         //return Sprite.Create(texture, new Rect(0, 0, radius * 2, (radius * 2) + 2), Vector2.zero, 10, 0, SpriteMeshType.FullRect);
     }
 
@@ -69,5 +83,27 @@ public static class DrawPixelCircle
                 err += dx - (radius << 1);
             }
         }
+    }
+
+    private static Texture2D BlankTexture(int width, int height)
+    {
+        Texture2D texture = new Texture2D(width, height+1, TextureFormat.RGBA32, false, false);
+        texture.filterMode = FilterMode.Point;
+
+        var pxls = texture.GetPixels32();
+        for (int i = 0; i < pxls.Length; i++)
+        {
+            pxls[i] = Color.clear;
+        }
+
+        texture.SetPixels32(pxls);
+        texture.Apply();
+
+        return texture;
+    }
+
+    private static Sprite CreateSprite(int width, int height, Texture2D texture)
+    {
+        return Sprite.Create(texture, new Rect(0, 0, width, height+1), Vector2.zero, 10, 2, SpriteMeshType.Tight);
     }
 }
