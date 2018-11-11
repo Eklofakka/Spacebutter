@@ -39,11 +39,6 @@ public static class DrawPixelCircle
         int dy = 1;
         int err = dx - (radius << 1);
 
-        //texture.SetPixel(radius - 1, radius - 1, Color.black);
-        //texture.SetPixel(50, 49, Color.black);
-        //texture.SetPixel(49, 50, Color.black);
-        //texture.SetPixel(50, 50, Color.black);
-
         int dC = doubleCenter ? 1 : 0;
 
         while (x >= y)

@@ -15,3 +15,13 @@ Update Mode: updateDependencies
 The following packages were updated:
   com.unity.collab-proxy from version 1.2.9 to 1.2.11
   com.unity.package-manager-ui from version 2.0.1 to 2.0.2
+
+=== Sat Nov 10 13:21:33 2018
+
+Packages were changed.
+Update Mode: updateDependencies
+
+The following packages were added:
+  com.unity.xr.legacyinputhelpers@1.0.0
+The following packages were updated:
+  com.unity.package-manager-ui from version 2.0.2 to 2.1.0-preview.1

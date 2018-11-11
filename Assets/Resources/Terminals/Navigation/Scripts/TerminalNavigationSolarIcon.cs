@@ -33,19 +33,19 @@ public class TerminalNavigationSolarIcon : MonoBehaviour, IPointerClickHandler
                 Image.sprite = Assets.Sprites.Instance.SolarPlanet_8x8;
                 break;
             case BodyTypes.STARGATE:
-                //GetComponent<RectTransform>().sizeDelta = new Vector2(8, 8);
+                GetComponent<RectTransform>().sizeDelta = new Vector2(8, 8);
 
-                //Image.sprite = Assets.Sprites.Instance.SolarStargate_8x8;
-
-
-                GenerateTargetLine();
+                Image.sprite = Assets.Sprites.Instance.SolarStargate_8x8;
 
                 GetComponent<RectTransform>().sizeDelta = new Vector2(Image.sprite.rect.width, Image.sprite.rect.height);
 
-                //Image.color = new Color(1, 1, 1, 0.03f);
+                Image.color = new Color(1, 1, 1, 1f);
 
-                Image.raycastTarget = false;
-                Image.color = Color.white;
+                GenerateTargetLine();
+
+
+                //Image.raycastTarget = false;
+                //Image.color = Color.white;
                 break;
             case BodyTypes.SUN:
                 //Image.sprite = Resources.Load<Sprite>(Assets.Sprites.SUN);
@@ -61,7 +61,7 @@ public class TerminalNavigationSolarIcon : MonoBehaviour, IPointerClickHandler
 
                 GetComponent<RectTransform>().sizeDelta = new Vector2( Image.sprite.rect.width, Image.sprite.rect.height );
                 
-                Image.color = new Color(1, 1, 1, 0.03f);
+                Image.color = new Color(1, 1, 1, 1f);
 
                 Image.raycastTarget = false;
 
@@ -109,33 +109,16 @@ public class TerminalNavigationSolarIcon : MonoBehaviour, IPointerClickHandler
 
     private void GenerateTargetLine()
     {
-        int distance = (int)Vector2.Distance(  Vector2.zero, Body.Position );
+        GameObject pixelLine = DrawPixelLine.Line( Vector2.zero, Body.Position );
 
-        int width = (int)Mathf.Abs(Body.Position.x) +1;
-        int height = (int)Mathf.Abs(Body.Position.y) +1;
-
-        Texture2D texture = new Texture2D(width, height, TextureFormat.RGBA32, false, false);
-
-        texture.filterMode = FilterMode.Point;
-
-        var pxls = texture.GetPixels32();
-        for (int i = 0; i < pxls.Length; i++)
-        {
-            pxls[i] = new Color32(50, 50, 50, 50);
-        }
-
-        texture.SetPixels32(pxls);
-
-        texture = DrawPixelLine.DrawLine(texture, 0, 0, (int)Body.Position.x, (int)Body.Position.y,  Color.yellow);
-
-        Image.sprite = Sprite.Create(texture, new Rect(0, 0, width, height), Vector2.zero, 10, 2, SpriteMeshType.Tight);
-
-
+        pixelLine.transform.SetParent( transform, false );
 
         // Offset
-        int xOffset = Body.Position.x < 0 ? 1 : -1;
-        int yOffset = Body.Position.y < 0 ? 1 : -1;
+        int xOffset = Body.Position.x < 0 ? 0 : 1;
+        int yOffset = Body.Position.y < 0 ? 0 : 1;
 
-        transform.localPosition += new Vector3( (texture.width / 2) * xOffset, (texture.height / 2) * yOffset);
+        Texture2D texture = pixelLine.GetComponent<Image>().sprite.texture;
+
+        pixelLine.transform.localPosition += new Vector3(0 - (xOffset * texture.width) , 0 - (yOffset * texture.height));
     }
 }

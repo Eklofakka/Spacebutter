@@ -8,8 +8,6 @@ public class DraggableContent : MonoBehaviour, IDragHandler
 {
     private Vector3 MoveDelta;
 
-
-
     private Vector3 Center;
 
     public void OnDrag(PointerEventData eventData)

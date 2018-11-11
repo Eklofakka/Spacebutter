@@ -14,7 +14,7 @@ TagManager:
   - 
   - 
   - PostProcessing
-  - 
+  - MouseCursor
   - 
   - 
   - 
@@ -46,4 +46,7 @@ TagManager:
     locked: 0
   - name: Top
     uniqueID: 1903638995
+    locked: 0
+  - name: Mouse
+    uniqueID: 2166828755
     locked: 0
