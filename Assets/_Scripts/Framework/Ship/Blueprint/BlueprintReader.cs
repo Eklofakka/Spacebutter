@@ -11,7 +11,8 @@ public static class BlueprintReader
     private static Color32 FloorZone = new Color32(239, 195, 8, 255);
 
     private static Color32 Door = new Color32( 247, 226, 107, 255 );
-    private static Color32 Screen = new Color32( 57, 58, 213, 255 );
+    private static Color32 ScreenTerminalNavigation = new Color32( 57, 58, 213, 255 );
+    private static Color32 ScreenTerminalGalaxy = new Color32( 190, 38, 51, 255 );
 
     public enum BlueprintType { Structure, Objects }
 
@@ -73,9 +74,14 @@ public static class BlueprintReader
         {
             return new Truple<string, Vector2Int, TileObject>( "TileObjects/Door/TO_Door", new Vector2Int(x, y), null );
         }
-        else if ( pixel.IsEqualTo( Screen ) )
+        else if ( pixel.IsEqualTo( ScreenTerminalNavigation ) )
         {
             return new Truple<string, Vector2Int, TileObject>("TileObjects/Screen/TO_Screen", new Vector2Int(x, y), null);
+        }
+        else if (pixel.IsEqualTo(ScreenTerminalGalaxy))
+        {
+            Debug.Log("Adding terminal");
+            return new Truple<string, Vector2Int, TileObject>("TileObjects/Screen/TO_TerminalGalaxy", new Vector2Int(x, y), null);
         }
 
         return null;

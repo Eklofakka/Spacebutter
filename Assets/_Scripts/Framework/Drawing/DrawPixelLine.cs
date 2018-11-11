@@ -45,7 +45,7 @@ public static class DrawPixelLine
         return texture;
     }
 
-    public static GameObject Line( Vector2 start, Vector2 end )
+    public static GameObject Line( Vector2 start, Vector2 end, Color clr, int gap = 0 )
     {
         int length = (int)Vector2.Distance( start, end );
         int width = Mathf.Max( (int)Mathf.Abs(start.x - end.x), 1 );
@@ -55,7 +55,7 @@ public static class DrawPixelLine
 
         Texture2D texture = BlankTexture(width, height);
 
-        texture = DrawLine(texture, 0, 0, Mathf.Max(width -1, 1), Mathf.Max(height -1, 1), start, end, Color.green);
+        texture = DrawLine(texture, 0, 0, Mathf.Max(width -1, 1), Mathf.Max(height -1, 1), start, end, clr, gap);
 
         obj.GetComponent<Image>().sprite = CreateSprite( width, height, texture);
 

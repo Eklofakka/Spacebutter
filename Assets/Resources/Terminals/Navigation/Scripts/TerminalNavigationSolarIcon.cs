@@ -109,7 +109,7 @@ public class TerminalNavigationSolarIcon : MonoBehaviour, IPointerClickHandler
 
     private void GenerateTargetLine()
     {
-        GameObject pixelLine = DrawPixelLine.Line( Vector2.zero, Body.Position );
+        GameObject pixelLine = DrawPixelLine.Line( Vector2.zero, Body.Position, Color.white );
 
         pixelLine.transform.SetParent( transform, false );
 
