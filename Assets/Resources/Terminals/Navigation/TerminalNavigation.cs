@@ -225,8 +225,8 @@ public class TerminalNavigation : ITerminal, IPointerClickHandler
         if (eventData.button == PointerEventData.InputButton.Right)
         {
             Vector3 pos = eventData.position / 2f;
-            pos.x -= 480;
-            pos.y -= 270;
+            pos.x -= Screen.width / 4;
+            pos.y -= Screen.height / 4;
             pos = pos.RoundToInt();
             pos = pos - Content.transform.parent.localPosition;
 
