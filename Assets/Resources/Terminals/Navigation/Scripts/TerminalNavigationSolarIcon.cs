@@ -40,30 +40,13 @@ public class TerminalNavigationSolarIcon : MonoBehaviour, IPointerClickHandler
                 GetComponent<RectTransform>().sizeDelta = new Vector2(Image.sprite.rect.width, Image.sprite.rect.height);
 
                 Image.color = new Color(1, 1, 1, 1f);
-
-                GenerateTargetLine();
-
-
-                //Image.raycastTarget = false;
-                //Image.color = Color.white;
                 break;
             case BodyTypes.SUN:
-                //Image.sprite = Resources.Load<Sprite>(Assets.Sprites.SUN);
+                Image.sprite = Assets.Sprites.Instance.SolarPlanet_8x8;
 
-                //Image.color = Color.yellow;
-
-                //SolarSystemBody target = ConstellationHandler.Constellation.SolarSystems[0].Planets[0];
-                //int dist = (int)Vector2.Distance(Body.Position, target.Position) + 1;
-
-                //Image.sprite = DrawPixelCircle.Drawd(dist, Color.white);
+                Image.color = Color.yellow;
 
                 GenerateSolarTexture();
-
-                GetComponent<RectTransform>().sizeDelta = new Vector2( Image.sprite.rect.width, Image.sprite.rect.height );
-                
-                Image.color = new Color(1, 1, 1, 1f);
-
-                Image.raycastTarget = false;
 
                 break;
         }
@@ -84,32 +67,29 @@ public class TerminalNavigationSolarIcon : MonoBehaviour, IPointerClickHandler
     private void GenerateSolarTexture()
     {
         List<Planet> planets = ConstellationHandler.Constellation.SolarSystems[0].Planets.OrderBy(p => (int)Vector2.Distance(p.Position, Body.Position)).ToList();
-        int radius = (int)Vector2.Distance( planets[planets.Count - 1].Position, Body.Position ) + 1;
-        
-        Texture2D texture = new Texture2D(radius * 2, ( radius * 2 ) + 2, TextureFormat.RGBA32, false, false);
+        int largestRadius = (int)Vector2.Distance( planets[planets.Count - 1].Position, Body.Position ) + 1;
 
-        texture.filterMode = FilterMode.Point;
-
-        var pxls = texture.GetPixels32();
-        for (int i = 0; i < pxls.Length; i++)
+        int[] radii = new int[planets.Count];
+        for (int i = 0; i < planets.Count; i++)
         {
-            pxls[i] = new Color32(0, 0, 0, 0);
+            radii[i] = (int)Vector2.Distance(planets[i].Position, Body.Position) + 1;
         }
 
-        texture.SetPixels32(pxls);
+        GameObject circles = DrawPixel.Circle.Draw(largestRadius, radii, new Color(1, 1, 1, 0.1f), true);
+        circles.transform.SetParent( transform, false );
 
-        foreach (var planet in planets)
-        {
-            int r = (int)Vector2.Distance(planet.Position, Body.Position) + 1;
-            //texture = DrawPixelCircle.Drawd(r, Color.white, texture);
-        }
-
-        Image.sprite = Sprite.Create(texture, new Rect(0, 0, radius * 2, (radius * 2) + 2), Vector2.zero, 10, 0, SpriteMeshType.FullRect);
+        Vector3 offset = circles.transform.localPosition;
+        offset.x -= largestRadius;
+        offset.y -= largestRadius + 1;
+        circles.transform.localPosition = offset;
     }
 
     private void GenerateTargetLine()
     {
-        GameObject pixelLine = DrawPixelLine.Line( Vector2.zero, Body.Position, Color.white );
+        // DONT DELETE CODE
+        // USEFUL TEMPLATE
+
+        GameObject pixelLine = DrawPixel.Line.Draw( Vector2.zero, Body.Position, Color.white );
 
         pixelLine.transform.SetParent( transform, false );
 

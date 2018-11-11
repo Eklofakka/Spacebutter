@@ -80,7 +80,6 @@ public static class BlueprintReader
         }
         else if (pixel.IsEqualTo(ScreenTerminalGalaxy))
         {
-            Debug.Log("Adding terminal");
             return new Truple<string, Vector2Int, TileObject>("TileObjects/Screen/TO_TerminalGalaxy", new Vector2Int(x, y), null);
         }
 

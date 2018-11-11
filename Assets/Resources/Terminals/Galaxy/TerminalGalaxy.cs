@@ -63,7 +63,7 @@ public class TerminalGalaxy : ITerminal
 
             alreadyDrawnConnections.Add(new Tuple<int, int>(solarsystem.SolarsystemID, targetSystem.SolarsystemID));
 
-            GameObject line = DrawPixelLine.Line(solarsystem.Position * SCALE, targetSystem.Position * SCALE, new Color( 1, 1, 1, 0.5f ), 4);
+            GameObject line = DrawPixel.Line.Draw(solarsystem.Position * SCALE, targetSystem.Position * SCALE, new Color( 1, 1, 1, 0.5f ), 4);
             line.transform.SetParent(solarsystemObj.transform, false);
 
             int xOffset = solarsystem.Position.x < targetSystem.Position.x ? 0 : 1;
@@ -79,7 +79,7 @@ public class TerminalGalaxy : ITerminal
     {
         SolarSystem solarsystem = ConstellationHandler.Constellation.SolarSystems[ShipHandler.Instance.ActiveShip.Position.SolarID];
 
-        GameObject circle = DrawPixelCircle.Drawd(6, Color.white, true);
+        GameObject circle = DrawPixel.Circle.Draw(6, Color.white, true);
         circle.transform.SetParent( Content, false );
 
         circle.transform.localPosition = PositionToContentPosition( solarsystem.Position, 6 );
