@@ -6,7 +6,10 @@ public class MouseCursor : MonoBehaviour
 {
     private void Start()
     {
-        //Cursor.visible = false;
+        if ( Application.isEditor == false )
+        {
+            //Cursor.visible = false;
+        }
     }
 
     // Update is called once per frame
@@ -14,8 +17,8 @@ public class MouseCursor : MonoBehaviour
     {
         Vector2 pos = Input.mousePosition / 2;
         
-        pos.x -= 480;
-        pos.y -= 270;
+        pos.x -= Screen.width / 4;
+        pos.y -= Screen.height / 4;
 
         pos.x = Mathf.RoundToInt(pos.x);
         pos.y = Mathf.RoundToInt(pos.y);
