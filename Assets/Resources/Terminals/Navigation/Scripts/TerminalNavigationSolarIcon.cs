@@ -66,7 +66,7 @@ public class TerminalNavigationSolarIcon : MonoBehaviour, IPointerClickHandler
 
     private void GenerateSolarTexture()
     {
-        List<Planet> planets = ConstellationHandler.Constellation.SolarSystems[0].Planets.OrderBy(p => (int)Vector2.Distance(p.Position, Body.Position)).ToList();
+        List<Planet> planets = ConstellationHandler.Constellation.SolarSystems[ ShipHandler.Instance.ActiveShip.Position.SolarID ].Planets.OrderBy(p => (int)Vector2.Distance(p.Position, Body.Position)).ToList();
         int largestRadius = (int)Vector2.Distance( planets[planets.Count - 1].Position, Body.Position ) + 1;
 
         int[] radii = new int[planets.Count];
