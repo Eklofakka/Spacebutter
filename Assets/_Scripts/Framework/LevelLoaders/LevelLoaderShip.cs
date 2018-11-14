@@ -23,8 +23,7 @@ public class LevelLoaderShip : MonoBehaviour
     {
         TileSpawner = GetComponent<TileSpawner>();
         TileObjectSpawner = GetComponent<TileObjectSpawner>();
-
-        //ShipToLoad = Resources.Load<SOBlueprint>( ship );
+        
         ShipToLoad = FactoryBlueprint.Instance.ROOKIE;
 
         ShipToLoad.Layout = BlueprintReader.Read( ShipToLoad.Tiles, ShipToLoad.TileObjects );
