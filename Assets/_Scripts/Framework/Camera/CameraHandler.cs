@@ -4,19 +4,38 @@ using UnityEngine;
 
 public class CameraHandler : MonoBehaviour
 {
-    public const int SHIP = -1;
+    public enum Cameras { SHIP, TERMINAL }
+    //public const int SHIP = -1;
+    //public const int COMBAT = 18;
 
-    public const int COMBAT = 18;
+    [SerializeField] private Camera Ship;
+    [SerializeField] private Camera Terminal;
+    
+    public Cameras Current { get; private set; }
 
     private void Update()
     {
         if ( Input.GetKeyDown( KeyCode.G ) )
         {
-            Vector3 newPos = transform.position;
-
-            newPos.z = newPos.z == SHIP ? COMBAT : SHIP;
-
-            transform.position = newPos;
+            SwitchCamera( Current == Cameras.SHIP ? Cameras.TERMINAL : Cameras.SHIP );
         }
+    }
+
+    public void SwitchCamera( Cameras camera )
+    {
+        switch(camera)
+        {
+            case Cameras.SHIP:
+                Ship.gameObject.SetActive(true);
+                Terminal.gameObject.SetActive(false);
+                break;
+
+            case Cameras.TERMINAL:
+                Terminal.gameObject.SetActive(true);
+                Ship.gameObject.SetActive(false);
+                break;
+        }
+
+        Current = camera;
     }
 }

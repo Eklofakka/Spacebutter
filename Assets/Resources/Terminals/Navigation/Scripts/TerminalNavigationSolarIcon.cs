@@ -17,11 +17,11 @@ public class TerminalNavigationSolarIcon : MonoBehaviour, IPointerClickHandler
 
     public BodyTypes BodyType;
 
-    private Image Image;
+    private SpriteRenderer Image;
 
     public void Init( SolarSystemBody body, BodyTypes bodyType )
     {
-        Image = GetComponent<Image>();
+        Image = GetComponent<SpriteRenderer>();
 
         Body = body;
 
@@ -33,11 +33,11 @@ public class TerminalNavigationSolarIcon : MonoBehaviour, IPointerClickHandler
                 Image.sprite = Assets.Sprites.Instance.SolarPlanet_8x8;
                 break;
             case BodyTypes.STARGATE:
-                GetComponent<RectTransform>().sizeDelta = new Vector2(8, 8);
+                //GetComponent<RectTransform>().sizeDelta = new Vector2(8, 8);
 
                 Image.sprite = Assets.Sprites.Instance.SolarStargate_8x8;
 
-                GetComponent<RectTransform>().sizeDelta = new Vector2(Image.sprite.rect.width, Image.sprite.rect.height);
+                //GetComponent<RectTransform>().sizeDelta = new Vector2(Image.sprite.rect.width, Image.sprite.rect.height);
 
                 Image.color = new Color(1, 1, 1, 1f);
                 break;
@@ -51,7 +51,7 @@ public class TerminalNavigationSolarIcon : MonoBehaviour, IPointerClickHandler
                 break;
         }
 
-        transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = Body.Name;
+        //transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = Body.Name;
     }
 
     public void OnPointerClick(PointerEventData eventData)
@@ -78,10 +78,8 @@ public class TerminalNavigationSolarIcon : MonoBehaviour, IPointerClickHandler
         GameObject circles = DrawPixel.Circle.Draw(largestRadius, radii, new Color(1, 1, 1, 0.1f), true);
         circles.transform.SetParent( transform, false );
 
-        Vector3 offset = circles.transform.localPosition;
-        offset.x -= largestRadius;
-        offset.y -= largestRadius + 1;
-        circles.transform.localPosition = offset;
+        Texture2D sprite = circles.GetComponent<SpriteRenderer>().sprite.texture;
+        circles.transform.localPosition = new Vector3((sprite.width / 2f) / 32f, ((sprite.height +1) / 2f) / 32, 0f) * -1;
     }
 
     private void GenerateTargetLine()

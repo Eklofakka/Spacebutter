@@ -23,6 +23,7 @@ public class TerminalNavigation : ITerminal, IPointerClickHandler
     [SerializeField] private GameObject PlanetInfoPrefab;
 
     private GameObject PlayerShipMarker;
+    private List<Tuple<AIShip, GameObject>> AIShipMarkers;
 
     private static Vector2 SelectorPosition = Vector2.zero;
     private static GameObject _Selector = null;
@@ -88,6 +89,8 @@ public class TerminalNavigation : ITerminal, IPointerClickHandler
         CreateStargates( curSolarSystem );
 
         CreateShip();
+
+        CreateAIShips();
     }
 
     private void CreateSun( Sun sun )
@@ -102,7 +105,7 @@ public class TerminalNavigation : ITerminal, IPointerClickHandler
     {
         var planetObj = Instantiate( IconPrefab );
         planetObj.transform.SetParent( Content.transform, false );
-        planetObj.transform.localPosition = planet.Position;
+        planetObj.transform.localPosition = planet.Position / 32;
         planetObj.Init( planet as SolarSystemBody, TerminalNavigationSolarIcon.BodyTypes.PLANET );
     }
 
@@ -112,6 +115,21 @@ public class TerminalNavigation : ITerminal, IPointerClickHandler
         ship.transform.SetParent(Content.transform, false);
         ship.transform.localPosition = new Vector3(0, 0, 0);
         PlayerShipMarker = ship;
+    }
+
+    private void CreateAIShips()
+    {
+        AIShipMarkers = new List<Tuple<AIShip, GameObject>>();
+
+        foreach (var aiShip in AIShips.Ships)
+        {
+            var shipObj = Instantiate( Ship );
+            shipObj.transform.SetParent( Content.transform, false );
+            shipObj.transform.localPosition = aiShip.Positions.Solar;
+            shipObj.transform.GetChild(0).gameObject.SetActive(false);
+
+            AIShipMarkers.Add(new Tuple<AIShip, GameObject>(aiShip, shipObj));
+        }
     }
 
     private void CreateStargates( SolarSystem solarsystem )
@@ -154,9 +172,14 @@ public class TerminalNavigation : ITerminal, IPointerClickHandler
         }
 
         Vector3 ff = ShipHandler.Instance.ActiveShip.Position.Solar;
-        PlayerShipMarker.transform.localPosition = ff.RoundToInt();
+        //PlayerShipMarker.transform.localPosition = ff.RoundToInt();
 
         UpdateTargetInfo();
+
+        foreach (var aiShip in AIShipMarkers)
+        {
+            aiShip.Second.transform.localPosition = aiShip.First.Positions.Solar;
+        }
     }
 
     #region ITerminal

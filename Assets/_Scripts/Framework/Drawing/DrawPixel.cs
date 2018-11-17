@@ -15,8 +15,8 @@ namespace DrawPixel
 
             texture = DrawLine(texture, 0, 0, Mathf.Max(width - 1, 1), Mathf.Max(height - 1, 1), start, end, clr, gap);
 
-            Image obj = Utility.EmptyObject();
-            obj.raycastTarget = false;
+            SpriteRenderer obj = Utility.EmptyObject();
+            //obj.raycastTarget = false;
             obj.sprite = Utility.CreateSprite(width, height, texture);
 
             RectTransform rectTransform = obj.GetComponent<RectTransform>();
@@ -114,12 +114,12 @@ namespace DrawPixel
 
             Sprite sprite = Utility.CreateSprite(fullWidth, fullWidth, texture);
 
-            Image circ = Utility.EmptyObject();
+            SpriteRenderer circ = Utility.EmptyObject();
             circ.sprite = sprite;
-            circ.raycastTarget = false;
+            //circ.raycastTarget = false;
 
-            circ.GetComponent<RectTransform>().pivot = Vector2.zero;
-            circ.GetComponent<RectTransform>().sizeDelta = new Vector2(fullWidth, fullWidth + 1);
+            //circ.GetComponent<RectTransform>().pivot = Vector2.zero;
+            //circ.GetComponent<RectTransform>().sizeDelta = new Vector2(fullWidth, fullWidth + 1);
 
             return circ.gameObject;
         }
@@ -186,12 +186,12 @@ namespace DrawPixel
         
         public static Sprite CreateSprite(int width, int height, Texture2D texture)
         {
-            return Sprite.Create(texture, new Rect(0, 0, width, height + 1), Vector2.zero, 10, 2, SpriteMeshType.Tight);
+            return Sprite.Create(texture, new Rect(0, 0, width, height + 1), Vector2.zero, 32, 2, SpriteMeshType.Tight);
         }
 
-        public static Image EmptyObject()
+        public static SpriteRenderer EmptyObject()
         {
-            return new GameObject().AddComponent<Image>();
+            return new GameObject().AddComponent<SpriteRenderer>();
         }
     }
 }

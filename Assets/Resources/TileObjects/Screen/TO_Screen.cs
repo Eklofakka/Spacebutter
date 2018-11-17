@@ -27,7 +27,8 @@ public class TO_Screen : TileObject, IInteract
 
         GameObject obj = Instantiate( Resources.Load<GameObject>( "Terminals/Navigation/TerminalNavigation" ) );
 
-        obj.transform.SetParent( MainCanvas.Instance, false );
+        //obj.transform.SetParent( MainCanvas.Instance, false );
+        obj.transform.SetParent( LevelLoaderCombat.Instance.transform, false );
 
         TerminalNavigation terminal = obj.GetComponent<TerminalNavigation>();
 

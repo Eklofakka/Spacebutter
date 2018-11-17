@@ -9,7 +9,7 @@ public class ShipRadar
 
     public List<SolarSystemBody> Contacts = new List<SolarSystemBody>();
 
-    public Action<SolarSystemBody> OnContactAdded { get; set; } = delegate { };
+    public Action<SolarSystemBody> OnContactAdded { get; set; } = delegate { Debug.Log( "Contact Added"); };
     public Action<SolarSystemBody> OnContactRemoved { get; set; } = delegate { };
 
     public void Scan( SolarSystem system )
@@ -17,49 +17,76 @@ public class ShipRadar
         RemoveContacts();
 
         AddContacts(system);
+
+        LevelLoaderShip.Instance.StartCoroutine(AddContacts(system));
     }
 
-    private void AddContacts(SolarSystem system)
+    private IEnumerator AddContacts(SolarSystem system)
     {
         bool withinRange;
         float distance;
         Ship playerShip = ShipHandler.Instance.ActiveShip;
 
-        foreach (var stargate in system.Stargates)
+        bool exitCoroutine = false;
+        WaitForSeconds wait = new WaitForSeconds(0.1f);
+
+        while (exitCoroutine == false)
         {
-            distance = Vector2.Distance(playerShip.Position.Solar, stargate.Position);
 
-            withinRange = distance <= Range;
+            //foreach (var stargate in system.Stargates)
+            //{
+            //    distance = Vector2.Distance(playerShip.Position.Solar, stargate.Position);
 
-            if (withinRange && Contacts.Contains(stargate) == false)
-            {
-                AddContact(stargate);
-                OnContactAdded(stargate);
-            }
-        }
+            //    withinRange = distance <= Range;
 
-        foreach (var planet in system.Planets)
-        {
-            distance = Vector2.Distance(playerShip.Position.Solar, planet.Position);
+            //    if (withinRange && Contacts.Contains(stargate) == false)
+            //    {
+            //        AddContact(stargate);
+            //        OnContactAdded(stargate);
+            //    }
+            //}
+            //yield return wait;
 
-            withinRange = distance <= Range;
+            //foreach (var planet in system.Planets)
+            //{
+            //    distance = Vector2.Distance(playerShip.Position.Solar, planet.Position);
 
-            if (withinRange && Contacts.Contains(planet) == false)
-            {
-                AddContact(planet);
-                OnContactAdded(planet);
-            }
-        }
+            //    withinRange = distance <= Range;
 
-        // Look for sun.
-        distance = Vector2.Distance(playerShip.Position.Solar, system.Sun.Position);
+            //    if (withinRange && Contacts.Contains(planet) == false)
+            //    {
+            //        AddContact(planet);
+            //        OnContactAdded(planet);
+            //    }
+            //}
+            //yield return wait;
 
-        withinRange = distance <= Range;
+            //// Look for sun.
+            //distance = Vector2.Distance(playerShip.Position.Solar, system.Sun.Position);
 
-        if (withinRange && Contacts.Contains(system.Sun) == false)
-        {
-            AddContact(system.Sun);
-            OnContactAdded(system.Sun);
+            //withinRange = distance <= Range;
+
+            //if (withinRange && Contacts.Contains(system.Sun) == false)
+            //{
+            //    AddContact(system.Sun);
+            //    OnContactAdded(system.Sun);
+            //}
+            //yield return wait;
+
+
+            //foreach (var aiShip in AIShips.Ships)
+            //{
+            //    distance = Vector2.Distance(playerShip.Position.Solar, aiShip.Positions.Solar);
+
+            //    withinRange = distance <= Range;
+
+            //    if (withinRange && Contacts.Contains(aiShip) == false)
+            //    {
+            //        AddContact(aiShip);
+            //        OnContactAdded(aiShip);
+            //    }
+            //}
+            yield return wait;
         }
     }
 
@@ -92,7 +119,7 @@ public class ShipRadar
 
     private void AddContact( SolarSystemBody body )
     {
-        if (Contacts.Contains(body) == false)
+        //if (Contacts.Contains(body) == false)
             Contacts.Add( body );
     }
 }

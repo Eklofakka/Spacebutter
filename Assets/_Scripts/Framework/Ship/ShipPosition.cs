@@ -1,5 +1,7 @@
 ﻿using System.Linq;
+using System.Collections.Generic;
 using UnityEngine;
+using MEC;
 
 public class ShipPosition
 {
@@ -10,14 +12,29 @@ public class ShipPosition
 
     public Vector2 SolarTarget = Vector2.zero;
 
+    public System.Action OnReachedTargetPosition { get; set; } = delegate { };
+
     public void TravelSolar()
     {
-        Solar = Vector2.MoveTowards(Solar, SolarTarget, 4f * Time.deltaTime);
-
         Moving = SolarTarget != Solar;
+
+        if (Moving)
+        {
+            Solar = Vector2.MoveTowards(Solar, SolarTarget, 4f * Time.deltaTime);
+
+            Moving = SolarTarget != Solar;
+
+            if (Moving == false)
+                OnReachedTargetPosition();
+        }
     }
 
     public void SetSolarDestination( Vector3 pos )
+    {
+        SolarTarget = pos;
+    }
+
+    public void SetSolarDestination(Vector2 pos)
     {
         SolarTarget = pos;
     }
