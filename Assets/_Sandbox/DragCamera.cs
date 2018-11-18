@@ -8,7 +8,6 @@ public class DragCamera : MonoBehaviour
 
     private Transform CameraObject;
 
-    private float DragSpeed = 5f;
     private bool Dragging = false;
     private Vector3 DragOrigin;
     private Vector3 CameraOrigin;
@@ -34,10 +33,8 @@ public class DragCamera : MonoBehaviour
         if ( Dragging )
         {
             Vector3 newPos = CameraObject.position + ((DragOrigin - Input.mousePosition) / 64f);
-            
-            newPos.x = Mathf.RoundToInt(newPos.x / 0.03125f) * 0.03125f;
-            newPos.y = Mathf.RoundToInt(newPos.y / 0.03125f) * 0.03125f;
-            newPos.z = CameraObject.position.z;
+
+            newPos = newPos.RoundToScale(32f);
 
             CameraObject.position = newPos;
 

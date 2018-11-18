@@ -276,15 +276,12 @@ public class TerminalNavigation : ITerminal, IPointerClickHandler
 
     private void OnMouseClick()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonUp(0))
         {
-            Vector3 newPos = Camera.main.ViewportToWorldPoint(Input.mousePosition);
+            Vector3 newPos = Camera.main.transform.position + MouseUtility.MouseToWorld();
+            newPos.z = 0f;
 
-            Vector3 pos = Input.mousePosition / 2f;
-            pos.x = (pos.x - (Screen.width / 4)) / 32;
-            pos.y = (pos.y - (Screen.height / 4)) / 32;
-            
-            Selector.transform.localPosition = MouseUtility.MouseToWorld();
+            Selector.transform.localPosition = newPos;
         }
     }
 }
