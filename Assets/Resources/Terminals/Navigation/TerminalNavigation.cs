@@ -284,7 +284,7 @@ public class TerminalNavigation : ITerminal, IPointerClickHandler
             pos.x = (pos.x - (Screen.width / 4)) / 32;
             pos.y = (pos.y - (Screen.height / 4)) / 32;
             
-            Selector.transform.localPosition = MouseUtility.MouseToWorld(true);
+            Selector.transform.localPosition = MouseUtility.MouseToWorld();
         }
     }
 }
