@@ -62,7 +62,17 @@ public class TerminalGalaxy : ITerminal
 
         Vector3 newCamPos = new Vector3( (totalx / positions.Count) / 4, (totaly / positions.Count) / 4, 18f ).RoundToScale(32);
         CameraHandler.Instance.Terminal.transform.position = newCamPos;
-        
+
+        GameObject dragable = new GameObject();
+        dragable.AddComponent<DragCamera>();
+
+        dragable.AddComponent<BoxCollider2D>();
+        dragable.GetComponent<BoxCollider2D>().isTrigger = true;
+        dragable.GetComponent<BoxCollider2D>().size = new Vector2(20, 20);
+
+        dragable.transform.SetParent( Content.transform, false );
+        newCamPos.z = 1;
+        dragable.transform.localPosition = newCamPos;
 
         CreatePlayerCircle();
     }

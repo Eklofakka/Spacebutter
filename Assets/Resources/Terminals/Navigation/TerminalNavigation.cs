@@ -154,7 +154,7 @@ public class TerminalNavigation : ITerminal, IPointerClickHandler
         stargateObj.transform.localPosition = stargate.Position / 32;
         stargateObj.Init( stargate as SolarSystemBody, TerminalNavigationSolarIcon.BodyTypes.STARGATE );
 
-        //stargateObj.OnClick += OnIconClicked;
+        stargateObj.OnClick += OnStargateClicked;
     }
 
     private void UpdateTargetInfo()
@@ -246,7 +246,7 @@ public class TerminalNavigation : ITerminal, IPointerClickHandler
         if (Vector2.Distance(ShipHandler.Instance.ActiveShip.Position.Solar, icon.Body.Position) > 15) return;
 
         var menu = Instantiate(Resources.Load<MenuStargate>("Terminals/Navigation/Prefabs/Menu_Stargate"));
-        menu.transform.SetParent(MainCanvas.Instance.transform, false);
+        menu.transform.SetParent(transform.GetChild(1).transform, false);
 
         Stargate stargate = icon.Body as Stargate;
 

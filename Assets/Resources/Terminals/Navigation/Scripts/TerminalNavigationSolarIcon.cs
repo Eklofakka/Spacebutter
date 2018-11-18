@@ -51,7 +51,7 @@ public class TerminalNavigationSolarIcon : MonoBehaviour, IPointerClickHandler
                 break;
         }
 
-        //transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = Body.Name;
+                transform.GetChild(0).GetComponent<TextMeshPro>().text = Body.Name;
     }
 
     public void OnPointerClick(PointerEventData eventData)

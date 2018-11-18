@@ -531,7 +531,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2999930c658d3440a852e7f287a63c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mouseTexture: {fileID: 2800000, guid: 3acb5fb8db8eb2544ab5b00fe50d440d, type: 3}
 --- !u!222 &331592718
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -719,7 +718,6 @@ GameObject:
   - component: {fileID: 943717669}
   - component: {fileID: 943717668}
   - component: {fileID: 943717667}
-  - component: {fileID: 943717670}
   m_Layer: 0
   m_Name: EventSystem
   m_TagString: Untagged
@@ -777,28 +775,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &943717670
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 943717666}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_GeneratorAsset: {fileID: 0}
-  m_Script: {fileID: 11500000, guid: 1e4c3a3f47a32464c97de6fec81e3ebf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  objs:
-  - {fileID: 473235777}
-  - {fileID: 1931760944}
-  - {fileID: 1913407702}
-  - {fileID: 2129906420}
-  - {fileID: 2136169893}
-  - {fileID: 42629916}
-  - {fileID: 2052993729}
-  - {fileID: 943717669}
 --- !u!1 &983733157
 GameObject:
   m_ObjectHideFlags: 0
@@ -1392,12 +1368,6 @@ MonoBehaviour:
   m_CropFrameX: 0
   m_CropFrameY: 0
   m_StretchFill: 0
---- !u!4 &1913407702 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4869256875047306663, guid: 09fcbf1c002395d49828b6a4ebae6ab4,
-    type: 3}
-  m_PrefabInstance: {fileID: 4869256874499872642}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1931760943
 GameObject:
   m_ObjectHideFlags: 0
