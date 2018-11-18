@@ -8,10 +8,17 @@ public class CameraHandler : MonoBehaviour
     //public const int SHIP = -1;
     //public const int COMBAT = 18;
 
+    public static CameraHandler Instance;
+
     [SerializeField] private Camera Ship;
     [SerializeField] private Camera Terminal;
     
     public Cameras Current { get; private set; }
+
+    private void Awake()
+    {
+        Instance = this;
+    }
 
     private void Update()
     {
@@ -37,5 +44,19 @@ public class CameraHandler : MonoBehaviour
         }
 
         Current = camera;
+    }
+
+    public Camera GetCamera( Cameras camera )
+    {
+        switch(camera)
+        {
+            case Cameras.SHIP:
+                return Ship;
+
+            case Cameras.TERMINAL:
+                return Terminal;
+        }
+
+        return null;
     }
 }

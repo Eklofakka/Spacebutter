@@ -34,7 +34,7 @@ public class TerminalNavigation : ITerminal, IPointerClickHandler
             if ( _Selector == null )
             {
                 _Selector = Instantiate(Resources.Load<GameObject>("Terminals/Navigation/Prefabs/Selector"));
-                _Selector.transform.SetParent(Content.parent.transform, false);
+                _Selector.transform.SetParent(Content.transform, false);
             }
 
             return _Selector;
@@ -180,6 +180,8 @@ public class TerminalNavigation : ITerminal, IPointerClickHandler
         {
             aiShip.Second.transform.localPosition = aiShip.First.Positions.Solar;
         }
+
+        OnMouseClick();
     }
 
     #region ITerminal
@@ -189,9 +191,13 @@ public class TerminalNavigation : ITerminal, IPointerClickHandler
 
         GenerateSolarSystem();
 
+        CameraHandler.Instance.SwitchCamera(CameraHandler.Cameras.TERMINAL);
+
         while (ToBeClosed == false) yield return null;
 
         Open = ToBeClosed = false;
+
+        CameraHandler.Instance.SwitchCamera(CameraHandler.Cameras.SHIP);
     }
     #endregion
 
@@ -267,4 +273,18 @@ public class TerminalNavigation : ITerminal, IPointerClickHandler
         }
     }
     #endregion
+
+    private void OnMouseClick()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            Vector3 newPos = Camera.main.ViewportToWorldPoint(Input.mousePosition);
+
+            Vector3 pos = Input.mousePosition / 2f;
+            pos.x = (pos.x - (Screen.width / 4)) / 32;
+            pos.y = (pos.y - (Screen.height / 4)) / 32;
+            
+            Selector.transform.localPosition = MouseUtility.MouseToWorld(true);
+        }
+    }
 }
