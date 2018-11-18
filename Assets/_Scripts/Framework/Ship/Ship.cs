@@ -25,7 +25,10 @@ public class Ship
         // SHULD ONLY BE CALLED ON THE SERVER
 
         Position.TravelSolar();
-        
-        Radar.Scan( ConstellationHandler.Constellation.SolarSystems[Position.SolarID] );
+    }
+
+    public virtual void Start( )
+    {
+        Radar.Scan(ConstellationHandler.Constellation.SolarSystems[Position.SolarID]);
     }
 }

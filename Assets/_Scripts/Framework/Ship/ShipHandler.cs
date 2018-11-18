@@ -18,6 +18,8 @@ public class ShipHandler : MonoBehaviour
     private void Start()
     {
         ActiveShip = LevelLoaderShip.Instance.LoadShip("Rookie");
+
+        ActiveShip.Start();
     }
 
     private void Update()

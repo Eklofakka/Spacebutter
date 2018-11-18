@@ -12,6 +12,20 @@ public class ShipRadar
     public Action<SolarSystemBody> OnContactAdded { get; set; } = delegate { Debug.Log( "Contact Added"); };
     public Action<SolarSystemBody> OnContactRemoved { get; set; } = delegate { };
 
+
+    bool withinRange;
+    float distance;
+    Ship playerShip = ShipHandler.Instance.ActiveShip;
+
+    bool exitCoroutine = false;
+    WaitForSeconds wait = new WaitForSeconds(0.1f);
+
+    List<SolarSystemBody> toBeRemoved = new List<SolarSystemBody>();
+
+    //bool withinRange;
+    //float distance;
+    //Ship playerShip = ShipHandler.Instance.ActiveShip;
+
     public void Scan( SolarSystem system )
     {
         RemoveContacts();
@@ -23,12 +37,7 @@ public class ShipRadar
 
     private IEnumerator AddContacts(SolarSystem system)
     {
-        bool withinRange;
-        float distance;
-        Ship playerShip = ShipHandler.Instance.ActiveShip;
 
-        bool exitCoroutine = false;
-        WaitForSeconds wait = new WaitForSeconds(0.1f);
 
         while (exitCoroutine == false)
         {
@@ -96,7 +105,7 @@ public class ShipRadar
         float distance;
         Ship playerShip = ShipHandler.Instance.ActiveShip;
 
-        List<SolarSystemBody> toBeRemoved = new List<SolarSystemBody>();
+        toBeRemoved.Clear();
 
         foreach (var contact in Contacts)
         {

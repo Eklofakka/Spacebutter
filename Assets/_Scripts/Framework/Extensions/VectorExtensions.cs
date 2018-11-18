@@ -64,6 +64,16 @@ public static class VectorExtensions
         return v3;
     }
 
+    public static Vector2 RoundToScale(this Vector2 v2, float scale)
+    {
+        float realScale = 1 / scale;
+
+        v2.x = Mathf.RoundToInt(v2.x / realScale) * realScale;
+        v2.y = Mathf.RoundToInt(v2.y / realScale) * realScale;
+
+        return v2;
+    }
+
     public static bool EqualToV2( this Vector3 v3, Vector2 v2 )
     {
         Vector3 comp = new Vector3( v2.x, v2.y, v3.z );

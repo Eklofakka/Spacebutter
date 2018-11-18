@@ -174,21 +174,21 @@ public class TerminalNavigation : ITerminal, IPointerClickHandler
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.T))
-        {
-            Open = false;
+        //if (Input.GetKeyDown(KeyCode.T))
+        //{
+        //    Open = false;
 
-            ToBeClosed = true;
-        }
+        //    ToBeClosed = true;
+        //}
 
         Vector3 ff = ShipHandler.Instance.ActiveShip.Position.Solar;
         PlayerShipMarker.transform.localPosition = (ff / 32f).RoundToScale(32);
 
-        UpdateTargetInfo();
+        //UpdateTargetInfo();
 
         foreach (var aiShip in AIShipMarkers)
         {
-            aiShip.Second.transform.localPosition = aiShip.First.Positions.Solar;
+            aiShip.Second.transform.localPosition = (aiShip.First.Positions.Solar / 32f).RoundToScale(32);
         }
     }
 

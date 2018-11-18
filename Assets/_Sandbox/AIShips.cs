@@ -21,7 +21,7 @@ public class AIShips : MonoBehaviour
 
     private void AddNewShips()
     {
-        for (int i = 0; i < 0; i++)
+        for (int i = 0; i < 100; i++)
         {
             Ships.Add(new AIShip());
         }
