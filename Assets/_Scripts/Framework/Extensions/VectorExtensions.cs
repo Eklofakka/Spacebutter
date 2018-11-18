@@ -70,4 +70,12 @@ public static class VectorExtensions
 
         return v3 == comp;
     }
+
+    public static Vector3 Add( this Vector3 v3, float num )
+    {
+        v3.x += num;
+        v3.y += num;
+
+        return v3;
+    }
 }

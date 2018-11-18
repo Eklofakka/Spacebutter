@@ -182,7 +182,7 @@ public class TerminalNavigation : ITerminal, IPointerClickHandler
         }
 
         Vector3 ff = ShipHandler.Instance.ActiveShip.Position.Solar;
-        PlayerShipMarker.transform.localPosition = ff / 32f;
+        PlayerShipMarker.transform.localPosition = (ff / 32f).RoundToScale(32);
 
         UpdateTargetInfo();
 
