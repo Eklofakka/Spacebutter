@@ -3,50 +3,27 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class DragCamera : MonoBehaviour
+public class DragCamera : MonoBehaviour, IDragHandler
 {
-    [SerializeField] private CameraHandler.Cameras Camera;
-
     private Transform CameraObject;
-
-    private bool Dragging = false;
-    private Vector3 DragOrigin;
-    private Vector3 CameraOrigin;
+    
+    private Vector3 newPos;
+    Vector3 delta;
 
     private void Start()
     {
-        CameraObject = CameraHandler.Instance.GetCamera( Camera ).transform;
+        CameraObject = Camera.main.transform;
     }
 
-    private void Update()
+    public void OnDrag(PointerEventData eventData)
     {
-        if ( Input.GetMouseButtonDown(0) )
-        {
-            var eventSys = GameObject.Find("EventSystem").GetComponent<EventSystem>();
+        delta = eventData.delta;
 
-            if (eventSys.IsPointerOverGameObject())
-            {
-                return; // exit out of OnMouseDown() because its over the uGUI
-            }
+        newPos = CameraObject.position - delta / 64f;
+        newPos = newPos.RoundToScale(32f);
+        newPos.x = Mathf.Clamp(newPos.x, -25, 25);
+        newPos.y = Mathf.Clamp(newPos.y, -25, 25);
 
-            DragOrigin = Input.mousePosition;
-            Dragging = true;
-        }
-
-        if ( Input.GetMouseButtonUp(0) )
-        {
-            Dragging = false;
-        }
-
-        if ( Dragging )
-        {
-            Vector3 newPos = CameraObject.position + ((DragOrigin - Input.mousePosition) / 64f);
-
-            newPos = newPos.RoundToScale(32f);
-
-            CameraObject.position = newPos;
-
-            DragOrigin = Input.mousePosition;
-        }
+        CameraObject.position = newPos;
     }
 }

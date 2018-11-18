@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace DrawPixel
@@ -116,10 +118,10 @@ namespace DrawPixel
 
             SpriteRenderer circ = Utility.EmptyObject();
             circ.sprite = sprite;
-            //circ.raycastTarget = false;
+            circ.gameObject.AddComponent<DragCamera>();
 
-            //circ.GetComponent<RectTransform>().pivot = Vector2.zero;
-            //circ.GetComponent<RectTransform>().sizeDelta = new Vector2(fullWidth, fullWidth + 1);
+            CircleCollider2D col = circ.gameObject.AddComponent<CircleCollider2D>();
+            col.isTrigger = true;
 
             return circ.gameObject;
         }
@@ -192,6 +194,39 @@ namespace DrawPixel
         public static SpriteRenderer EmptyObject()
         {
             return new GameObject().AddComponent<SpriteRenderer>();
+        }
+    }
+
+    public static class Sprites
+    {
+        public static GameObject SolarSystemRings()
+        {
+            List<Planet> planets = ConstellationHandler.Constellation.SolarSystems[ShipHandler.Instance.ActiveShip.Position.SolarID].Planets.OrderBy(p => (int)Vector2.Distance(p.Position, Vector2.zero)).ToList();
+            int largestRadius = (int)Vector2.Distance(planets[planets.Count - 1].Position, Vector2.zero) + 1;
+
+            int[] radii = new int[planets.Count];
+            for (int i = 0; i < planets.Count; i++)
+            {
+                radii[i] = (int)Vector2.Distance(planets[i].Position, Vector2.zero) + 1;
+            }
+
+            GameObject circles = DrawPixel.Circle.Draw(largestRadius, radii, new Color(1, 1, 1, 0.1f), true);
+
+            Texture2D sprite = circles.GetComponent<SpriteRenderer>().sprite.texture;
+            circles.transform.localPosition = new Vector3((sprite.width / 2f) / 32f, ((sprite.height + 1) / 2f) / 32, 0f) * -1;
+
+            circles.name = "SolarSystemRingsTexture";
+
+            return circles;
+        }
+
+        public static GameObject SolarSystemRings( Transform parent )
+        {
+            var circles = SolarSystemRings();
+
+            circles.transform.SetParent(parent, false);
+
+            return circles;
         }
     }
 }

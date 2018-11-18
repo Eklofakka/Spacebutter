@@ -88,6 +88,8 @@ public class TerminalNavigation : ITerminal, IPointerClickHandler
 
         CreateStargates( curSolarSystem );
 
+        CreateSolarSystemRingsTexture();
+
         CreateShip();
 
         CreateAIShips();
@@ -99,6 +101,7 @@ public class TerminalNavigation : ITerminal, IPointerClickHandler
         sunObj.transform.SetParent( Content.transform, false );
         sunObj.transform.localPosition = new Vector3(0, 0, 0);
         sunObj.Init(sun as SolarSystemBody, TerminalNavigationSolarIcon.BodyTypes.SUN);
+        sunObj.OnClick += OnSunClicked;
     }
 
     private void CreatePlanet( Planet planet )
@@ -107,6 +110,7 @@ public class TerminalNavigation : ITerminal, IPointerClickHandler
         planetObj.transform.SetParent( Content.transform, false );
         planetObj.transform.localPosition = planet.Position / 32;
         planetObj.Init( planet as SolarSystemBody, TerminalNavigationSolarIcon.BodyTypes.PLANET );
+        planetObj.OnClick += OnPlanetClicked;
     }
 
     private void CreateShip()
@@ -162,6 +166,12 @@ public class TerminalNavigation : ITerminal, IPointerClickHandler
         ETADisplay.text = "ETA: " + string.Format("{0:0.00}", dist / 4f);
     }
 
+    private void CreateSolarSystemRingsTexture()
+    {
+        GameObject rings = DrawPixel.Sprites.SolarSystemRings(Content.transform);
+        rings.transform.position += new Vector3(0, 0, 1);
+    }
+
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.T))
@@ -172,7 +182,7 @@ public class TerminalNavigation : ITerminal, IPointerClickHandler
         }
 
         Vector3 ff = ShipHandler.Instance.ActiveShip.Position.Solar;
-        //PlayerShipMarker.transform.localPosition = ff.RoundToInt();
+        PlayerShipMarker.transform.localPosition = ff / 32f;
 
         UpdateTargetInfo();
 
@@ -180,8 +190,6 @@ public class TerminalNavigation : ITerminal, IPointerClickHandler
         {
             aiShip.Second.transform.localPosition = aiShip.First.Positions.Solar;
         }
-
-        OnMouseClick();
     }
 
     #region ITerminal
@@ -204,18 +212,18 @@ public class TerminalNavigation : ITerminal, IPointerClickHandler
     #region Button Events
     public void OnIconClicked( TerminalNavigationSolarIcon icon, PointerEventData eventData )
     {
-        switch( icon.BodyType )
-        {
-            case TerminalNavigationSolarIcon.BodyTypes.STARGATE:
-                OnStargateClicked( icon, eventData);
-                break;
-            case TerminalNavigationSolarIcon.BodyTypes.PLANET:
-                OnPlanetClicked(icon);
-                break;
-            case TerminalNavigationSolarIcon.BodyTypes.SUN:
-                OnSunClicked(icon);
-                break;
-        }
+        //switch( icon.BodyType )
+        //{
+        //    case TerminalNavigationSolarIcon.BodyTypes.STARGATE:
+        //        OnStargateClicked( icon, eventData);
+        //        break;
+        //    case TerminalNavigationSolarIcon.BodyTypes.PLANET:
+        //        OnPlanetClicked(icon);
+        //        break;
+        //    case TerminalNavigationSolarIcon.BodyTypes.SUN:
+        //        OnSunClicked(icon);
+        //        break;
+        //}
     }
 
     private void OnStargateClicked(TerminalNavigationSolarIcon icon, PointerEventData eventData)
@@ -238,14 +246,14 @@ public class TerminalNavigation : ITerminal, IPointerClickHandler
         menu.OnClose += (x) => { ShipHandler.Instance.ActiveShip.Position.JumpToGalaxy(stargate.Target); GenerateSolarSystem(); };
     }
 
-    private void OnPlanetClicked(TerminalNavigationSolarIcon icon)
+    private void OnPlanetClicked(TerminalNavigationSolarIcon icon, PointerEventData eventData)
     {
-
+        print(icon.Body.Position);
     }
 
-    private void OnSunClicked( TerminalNavigationSolarIcon icon )
+    private void OnSunClicked(TerminalNavigationSolarIcon icon, PointerEventData eventData)
     {
-
+        print(icon.name);
     }
 
     public void OnPointerClick(PointerEventData eventData)
@@ -253,35 +261,24 @@ public class TerminalNavigation : ITerminal, IPointerClickHandler
         if (eventData.dragging != false) return;
         if (eventData.button == PointerEventData.InputButton.Right)
         {
-            Vector3 pos = eventData.position / 2f;
-            pos.x -= Screen.width / 4;
-            pos.y -= Screen.height / 4;
-            pos = pos.RoundToInt();
-            pos = pos - Content.transform.parent.localPosition;
-
-            Selector.transform.localPosition = SelectorPosition = pos;
-
-            if (Input.GetKey(KeyCode.LeftControl))
-            {
-                ShipHandler.Instance.ActiveShip.Position.Solar = pos;
-                ShipHandler.Instance.ActiveShip.Position.SolarTarget = pos;
-            }
-            else
-            {
-                ShipHandler.Instance.ActiveShip.Position.SetSolarDestination(pos);
-            }
-        }
-    }
-    #endregion
-
-    private void OnMouseClick()
-    {
-        if (Input.GetMouseButtonUp(0))
-        {
             Vector3 newPos = Camera.main.transform.position + MouseUtility.MouseToWorld();
             newPos.z = 0f;
 
             Selector.transform.localPosition = newPos;
+
+            ShipHandler.Instance.ActiveShip.Position.SolarTarget = (newPos * 32).RoundToScale(16);
+            if (Input.GetKey(KeyCode.LeftControl))
+            {
+                ShipHandler.Instance.ActiveShip.Position.Solar = (newPos * 32).RoundToScale(16);
+            }
+        }
+        else
+        {
+            Vector3 newPos = Camera.main.transform.position + MouseUtility.MouseToWorld();
+            newPos.z = 0f;
+
+            Marker.transform.localPosition = newPos;
         }
     }
+    #endregion
 }

@@ -19,7 +19,7 @@ public static class VectorExtensions
         //TODO: Stranded starfish has nowhere to hide.
     }
 
-    public static Vector2Int ToV2( this Vector3 v3 )
+    public static Vector2Int ToV2Int( this Vector3 v3 )
     {
         return new Vector2Int( Mathf.RoundToInt(v3.x), Mathf.RoundToInt(v3.y) );
     }

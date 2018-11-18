@@ -56,7 +56,6 @@ public class TerminalNavigationSolarIcon : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        print("wop");
         OnClick(this, eventData);
     }
 
@@ -67,20 +66,7 @@ public class TerminalNavigationSolarIcon : MonoBehaviour, IPointerClickHandler
 
     private void GenerateSolarTexture()
     {
-        List<Planet> planets = ConstellationHandler.Constellation.SolarSystems[ ShipHandler.Instance.ActiveShip.Position.SolarID ].Planets.OrderBy(p => (int)Vector2.Distance(p.Position, Body.Position)).ToList();
-        int largestRadius = (int)Vector2.Distance( planets[planets.Count - 1].Position, Body.Position ) + 1;
-
-        int[] radii = new int[planets.Count];
-        for (int i = 0; i < planets.Count; i++)
-        {
-            radii[i] = (int)Vector2.Distance(planets[i].Position, Body.Position) + 1;
-        }
-
-        GameObject circles = DrawPixel.Circle.Draw(largestRadius, radii, new Color(1, 1, 1, 0.1f), true);
-        circles.transform.SetParent( transform, false );
-
-        Texture2D sprite = circles.GetComponent<SpriteRenderer>().sprite.texture;
-        circles.transform.localPosition = new Vector3((sprite.width / 2f) / 32f, ((sprite.height +1) / 2f) / 32, 0f) * -1;
+        //DrawPixel.Sprites.SolarSystemRings(transform);
     }
 
     private void GenerateTargetLine()

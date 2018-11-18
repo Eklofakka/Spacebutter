@@ -839,6 +839,7 @@ GameObject:
   - component: {fileID: 991654749}
   - component: {fileID: 991654748}
   - component: {fileID: 991654751}
+  - component: {fileID: 991654752}
   m_Layer: 0
   m_Name: Terminal
   m_TagString: MainCamera
@@ -846,8 +847,8 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 0
---- !u!4 &991654747
-Transform:
+--- !u!224 &991654747
+RectTransform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -860,6 +861,11 @@ Transform:
   m_Father: {fileID: 2136169893}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &991654748
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -945,6 +951,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Camera: 1
+--- !u!114 &991654752
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 991654746}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_GeneratorAsset: {fileID: 0}
+  m_Script: {fileID: -1690312454, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EventMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_MaxRayIntersections: 0
 --- !u!1 &1033771070
 GameObject:
   m_ObjectHideFlags: 0
