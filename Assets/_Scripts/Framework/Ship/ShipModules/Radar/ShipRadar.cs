@@ -12,19 +12,15 @@ public class ShipRadar
     public Action<SolarSystemBody> OnContactAdded { get; set; } = delegate { Debug.Log( "Contact Added"); };
     public Action<SolarSystemBody> OnContactRemoved { get; set; } = delegate { };
 
-
     bool withinRange;
     float distance;
-    Ship playerShip = ShipHandler.Instance.ActiveShip;
+    Ship playerShip;
 
     bool exitCoroutine = false;
     WaitForSeconds wait = new WaitForSeconds(0.1f);
+    WaitForEndOfFrame fWait = new WaitForEndOfFrame();
 
     List<SolarSystemBody> toBeRemoved = new List<SolarSystemBody>();
-
-    //bool withinRange;
-    //float distance;
-    //Ship playerShip = ShipHandler.Instance.ActiveShip;
 
     public void Scan( SolarSystem system )
     {
@@ -37,10 +33,30 @@ public class ShipRadar
 
     private IEnumerator AddContacts(SolarSystem system)
     {
+        AIShip ship;
+        playerShip = ShipHandler.Instance.ActiveShip;
 
+        yield return wait;
 
         while (exitCoroutine == false)
         {
+            int aiCount = AIShips.Ships.Count;
+            for (int i = 0; i < aiCount; i++)
+            {
+                if (i % 4 == 0)
+                    yield return fWait;
+
+                ship = AIShips.Ships[i];
+                distance = Vector2.Distance(playerShip.Position.Solar, ship.Positions.Solar);
+
+                withinRange = distance <= Range;
+
+                if (withinRange && Contacts.Contains(ship) == false)
+                {
+                    //AddContact(ship);
+                    //OnContactAdded(ship);
+                }
+            }
 
             //foreach (var stargate in system.Stargates)
             //{
@@ -101,10 +117,6 @@ public class ShipRadar
 
     private void RemoveContacts()
     {
-        bool withinRange;
-        float distance;
-        Ship playerShip = ShipHandler.Instance.ActiveShip;
-
         toBeRemoved.Clear();
 
         foreach (var contact in Contacts)
