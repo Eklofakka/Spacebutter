@@ -19,15 +19,17 @@ public class TileContainer : MonoBehaviour
         Cam = Camera.main;
     }
 
-    public void Init( Tile tile )
+    public void Init( Tile tile, Tile[,] tiles )
     {
         Tile = tile;
 
-        transform.position = new Vector3( Tile.Position.x, Tile.Position.y, 1);
+        transform.position = new Vector3(Tile.Position.x, Tile.Position.y, 1);
 
-        SpriteRenderer.sprite = Resources.Load<Sprite>( IDToSprites( Tile.ID ) );
+        //SpriteRenderer.sprite = Resources.Load<Sprite>(IDToSprites(Tile.ID));
 
-        BoxCollider.enabled = Tile.ID == 0;
+        SpriteRenderer.sprite = TilemapHandler.Instance.GetSprite(Tile.Tilemap, BitMasking.GetTilemapIndex(Tile.Position.x, Tile.Position.y, Tile.Tilemap, tiles));
+
+        BoxCollider.enabled = Tile.Tilemap == Tile.Tilemaps.Wall_Metal;
     }
 
     private string IDToSprites( int id )

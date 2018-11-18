@@ -6,7 +6,7 @@ public class Layout
 {
     public Tile[,] Tiles { get; private set; }
 
-    public List<Tuple<string, Vector2Int>> TileObjectsID { get; set; }
+    public List<Truple<string, Vector2Int, TileObject>> TileObjectsID { get; set; }
 
     public int Width { get; private set; }
 
@@ -16,32 +16,33 @@ public class Layout
     {
         Width = width;
         Height = height;
-
+        
         Tiles = new Tile[width, height];
-
-        //for (int y = 0; y < Tiles.GetLength(1); y++)
-        //{
-        //    for (int x = 0; x < Tiles.GetLength(0); x++)
-        //    {
-        //        if ( x == 0 || x == width -1 || y == 0 || y == height -1 )
-        //        {
-        //            Tiles[x, y] = new Tile( 0, new Vector2Int(x, y) );
-        //        }
-        //        else
-        //        {
-        //            Tiles[x, y] = new Tile(1, new Vector2Int(x, y));
-        //        }
-        //    }
-        //}
     }
 
-    public Layout( Tile[,] tiles, List<Tuple<string, Vector2Int>> tileObjectsID )
+    public Layout( Tile[,] tiles, List<Truple<string, Vector2Int, TileObject>> tileObjectsID )
     {
         Width = tiles.GetLength(0);
+
         Height = tiles.GetLength(1);
 
         Tiles = tiles;
 
         TileObjectsID = tileObjectsID;
+    }
+
+    public List<TileObject> GetObjectsAt( int x, int y )
+    {
+        List<TileObject> objects = new List<TileObject>();
+
+        Vector2Int pos = new Vector2Int( x, y );
+
+        foreach (var tileObject in TileObjectsID)
+        {
+            if (tileObject.Second == pos)
+                objects.Add( tileObject.Third );
+        }
+
+        return objects;
     }
  }
