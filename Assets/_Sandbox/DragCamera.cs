@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class DragCamera : MonoBehaviour
 {
@@ -21,6 +22,13 @@ public class DragCamera : MonoBehaviour
     {
         if ( Input.GetMouseButtonDown(0) )
         {
+            var eventSys = GameObject.Find("EventSystem").GetComponent<EventSystem>();
+
+            if (eventSys.IsPointerOverGameObject())
+            {
+                return; // exit out of OnMouseDown() because its over the uGUI
+            }
+
             DragOrigin = Input.mousePosition;
             Dragging = true;
         }

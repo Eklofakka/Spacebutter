@@ -56,6 +56,7 @@ public class TerminalNavigationSolarIcon : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
+        print("wop");
         OnClick(this, eventData);
     }
 

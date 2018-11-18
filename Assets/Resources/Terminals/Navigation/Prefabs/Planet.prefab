@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3522338085604330107}
   - component: {fileID: 3665679572260856860}
   - component: {fileID: 2207241494649163440}
+  - component: {fileID: 9211130828715096321}
   m_Layer: 5
   m_Name: Planet
   m_TagString: Untagged
@@ -94,3 +95,19 @@ SpriteRenderer:
   m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!58 &9211130828715096321
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3478587531721608983}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.15
