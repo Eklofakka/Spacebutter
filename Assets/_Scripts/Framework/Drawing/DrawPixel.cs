@@ -18,12 +18,7 @@ namespace DrawPixel
             texture = DrawLine(texture, 0, 0, Mathf.Max(width - 1, 1), Mathf.Max(height - 1, 1), start, end, clr, gap);
 
             SpriteRenderer obj = Utility.EmptyObject();
-            //obj.raycastTarget = false;
             obj.sprite = Utility.CreateSprite(width, height, texture);
-
-            RectTransform rectTransform = obj.GetComponent<RectTransform>();
-            rectTransform.sizeDelta = new Vector2(width, height);
-            rectTransform.pivot = Vector2.zero;
 
             return obj.gameObject;
         }
@@ -89,11 +84,8 @@ namespace DrawPixel
 
             GameObject circ = new GameObject();
 
-            Image image = circ.AddComponent<Image>();
+            SpriteRenderer image = circ.AddComponent<SpriteRenderer>();
             image.sprite = sprite;
-
-            circ.GetComponent<RectTransform>().pivot = Vector2.zero;
-            circ.GetComponent<RectTransform>().sizeDelta = new Vector2(width, width + 1);
 
             return circ;
         }

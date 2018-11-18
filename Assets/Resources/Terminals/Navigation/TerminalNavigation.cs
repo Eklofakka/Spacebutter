@@ -149,10 +149,10 @@ public class TerminalNavigation : ITerminal, IPointerClickHandler
         var stargateObj = Instantiate( IconPrefab );
         stargateObj.transform.SetParent( Content.transform, false );
         stargateObj.Body = stargate;
-        stargateObj.transform.localPosition = stargate.Position;
+        stargateObj.transform.localPosition = stargate.Position / 32;
         stargateObj.Init( stargate as SolarSystemBody, TerminalNavigationSolarIcon.BodyTypes.STARGATE );
 
-        stargateObj.OnClick += OnIconClicked;
+        //stargateObj.OnClick += OnIconClicked;
     }
 
     private void UpdateTargetInfo()
@@ -210,22 +210,6 @@ public class TerminalNavigation : ITerminal, IPointerClickHandler
     #endregion
 
     #region Button Events
-    public void OnIconClicked( TerminalNavigationSolarIcon icon, PointerEventData eventData )
-    {
-        //switch( icon.BodyType )
-        //{
-        //    case TerminalNavigationSolarIcon.BodyTypes.STARGATE:
-        //        OnStargateClicked( icon, eventData);
-        //        break;
-        //    case TerminalNavigationSolarIcon.BodyTypes.PLANET:
-        //        OnPlanetClicked(icon);
-        //        break;
-        //    case TerminalNavigationSolarIcon.BodyTypes.SUN:
-        //        OnSunClicked(icon);
-        //        break;
-        //}
-    }
-
     private void OnStargateClicked(TerminalNavigationSolarIcon icon, PointerEventData eventData)
     {
         Marker.transform.localPosition = icon.Body.Position;
@@ -248,12 +232,12 @@ public class TerminalNavigation : ITerminal, IPointerClickHandler
 
     private void OnPlanetClicked(TerminalNavigationSolarIcon icon, PointerEventData eventData)
     {
-        print(icon.Body.Position);
+
     }
 
     private void OnSunClicked(TerminalNavigationSolarIcon icon, PointerEventData eventData)
     {
-        print(icon.name);
+
     }
 
     public void OnPointerClick(PointerEventData eventData)

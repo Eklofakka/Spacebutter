@@ -23,9 +23,13 @@ public class TerminalGalaxy : ITerminal
 
         GenerateGalaxy();
 
+        CameraHandler.Instance.SwitchCamera(CameraHandler.Cameras.TERMINAL);
+
         while (ToBeClosed == false) yield return null;
 
         Open = ToBeClosed = false;
+
+        CameraHandler.Instance.SwitchCamera(CameraHandler.Cameras.SHIP);
     }
 
     private void GenerateGalaxy()
@@ -34,17 +38,31 @@ public class TerminalGalaxy : ITerminal
 
         List<Tuple<int, int>> alreadyDrawnConnections = new List<Tuple<int, int>>();
 
+        List<Vector2> positions = new List<Vector2>();
+
         foreach (var solarsytem in solarsystems)
         {
             GameObject solarsystemObj = Instantiate( SolarsystemPrefab );
             solarsystemObj.transform.SetParent( Content, false );
             
-            solarsystemObj.transform.localPosition = solarsytem.Position.ToV3() * SCALE;
+            solarsystemObj.transform.localPosition = solarsytem.Position.ToV3() / 4;
 
-            solarsystemObj.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = solarsytem.Name;
+            positions.Add( solarsytem.Position );
 
             GenerateStargateLines(solarsytem, solarsystemObj, alreadyDrawnConnections);
         }
+
+        float totalx = 0;
+        float totaly = 0;
+        foreach (var pos in positions)
+        {
+            totalx += pos.x;
+            totaly += pos.y;
+        }
+
+        Vector3 newCamPos = new Vector3( (totalx / positions.Count) / 4, (totaly / positions.Count) / 4, 18f ).RoundToScale(32);
+        CameraHandler.Instance.Terminal.transform.position = newCamPos;
+        
 
         CreatePlayerCircle();
     }
@@ -69,9 +87,9 @@ public class TerminalGalaxy : ITerminal
             int xOffset = solarsystem.Position.x < targetSystem.Position.x ? 0 : 1;
             int yOffset = solarsystem.Position.y < targetSystem.Position.y ? 0 : 1;
 
-            Texture2D texture = line.GetComponent<Image>().sprite.texture;
+            Texture2D texture = line.GetComponent<SpriteRenderer>().sprite.texture;
 
-            line.transform.localPosition += new Vector3(0 - (xOffset * texture.width), 0 - (yOffset * texture.height));
+            line.transform.localPosition += new Vector3(0 - (xOffset * texture.width), 0 - (yOffset * texture.height)) / 32;
         }
     }
 
@@ -100,7 +118,7 @@ public class TerminalGalaxy : ITerminal
         {
             SolarSystem solarsystem = ConstellationHandler.Constellation.SolarSystems[ShipHandler.Instance.ActiveShip.Position.SolarID];
 
-            PlayerGalaxyIndicator.localPosition = PositionToContentPosition( solarsystem.Position, 6 );
+            PlayerGalaxyIndicator.localPosition = PositionToContentPosition( solarsystem.Position, 6 ) / 32;
         }
     }
 

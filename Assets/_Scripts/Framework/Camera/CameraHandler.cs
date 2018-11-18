@@ -10,8 +10,8 @@ public class CameraHandler : MonoBehaviour
 
     public static CameraHandler Instance;
 
-    [SerializeField] private Camera Ship;
-    [SerializeField] private Camera Terminal;
+    [SerializeField] public Camera Ship;
+    [SerializeField] public Camera Terminal;
     
     public Cameras Current { get; private set; }
 

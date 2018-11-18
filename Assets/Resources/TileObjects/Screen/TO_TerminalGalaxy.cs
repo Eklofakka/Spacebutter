@@ -27,7 +27,7 @@ public class TO_TerminalGalaxy : TileObject, IInteract
 
         GameObject obj = Instantiate(Resources.Load<GameObject>("Terminals/Galaxy/TerminalGalaxy"));
 
-        obj.transform.SetParent(MainCanvas.Instance, false);
+        obj.transform.SetParent(LevelLoaderCombat.Instance.transform, false);
 
         TerminalGalaxy terminal = obj.GetComponent<TerminalGalaxy>();
 
