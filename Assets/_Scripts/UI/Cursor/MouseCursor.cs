@@ -4,28 +4,25 @@ using UnityEngine;
 
 public class MouseCursor : MonoBehaviour
 {
-    public Texture2D mouseTexture;
-
     private void Start()
     {
-        //if ( Application.isEditor == false )
-        //{
-            //Cursor.visible = false;
-        //Cursor.SetCursor(mouseTexture, Vector2.zero, CursorMode.Auto);
-        //}
+        if (Application.isEditor == false)
+        {
+            Cursor.visible = false;
+            //Cursor.SetCursor(mouseTexture, Vector2.zero, CursorMode.Auto);
+        }
     }
 
-    // Update is called once per frame
-    //void LateUpdate()
-    //{
-    //    Vector2 pos = Input.mousePosition / 2;
-        
-    //    pos.x -= Screen.width / 4;
-    //    pos.y -= Screen.height / 4;
+    void LateUpdate()
+    {
+        Vector2 pos = Input.mousePosition / 2;
 
-    //    pos.x = Mathf.RoundToInt(pos.x);
-    //    pos.y = Mathf.RoundToInt(pos.y);
+        pos.x -= Screen.width / 4;
+        pos.y -= Screen.height / 4;
 
-    //    transform.localPosition = pos;
-    //}
+        pos.x = Mathf.RoundToInt(pos.x);
+        pos.y = Mathf.RoundToInt(pos.y);
+
+        transform.localPosition = pos;
+    }
 }
