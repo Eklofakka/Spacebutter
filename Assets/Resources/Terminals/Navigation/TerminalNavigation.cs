@@ -22,6 +22,9 @@ public class TerminalNavigation : ITerminal, IPointerClickHandler
     [Header("Planet Info")]
     [SerializeField] private GameObject PlanetInfoPrefab;
 
+    [Header("Warp Pnale")]
+    [SerializeField] private TerminalNavigationWarp WarpPanel;
+
     private GameObject PlayerShipMarker;
     private List<Tuple<AIShip, GameObject>> AIShipMarkers;
 
@@ -274,6 +277,9 @@ public class TerminalNavigation : ITerminal, IPointerClickHandler
             Selector.transform.localPosition = newPos;
 
             ShipHandler.Instance.ActiveShip.Position.SolarTarget = (newPos * 32).RoundToScale(16);
+
+            WarpPanel.SetFields( newPos.x.ToString(), newPos.y.ToString(), "245", "345*" );
+
             if (Input.GetKey(KeyCode.LeftControl))
             {
                 ShipHandler.Instance.ActiveShip.Position.Solar = (newPos * 32).RoundToScale(16);
