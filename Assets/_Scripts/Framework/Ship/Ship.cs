@@ -7,9 +7,11 @@ public class Ship
 {
     public Layout Layout { get; private set; }
 
-    public ShipPosition Position;
+    public ShipPosition Position { get; private set; }
 
-    public ShipRadar Radar;
+    public ShipRadar Radar { get; private set; }
+
+    public WarpEngine WarpEngine { get; private set; }
 
     public Ship (Layout layout)
     {
@@ -18,6 +20,8 @@ public class Ship
         Position = new ShipPosition();
 
         Radar = new ShipRadar();
+
+        WarpEngine = new WarpEngine( this );
     }
 
     public virtual void Update(  )

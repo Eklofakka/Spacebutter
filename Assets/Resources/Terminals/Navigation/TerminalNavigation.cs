@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.EventSystems;
+using MEC;
 
 public class TerminalNavigation : ITerminal, IPointerClickHandler
 {
@@ -276,14 +277,14 @@ public class TerminalNavigation : ITerminal, IPointerClickHandler
 
             Selector.transform.localPosition = newPos;
 
-            ShipHandler.Instance.ActiveShip.Position.SolarTarget = (newPos * 32).RoundToScale(16);
+            ShipHandler.Instance.ActiveShip.WarpEngine.SetWarpTarget((newPos * 32).RoundToScale(16));
 
-            WarpPanel.SetFields( newPos.x.ToString(), newPos.y.ToString(), "245", "345*" );
+            //WarpPanel.SetFields( newPos.x.ToString(), newPos.y.ToString(), "245", "345*" );
 
-            if (Input.GetKey(KeyCode.LeftControl))
-            {
-                ShipHandler.Instance.ActiveShip.Position.Solar = (newPos * 32).RoundToScale(16);
-            }
+            //if (Input.GetKey(KeyCode.LeftControl))
+            //{
+            //    ShipHandler.Instance.ActiveShip.Position.Solar = (newPos * 32).RoundToScale(16);
+            //}
         }
         else
         {
@@ -294,4 +295,32 @@ public class TerminalNavigation : ITerminal, IPointerClickHandler
         }
     }
     #endregion
+}
+
+public class WarpTarget
+{
+    public Vector2 TargetPosition;
+
+    public bool Spooling { get; private set; } = false;
+
+    public WarpTarget( Vector2 targetpos )
+    {
+        TargetPosition = targetpos;
+    }
+
+    public void BeginWarp()
+    {
+        Timing.RunCoroutine(_Test());
+    }
+
+    public IEnumerator<float> _Test()
+    {
+        Spooling = true;
+
+        yield return Timing.WaitForSeconds(2f);
+
+        Spooling = false;
+
+        ShipHandler.Instance.ActiveShip.Position.SetSolarDestination(TargetPosition);
+    }
 }
